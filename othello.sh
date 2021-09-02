@@ -991,8 +991,11 @@ function is_number_available()
 
 function is_corner_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 1:1 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 8:8 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 57:57 " ]]  &&
-            [[ ! "${AVAILABLE_ALL[*]}" =~ " 64:64 " ]]); then
+    num_1=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*1:1.*")
+    num_8=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*8:8.*")
+    num_57=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*57:57.*")
+    num_64=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*64:64.*")
+    if ([ -z "${num_1}" ] && [ -z "${num_8}" ] && [ -z "${num_57}" ] && [ -z "${num_64}" ]); then
         return 1
     fi
     return 0
@@ -1003,8 +1006,11 @@ function is_corner_available()
 
 function is_sub_corner_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 19:19 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 22:22 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 43:43 " ]] &&
-            [[ ! "${AVAILABLE_ALL[*]}" =~ " 46:46 " ]]); then
+    num_19=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*19:19.*")
+    num_22=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*22:22.*")
+    num_43=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*43:43.*")
+    num_46=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*46:46.*")
+    if ([ -z "${num_19}" ] && [ -z "${num_22}" ] && [ -z "${num_43}" ] && [ -z "${num_46}" ]); then
         return 1
     fi
     return 0
@@ -1015,8 +1021,11 @@ function is_sub_corner_available()
 
 function is_upper_rim_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 3:3 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 4:4 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 5:5 " ]] &&
-            [[ ! "${AVAILABLE_ALL[*]}" =~ " 6:6 " ]]); then
+    num_3=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*3:3.*")
+    num_4=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*4:4.*")
+    num_5=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*5:5.*")
+    num_6=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*6:6.*")
+    if ([ -z "${num_3}" ] && [ -z "${num_4}" ] && [ -z "${num_5}" ] && [ -z "${num_6}" ]); then
         return 1
     fi
     return 0
@@ -1027,8 +1036,11 @@ function is_upper_rim_available()
 
 function is_right_rim_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 24:24 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 32:32 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 40:40 " ]] &&
-            [[ ! "${AVAILABLE_ALL[*]}" =~ " 48:48 " ]]); then
+    num_24=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*24:24.*")
+    num_32=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*32:32.*")
+    num_40=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*40:40.*")
+    num_48=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*48:48.*")
+    if ([ -z "${num_24}" ] && [ -z "${num_32}" ] && [ -z "${num_40}" ] && [ -z "${num_48}" ]); then
         return 1
     fi
     return 0
@@ -1039,8 +1051,11 @@ function is_right_rim_available()
 
 function is_down_rim_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 59:59 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 60:60 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 61:61 " ]] &&
-            [[ ! "${AVAILABLE_ALL[*]}" =~ " 62:62 " ]]); then
+    num_59=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*59:59.*")
+    num_60=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*60:60.*")
+    num_61=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*61:61.*")
+    num_62=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*62:62.*")
+    if ([ -z "${num_59}" ] && [ -z "${num_60}" ] && [ -z "${num_61}" ] && [ -z "${num_62}" ]); then
         return 1
     fi
     return 0
@@ -1051,8 +1066,11 @@ function is_down_rim_available()
 
 function is_left_rim_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 17:17 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 25:25 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 33:33 " ]] &&
-            [[ ! "${AVAILABLE_ALL[*]}" =~ " 41:41 " ]]); then
+    num_17=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*17:17.*")
+    num_25=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*25:25.*")
+    num_33=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*33:33.*")
+    num_41=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*41:41.*")
+    if ([ -z "${num_17}" ] && [ -z "${num_25}" ] && [ -z "${num_33}" ] && [ -z "${num_41}" ]); then
         return 1
     fi
     return 0
@@ -1063,7 +1081,9 @@ function is_left_rim_available()
 
 function is_sub_upper_rim_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 20:20 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 21:21 " ]]);then
+    num_20=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*20:20.*")
+    num_21=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*21:21.*")
+    if ([ -z "${num_20}" ] && [ -z "${num_21}" ]); then
         return 1
     fi
     return 0
@@ -1074,7 +1094,9 @@ function is_sub_upper_rim_available()
 
 function is_sub_right_rim_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 30:30 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 38:38 " ]]);then
+    num_30=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*30:30.*")
+    num_38=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*38:38.*")
+    if ([ -z "${num_30}" ] && [ -z "${num_38}" ]); then
         return 1
     fi
     return 0
@@ -1085,7 +1107,9 @@ function is_sub_right_rim_available()
 
 function is_sub_down_rim_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 44:44 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 45:45 " ]]);then
+    num_44=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*44:44.*")
+    num_45=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*45:45.*")
+    if ([ -z "${num_44}" ] && [ -z "${num_45}" ]); then
         return 1
     fi
     return 0
@@ -1096,7 +1120,9 @@ function is_sub_down_rim_available()
 
 function is_sub_left_rim_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 27:27 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 35:35 " ]]);then
+    num_27=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*27:27.*")
+    num_35=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*35:35.*")
+    if ([ -z "${num_27}" ] && [ -z "${num_35}" ]); then
         return 1
     fi
     return 0
@@ -1107,7 +1133,9 @@ function is_sub_left_rim_available()
 
 function is_upper_rim_above_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 12:12 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 13:13 " ]]); then
+    num_12=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*12:12.*")
+    num_13=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*13:13.*")
+    if ([ -z "${num_12}" ] && [ -z "${num_13}" ]); then
         return 1
     fi
     return 0
@@ -1118,7 +1146,9 @@ function is_upper_rim_above_available()
 
 function is_right_rim_above_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 31:31 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 39:39 " ]]); then
+    num_31=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*31:31.*")
+    num_39=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*39:39.*")
+    if ([ -z "${num_31}" ] && [ -z "${num_39}" ]); then
         return 1
     fi
     return 0
@@ -1129,7 +1159,9 @@ function is_right_rim_above_available()
 
 function is_down_rim_above_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 52:52 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 53:53 " ]]); then
+    num_52=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*52:52.*")
+    num_53=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*53:53.*")
+    if ([ -z "${num_52}" ] && [ -z "${num_53}" ]); then
         return 1
     fi
     return 0
@@ -1140,7 +1172,9 @@ function is_down_rim_above_available()
 
 function is_left_rim_above_available()
 {
-    if ([[ ! "${AVAILABLE_ALL[*]}" =~ " 26:26 " ]] && [[ ! "${AVAILABLE_ALL[*]}" =~ " 34:34 " ]]); then
+    num_26=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*26:26.*")
+    num_34=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*34:34.*")
+    if ([ -z "${num_26}" ] && [ -z "${num_34}" ]); then
         return 1
     fi
     return 0
@@ -2174,7 +2208,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver0.1"
+echo "CLI_Othello ver0.2"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

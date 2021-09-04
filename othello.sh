@@ -47,6 +47,7 @@ ALPHABET=""
 NUMBER=""
 POSITION=""
 SELECTED=""
+REMAIN=64
 
 ## This function shows present kifu
 ##
@@ -221,6 +222,9 @@ function search1()
         echo "Please give a variable as color B,W." >&2
         exit 1
     fi
+    # This is needed
+    AVAILABLE_NO1=("")
+    FLIPPABLE_NO1=("")
     local position="${1}"
     local position_chk=${position}
     local file="${FILE_KIFU_PRESENT}"
@@ -244,16 +248,16 @@ function search1()
         position_chk_rim=$((position_chk % 8))
         if [ $position_chk_rim -eq 1 ]; then
             if [ $_check_str != "${color}" ]; then
-                AVAILABLE_NO1=(" ")
-                FLIPPABLE_NO1=(" ")
+                AVAILABLE_NO1=("")
+                FLIPPABLE_NO1=("")
                 break
             fi
         fi
         position_chk=$((position_chk - 1)) 
         position_calc=$((position_calc - 1)) 
         if [ $position_chk -lt 1 ]; then
-            AVAILABLE_NO1=(" ")
-            FLIPPABLE_NO1=(" ")
+            AVAILABLE_NO1=("")
+            FLIPPABLE_NO1=("")
             break
         fi
         _check_str=$(cut -f ${position_chk} -d" " "${file}")
@@ -261,8 +265,8 @@ function search1()
             break
         fi
         if [ "${_check_str}" = "-" ]; then
-            AVAILABLE_NO1=(" ")
-            FLIPPABLE_NO1=(" ")
+            AVAILABLE_NO1=("")
+            FLIPPABLE_NO1=("")
             break
         fi
         if [ "${_check_str}" = "${color}" ]; then
@@ -277,8 +281,8 @@ function search1()
         FLIPPABLE_NO1+=("${position}:${position_chk}")
         if [ $position_calc -eq 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO1=(" ")
-                FLIPPABLE_NO1=(" ")
+                AVAILABLE_NO1=("")
+                FLIPPABLE_NO1=("")
             fi
         fi
     done
@@ -300,6 +304,9 @@ function search2()
         echo "Please give a variable as color B,W." >&2
         exit 1
     fi
+    # This is needed
+    AVAILABLE_NO2=("")
+    FLIPPABLE_NO2=("")
     local position="${1}"
     local position_calc=${position}
     local position_calc_rim=${position}
@@ -317,39 +324,39 @@ function search2()
     while [ $position_calc -ge 1 ]
     do
         if ([ $position_calc -eq 1 ] || [ $position_calc -eq 8 ] || [ $position_calc -eq 57 ]); then
-            AVAILABLE_NO2=(" ")
-            FLIPPABLE_NO2=(" ")
+            AVAILABLE_NO2=("")
+            FLIPPABLE_NO2=("")
             break
         fi
         if ([ $position_calc -gt 1 ] && [ $position_calc -lt 8 ]); then
             if [ $_check_str != "${color}" ]; then
-                AVAILABLE_NO2=(" ")
-                FLIPPABLE_NO2=(" ")
+                AVAILABLE_NO2=("")
+                FLIPPABLE_NO2=("")
                 break
             fi
         fi
         position_calc_rim=$((position_calc % 8))
         if [ $position_calc_rim -eq 1 ]; then
-            AVAILABLE_NO2=(" ")
-            FLIPPABLE_NO2=(" ")
+            AVAILABLE_NO2=("")
+            FLIPPABLE_NO2=("")
             break
         fi
         position_calc=$((position_calc - 9)) 
         loop=$((loop + 1)) 
         if [ $position_calc -lt 1 ]; then
-            AVAILABLE_NO2=(" ")
-            FLIPPABLE_NO2=(" ")
+            AVAILABLE_NO2=("")
+            FLIPPABLE_NO2=("")
             break
         fi
         if ([ $position_calc -ge 57 ] && [ $position_calc -le 64 ]); then
-            AVAILABLE_NO2=(" ")
-            FLIPPABLE_NO2=(" ")
+            AVAILABLE_NO2=("")
+            FLIPPABLE_NO2=("")
             break
         fi
         _check_str=$(cut -f ${position_calc} -d" " "${file}")
         if [ "${_check_str}" = "-" ]; then
-            AVAILABLE_NO2=(" ")
-            FLIPPABLE_NO2=(" ")
+            AVAILABLE_NO2=("")
+            FLIPPABLE_NO2=("")
             break
         fi
         if ([ "${_check_str}" = "${color}" ] && [ $loop -eq 1 ]); then
@@ -367,8 +374,8 @@ function search2()
         FLIPPABLE_NO2+=("${position}:${position_calc}")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO2=(" ")
-                FLIPPABLE_NO2=(" ")
+                AVAILABLE_NO2=("")
+                FLIPPABLE_NO2=("")
             fi
         fi
     done
@@ -390,6 +397,9 @@ function search3()
         echo "Please give a variable as color B,W." >&2
         exit 1
     fi
+    # This is needed
+    AVAILABLE_NO3=("")
+    FLIPPABLE_NO3=("")
     local position="${1}"
     local position_calc=${position}
     local file="${FILE_KIFU_PRESENT}"
@@ -409,8 +419,8 @@ function search3()
         position_calc=$((position_calc - 8)) 
         loop=$((loop + 1)) 
         if [ $position_calc -lt 1 ]; then
-            AVAILABLE_NO3=(" ")
-            FLIPPABLE_NO3=(" ")
+            AVAILABLE_NO3=("")
+            FLIPPABLE_NO3=("")
             break
         fi
         _check_str=$(cut -f ${position_calc} -d" " "${file}")
@@ -418,14 +428,14 @@ function search3()
             break
         fi
         if [ "${_check_str}" = "-" ]; then
-            AVAILABLE_NO3=(" ")
-            FLIPPABLE_NO3=(" ")
+            AVAILABLE_NO3=("")
+            FLIPPABLE_NO3=("")
             break
         fi
         if [ $position_calc -eq 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO3=()
-                FLIPPABLE_NO3=()
+                AVAILABLE_NO3=("")
+                FLIPPABLE_NO3=("")
                 break
             fi
         fi
@@ -441,8 +451,8 @@ function search3()
         FLIPPABLE_NO3+=("${position}:${position_calc}")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO3=(" ")
-                FLIPPABLE_NO3=(" ")
+                AVAILABLE_NO3=("")
+                FLIPPABLE_NO3=("")
             fi
         fi
     done
@@ -464,6 +474,9 @@ function search4()
         echo "Please give a variable as color B,W." >&2
         exit 1
     fi
+    # This is needed
+    AVAILABLE_NO4=("")
+    FLIPPABLE_NO4=("")
     local position="${1}"
     local position_calc=${position}
     local position_rim=${position}
@@ -481,38 +494,38 @@ function search4()
     while [ $position_calc -gt 1 ]
     do
         if ([ $position -eq 1 ] || [ $position -eq 8 ] || [ $position -eq 64 ]); then
-            AVAILABLE_NO4=(" ")
-            FLIPPABLE_NO4=(" ")
+            AVAILABLE_NO4=("")
+            FLIPPABLE_NO4=("")
             break
         fi
         if ([ $position -ge 1 ] && [ $position -le 8 ]); then
-            AVAILABLE_NO4=(" ")
-            FLIPPABLE_NO4=(" ")
+            AVAILABLE_NO4=("")
+            FLIPPABLE_NO4=("")
             break
         fi
         position_calc_rim=$((position_calc % 8))
         if [ $position_calc_rim -eq 0 ]; then
-            AVAILABLE_NO4=(" ")
-            FLIPPABLE_NO4=(" ")
+            AVAILABLE_NO4=("")
+            FLIPPABLE_NO4=("")
             break
         fi
         position_calc=$((position_calc - 7)) 
         loop=$((loop + 1)) 
         if [ $position_calc -lt 1 ]; then
-            AVAILABLE_NO4=(" ")
-            FLIPPABLE_NO4=(" ")
+            AVAILABLE_NO4=("")
+            FLIPPABLE_NO4=("")
             break
         fi
         _check_str=$(cut -f ${position_calc} -d" " "${file}")
         if [ "${_check_str}" = "-" ]; then
-            AVAILABLE_NO4=(" ")
-            FLIPPABLE_NO4=(" ")
+            AVAILABLE_NO4=("")
+            FLIPPABLE_NO4=("")
             break
         fi
         if ([ $position_calc -ge 1 ] && [ $position_calc -le 8 ]); then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO4=(" ")
-                FLIPPABLE_NO4=(" ")
+                AVAILABLE_NO4=("")
+                FLIPPABLE_NO4=("")
                 break
             fi
         fi
@@ -531,8 +544,8 @@ function search4()
         FLIPPABLE_NO4+=("${position}:${position_calc}")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO4=(" ")
-                FLIPPABLE_NO4=(" ")
+                AVAILABLE_NO4=("")
+                FLIPPABLE_NO4=("")
             fi
         fi
     done
@@ -554,6 +567,9 @@ function search5()
         echo "Please give a variable as color B,W." >&2
         exit 1
     fi
+    # This is needed
+    AVAILABLE_NO5=("")
+    FLIPPABLE_NO5=("")
     local position="${1}"
     local position_chk=${position}
     local file="${FILE_KIFU_PRESENT}"
@@ -578,16 +594,16 @@ function search5()
         position_chk_rim=$((position_chk % 8))
         if [ $position_chk_rim -eq 0 ]; then
             if [ $_check_str != "${color}" ]; then
-                AVAILABLE_NO1=(" ")
-                FLIPPABLE_NO1=(" ")
+                AVAILABLE_NO5=("")
+                FLIPPABLE_NO5=("")
                 break
             fi
         fi
         position_calc=$((position_calc + 1)) 
         position_chk=$((position_chk + 1)) 
         if [ $position_chk -lt 1 ]; then
-            AVAILABLE_NO5=(" ")
-            FLIPPABLE_NO5=(" ")
+            AVAILABLE_NO5=("")
+            FLIPPABLE_NO5=("")
             break
         fi
         _check_str=$(cut -f ${position_chk} -d" " "${file}")
@@ -595,8 +611,8 @@ function search5()
             break
         fi
         if [ "${_check_str}" = "-" ]; then
-            AVAILABLE_NO5=(" ")
-            FLIPPABLE_NO5=(" ")
+            AVAILABLE_NO5=("")
+            FLIPPABLE_NO5=("")
             break
         fi
         if [ "${_check_str}" = "${color}" ]; then
@@ -611,8 +627,8 @@ function search5()
         FLIPPABLE_NO5+=("${position}:${position_chk}")
         if [ $position_calc -eq 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO5=(" ")
-                FLIPPABLE_NO5=(" ")
+                AVAILABLE_NO5=("")
+                FLIPPABLE_NO5=("")
             fi
         fi
     done
@@ -634,6 +650,9 @@ function search6()
         echo "Please give a variable as color B,W." >&2
         exit 1
     fi
+    # This is needed
+    AVAILABLE_NO6=("")
+    FLIPPABLE_NO6=("")
     local position="${1}"
     local position_calc=${position}
     local position_calc_rim=${position}
@@ -652,21 +671,21 @@ function search6()
     while [ $position_calc -lt 64 ]
     do
         if ([ $position -eq 8 ] || [ $position -eq 57 ] || [ $position -eq 64 ]); then
-            AVAILABLE_NO6=(" ")
-            FLIPPABLE_NO6=(" ")
+            AVAILABLE_NO6=("")
+            FLIPPABLE_NO6=("")
             break
         fi
         position_calc_rim=$((position_calc % 8))
         if [ $position_calc_rim -eq 0 ]; then
-            AVAILABLE_NO6=(" ")
-            FLIPPABLE_NO6=(" ")
+            AVAILABLE_NO6=("")
+            FLIPPABLE_NO6=("")
             break
         fi
         position_calc=$((position_calc + 9)) 
         loop=$((loop + 1)) 
         if ([ $position_calc -ge 1 ] && [ $position_calc -le 8 ]); then
-            AVAILABLE_NO6=(" ")
-            FLIPPABLE_NO6=(" ")
+            AVAILABLE_NO6=("")
+            FLIPPABLE_NO6=("")
             break
         fi
         _check_str=$(cut -f ${position_calc} -d" " "${file}")
@@ -674,8 +693,8 @@ function search6()
             break
         fi
         if [ "${_check_str}" = "-" ]; then
-            AVAILABLE_NO6=(" ")
-            FLIPPABLE_NO6=(" ")
+            AVAILABLE_NO6=("")
+            FLIPPABLE_NO6=("")
             break
         fi
         if [ "${_check_str}" = "${color}" ]; then
@@ -684,8 +703,8 @@ function search6()
             break
         fi
         if ([ $position_calc -ge 57 ] && [ $position_calc -le 64 ]); then
-            AVAILABLE_NO6=(" ")
-            FLIPPABLE_NO6=(" ")
+            AVAILABLE_NO6=("")
+            FLIPPABLE_NO6=("")
             break
         fi
         if [ $_available -ne 1 ]; then
@@ -696,7 +715,7 @@ function search6()
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
                 AVAILABLE_NO6=(" ")
-                FLIPPABLE_NO6=(" ")
+                FLIPPABLE_NO6=("")
             fi
         fi
     done
@@ -718,6 +737,9 @@ function search7()
         echo "Please give a variable as color B,W." >&2
         exit 1
     fi
+    # This is needed
+    AVAILABLE_NO7=("")
+    FLIPPABLE_NO7=("")
     local position="${1}"
     local position_calc=${position}
     local file="${FILE_KIFU_PRESENT}"
@@ -737,8 +759,8 @@ function search7()
         position_calc=$((position_calc + 8)) 
         loop=$((loop + 1)) 
         if [ $position_calc -gt 64 ]; then
-            AVAILABLE_NO7=(" ")
-            FLIPPABLE_NO7=(" ")
+            AVAILABLE_NO7=("")
+            FLIPPABLE_NO7=("")
             break
         fi
         _check_str=$(cut -f ${position_calc} -d" " "${file}")
@@ -747,14 +769,14 @@ function search7()
         fi
         if [ $position_calc -eq 64 ]; then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO7=()
-                FLIPPABLE_NO7=()
+                AVAILABLE_NO7=("")
+                FLIPPABLE_NO7=("")
                 break
             fi
         fi
         if [ "${_check_str}" = "-" ]; then
-            AVAILABLE_NO7=()
-            FLIPPABLE_NO7=()
+            AVAILABLE_NO7=("")
+            FLIPPABLE_NO7=("")
             break
         fi
         if [ "${_check_str}" = "${color}" ]; then
@@ -769,8 +791,8 @@ function search7()
         FLIPPABLE_NO7+=("${position}:${position_calc}")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO7=(" ")
-                FLIPPABLE_NO7=(" ")
+                AVAILABLE_NO7=("")
+                FLIPPABLE_NO7=("")
             fi
         fi
     done
@@ -792,6 +814,9 @@ function search8()
         echo "Please give a variable as color B,W." >&2
         exit 1
     fi
+    # This is needed
+    AVAILABLE_NO8=("")
+    FLIPPABLE_NO8=("")
     local position="${1}"
     local position_calc=${position}
     local position_calc_rim=${position}
@@ -809,21 +834,21 @@ function search8()
     while [ $position_calc -lt 64 ]
     do
         if ([ $position -eq 1 ] || [ $position -eq 57 ] || [ $position -eq 64 ]); then
-            AVAILABLE_NO8=(" ")
-            FLIPPABLE_NO8=(" ")
+            AVAILABLE_NO8=("")
+            FLIPPABLE_NO8=("")
             break
         fi
         position_calc_rim=$((position_calc % 8))
         if [ $position_calc_rim -eq 1 ]; then
-            AVAILABLE_NO8=(" ")
-            FLIPPABLE_NO8=(" ")
+            AVAILABLE_NO8=("")
+            FLIPPABLE_NO8=("")
             break
         fi
         position_calc=$((position_calc + 7)) 
         loop=$((loop + 1)) 
 	if ([ $position_calc -ge 1 ] && [ $position_calc -le 8 ]); then
-            AVAILABLE_NO8=(" ")
-            FLIPPABLE_NO8=(" ")
+            AVAILABLE_NO8=("")
+            FLIPPABLE_NO8=("")
             break
         fi
         _check_str=$(cut -f ${position_calc} -d" " "${file}")
@@ -831,8 +856,8 @@ function search8()
             break
         fi
         if [ "${_check_str}" = "-" ]; then
-            AVAILABLE_NO8=(" ")
-            FLIPPABLE_NO8=(" ")
+            AVAILABLE_NO8=("")
+            FLIPPABLE_NO8=("")
             break
         fi
         if [ "${_check_str}" = "${color}" ]; then
@@ -841,8 +866,8 @@ function search8()
             break
         fi
         if ([ $position_calc -ge 57 ] && [ $position_calc -le 64 ]); then
-            AVAILABLE_NO8=(" ")
-            FLIPPABLE_NO8=(" ")
+            AVAILABLE_NO8=("")
+            FLIPPABLE_NO8=("")
             break
         fi
         if [ $_available -ne 1 ]; then
@@ -852,8 +877,8 @@ function search8()
         FLIPPABLE_NO8+=("${position}:${position_calc}")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
-                AVAILABLE_NO8=(" ")
-                FLIPPABLE_NO8=(" ")
+                AVAILABLE_NO8=("")
+                FLIPPABLE_NO8=("")
             fi
         fi
     done
@@ -881,44 +906,44 @@ function search_available_positions()
         color="B"
     fi
 
-    AVAILABLE_ALL=(" " )
-    FLIPPABLE_ALL=(" ")
+    AVAILABLE_ALL=("" )
+    FLIPPABLE_ALL=("")
 
-    AVAILABLE_NO1_ALL=(" ")
-    AVAILABLE_NO2_ALL=(" " )
-    AVAILABLE_NO3_ALL=(" ")
-    AVAILABLE_NO4_ALL=(" ")
-    AVAILABLE_NO5_ALL=(" ")
-    AVAILABLE_NO6_ALL=(" ")
-    AVAILABLE_NO7_ALL=(" ")
-    AVAILABLE_NO8_ALL=(" ")
+    AVAILABLE_NO1_ALL=("")
+    AVAILABLE_NO2_ALL=("" )
+    AVAILABLE_NO3_ALL=("")
+    AVAILABLE_NO4_ALL=("")
+    AVAILABLE_NO5_ALL=("")
+    AVAILABLE_NO6_ALL=("")
+    AVAILABLE_NO7_ALL=("")
+    AVAILABLE_NO8_ALL=("")
 
-    FLIPPABLE_NO1_ALL=(" ")
-    FLIPPABLE_NO2_ALL=(" ")
-    FLIPPABLE_NO3_ALL=(" ")
-    FLIPPABLE_NO4_ALL=(" ")
-    FLIPPABLE_NO5_ALL=(" ")
-    FLIPPABLE_NO6_ALL=(" ")
-    FLIPPABLE_NO7_ALL=(" ")
-    FLIPPABLE_NO8_ALL=(" ")
+    FLIPPABLE_NO1_ALL=("")
+    FLIPPABLE_NO2_ALL=("")
+    FLIPPABLE_NO3_ALL=("")
+    FLIPPABLE_NO4_ALL=("")
+    FLIPPABLE_NO5_ALL=("")
+    FLIPPABLE_NO6_ALL=("")
+    FLIPPABLE_NO7_ALL=("")
+    FLIPPABLE_NO8_ALL=("")
 
-    AVAILABLE_NO1=(" ")
-    AVAILABLE_NO2=(" ")
-    AVAILABLE_NO3=(" ")
-    AVAILABLE_NO4=(" ")
-    AVAILABLE_NO5=(" ")
-    AVAILABLE_NO6=(" ")
-    AVAILABLE_NO7=(" ")
-    AVAILABLE_NO8=(" ")
+    AVAILABLE_NO1=("")
+    AVAILABLE_NO2=("")
+    AVAILABLE_NO3=("")
+    AVAILABLE_NO4=("")
+    AVAILABLE_NO5=("")
+    AVAILABLE_NO6=("")
+    AVAILABLE_NO7=("")
+    AVAILABLE_NO8=("")
 
-    FLIPPABLE_NO1=(" ")
-    FLIPPABLE_NO2=(" ")
-    FLIPPABLE_NO3=(" ")
-    FLIPPABLE_NO4=(" ")
-    FLIPPABLE_NO5=(" ")
-    FLIPPABLE_NO6=(" ")
-    FLIPPABLE_NO7=(" ")
-    FLIPPABLE_NO8=(" ")
+    FLIPPABLE_NO1=("")
+    FLIPPABLE_NO2=("")
+    FLIPPABLE_NO3=("")
+    FLIPPABLE_NO4=("")
+    FLIPPABLE_NO5=("")
+    FLIPPABLE_NO6=("")
+    FLIPPABLE_NO7=("")
+    FLIPPABLE_NO8=("")
 
     while [ $i -lt 65 ]
     do
@@ -1365,6 +1390,7 @@ function judge_position()
     local flippables_62=0
     local flippables_63=0
     local flippables_64=0
+    local flippables_aggressive=0
     local array=()
     local i_pre
     local i 
@@ -1985,7 +2011,8 @@ function judge_position()
 
     position_last2=0
     position_last=0
-    if [ $position -eq 0 ]; then
+
+    if ([ $position -eq 0 ] || ([ $MODE = "Mode1" ] && [ $REMAIN -gt 4 ])); then
         #echo "XXXX I'm still checking remaining positions. XXXX"
         flippables_2=0
         flippables_7=0
@@ -2184,13 +2211,18 @@ function count_black_and_white()
 {
     local black=0
     local white=0
+    local remain=0
     local count_all=0
     local pattern_b="B"
     local pattern_w="W"
     black=$(awk -F" " -v pat="$pattern_b" '{for(i=1;i<=NF;i++) if($i ~ pat) c++} END {print c}' "${FILE_KIFU_PRESENT}")
     white=$(awk -F" " -v pat="$pattern_w" '{for(i=1;i<=NF;i++) if($i ~ pat) c++} END {print c}' "${FILE_KIFU_PRESENT}")
-    echo "Black:$black White:$white"
+    remain=$((64 - $black - $white))
+
+    # Note that 'remain(local)' and 'REMAIN(global)' is different.
+    echo "Black:$black White:$white Remain:$remain"
     count_all=$((black + white))
+    REMAIN=$((64 - $count_all - 1))
     if [ $count_all -eq 64 ]; then
         if [ $black -gt $white ]; then
             echo "Black wins."
@@ -2208,7 +2240,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver0.2"
+echo "CLI_Othello ver0.3"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file
@@ -2219,11 +2251,11 @@ do
     if [ -n "${answer}" ]; then
         case "${REPLY}" in
             1)  HUMAN="Black"
-                show_kifu_present
+                #show_kifu_present
                 break
                 ;;
             2)  HUMAN="White"
-                show_kifu_present
+                #show_kifu_present
                 break
                 ;;
             3) exit 1 ;;
@@ -2234,27 +2266,50 @@ do
     fi
 done
 
+echo ""
 echo "You are ${HUMAN}"
+echo ""
+echo "Mode"
 
+PS3="Select mode:"
+select answer in Normal Mode1 
+do
+    if [ -n "${answer}" ]; then
+        case "${REPLY}" in
+            1)  MODE="Normal"
+                echo ""
+                echo "I'm in 'Normal mode'."
+                echo ""
+                break
+                ;;
+            2)  MODE="Mode1"
+                echo ""
+                echo "I'm in 'Mode1'."
+                echo ""
+                break
+                ;;
+            3) exit 1 ;;
+            *) echo "Invalid." ;;
+        esac
+    else
+        echo "Invalid."
+    fi
+done
+
+show_kifu_present
+
+echo "You are ${HUMAN}"
 while :
 do
     if [ "${HUMAN}" = "White" ]; then
         # Computer
         echo "I'm Black. Thinking..."
         search_available_positions "Black" 
-        if [ $? -eq 2 ]; then
-            echo "Game ends."
-            exit 0
-        fi
         judge_position "Black" 0
        	show_kifu_present
         count_black_and_white
         # Human 
         search_available_positions "White" 
-        if [ $? -eq 2 ]; then
-            echo "Game ends."
-            exit 0
-        fi
         echo "Your turn."
         get_position_value
         while :
@@ -2273,10 +2328,6 @@ do
     else
         ## Human 
         search_available_positions "Black" 
-        if [ $? -eq 2 ]; then
-            echo "Game ends."
-            exit 0
-        fi
         echo "Your turn."
         get_position_value
         while :
@@ -2295,10 +2346,6 @@ do
         # Computer
         echo "I'm White. Thinking..."
         search_available_positions "White" 
-        if [ $? -eq 2 ]; then
-            echo "Game ends."
-            exit 0
-        fi
         judge_position "White" 0
        	show_kifu_present
         count_black_and_white

@@ -47,6 +47,7 @@ ALPHABET=""
 NUMBER=""
 POSITION=""
 SELECTED=""
+REMAIN=64
 
 ## This function shows present kifu
 ##
@@ -1940,7 +1941,6 @@ function judge_position()
     fi
 
     if [ $position -eq 0 ]; then
-    #if ([ $position -eq 0 ] || [ $MODE = "Aggressive" ]); then
         #echo "==== I check remaining positions. ===="
         # corner 2nd next inner. 
         #11,14
@@ -2011,8 +2011,8 @@ function judge_position()
 
     position_last2=0
     position_last=0
-    #if [ $position -eq 0 ]; then
-    if ([ $position -eq 0 ] || [ $MODE = "Aggressive" ]); then
+
+    if ([ $position -eq 0 ] || ([ $MODE = "Mode1" ] && [ $REMAIN -gt 4 ])); then
         #echo "XXXX I'm still checking remaining positions. XXXX"
         flippables_2=0
         flippables_7=0
@@ -2101,7 +2101,6 @@ function judge_position()
                 i_pre=${array[i]}
             done
         fi
-echo "position_last2:$position_last2"
     fi
 
     if [ $position_last2 -eq 0 ]; then
@@ -2169,14 +2168,6 @@ echo "position_last2:$position_last2"
         fi
     fi
 
-    # Aggressive mode
-    flippables_aggressive=$(count_flippables $position_last2)
-    if [ $flippables_aggressive -ge 4 ]; then
-        echo "flippables_aggressive:$flippables_aggressive"
-        echo "I go aggressive!"
-        position=$position_last2
-    fi
-
     if [ $position -eq 0 ]; then
         echo "I pass." >&2
         return 1
@@ -2220,13 +2211,18 @@ function count_black_and_white()
 {
     local black=0
     local white=0
+    local remain=0
     local count_all=0
     local pattern_b="B"
     local pattern_w="W"
     black=$(awk -F" " -v pat="$pattern_b" '{for(i=1;i<=NF;i++) if($i ~ pat) c++} END {print c}' "${FILE_KIFU_PRESENT}")
     white=$(awk -F" " -v pat="$pattern_w" '{for(i=1;i<=NF;i++) if($i ~ pat) c++} END {print c}' "${FILE_KIFU_PRESENT}")
-    echo "Black:$black White:$white"
+    remain=$((64 - $black - $white))
+
+    # Note that 'remain(local)' and 'REMAIN(global)' is different.
+    echo "Black:$black White:$white Remain:$remain"
     count_all=$((black + white))
+    REMAIN=$((64 - $count_all - 1))
     if [ $count_all -eq 64 ]; then
         if [ $black -gt $white ]; then
             echo "Black wins."
@@ -2276,7 +2272,7 @@ echo ""
 echo "Mode"
 
 PS3="Select mode:"
-select answer in Normal Aggressive 
+select answer in Normal Mode1 
 do
     if [ -n "${answer}" ]; then
         case "${REPLY}" in
@@ -2286,9 +2282,9 @@ do
                 echo ""
                 break
                 ;;
-            2)  MODE="Aggressive"
+            2)  MODE="Mode1"
                 echo ""
-                echo "I'm in 'Aggressive mode'."
+                echo "I'm in 'Mode1'."
                 echo ""
                 break
                 ;;
@@ -2309,19 +2305,11 @@ do
         # Computer
         echo "I'm Black. Thinking..."
         search_available_positions "Black" 
-        if [ $? -eq 2 ]; then
-            echo "Game ends."
-            exit 0
-        fi
         judge_position "Black" 0
        	show_kifu_present
         count_black_and_white
         # Human 
         search_available_positions "White" 
-        if [ $? -eq 2 ]; then
-            echo "Game ends."
-            exit 0
-        fi
         echo "Your turn."
         get_position_value
         while :
@@ -2340,10 +2328,6 @@ do
     else
         ## Human 
         search_available_positions "Black" 
-        if [ $? -eq 2 ]; then
-            echo "Game ends."
-            exit 0
-        fi
         echo "Your turn."
         get_position_value
         while :
@@ -2362,10 +2346,6 @@ do
         # Computer
         echo "I'm White. Thinking..."
         search_available_positions "White" 
-        if [ $? -eq 2 ]; then
-            echo "Game ends."
-            exit 0
-        fi
         judge_position "White" 0
        	show_kifu_present
         count_black_and_white

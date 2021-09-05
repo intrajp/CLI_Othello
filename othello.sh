@@ -1016,10 +1016,10 @@ function is_number_available()
 
 function is_corner_available()
 {
-    num_1=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*1:1.*")
-    num_8=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*8:8.*")
-    num_57=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*57:57.*")
-    num_64=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*64:64.*")
+    num_1=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]1:1[[:space:]]")
+    num_8=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]8:8[[:space:]]")
+    num_57=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]57:57[[:space:]]")
+    num_64=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]64:64[[:space:]]")
     if ([ -z "${num_1}" ] && [ -z "${num_8}" ] && [ -z "${num_57}" ] && [ -z "${num_64}" ]); then
         return 1
     fi
@@ -1031,11 +1031,63 @@ function is_corner_available()
 
 function is_sub_corner_available()
 {
-    num_19=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*19:19.*")
-    num_22=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*22:22.*")
-    num_43=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*43:43.*")
-    num_46=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*46:46.*")
+    num_19=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]19:19[[:space:]]")
+    num_22=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]22:22[[:space:]]")
+    num_43=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]43:43[[:space:]]")
+    num_46=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]46:46[[:space:]]")
     if ([ -z "${num_19}" ] && [ -z "${num_22}" ] && [ -z "${num_43}" ] && [ -z "${num_46}" ]); then
+        return 1
+    fi
+    return 0
+}
+
+## This function returns 0 if upper rim sub-corner is available.
+##
+
+function is_upper_rim_sub_corner_available()
+{
+    num_3=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]3:3[[:space:]]")
+    num_6=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]6:6[[:space:]]")
+    if ([ -z "${num_3}" ] && [ -z "${num_6}" ]); then
+        return 1
+    fi
+    return 0
+}
+
+## This function returns 0 if right rim sub-corner is available.
+##
+
+function is_right_rim_sub_corner_available()
+{
+    num_24=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]24:24[[:space:]]")
+    num_48=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]48:48[[:space:]]")
+    if ([ -z "${num_24}" ] && [ -z "${num_48}" ]); then
+        return 1
+    fi
+    return 0
+}
+
+## This function returns 0 if down rim sub-corner is available.
+##
+
+function is_down_rim_sub_corner_available()
+{
+    num_59=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]59:59[[:space:]]")
+    num_62=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]62:62[[:space:]]")
+    if ([ -z "${num_59}" ] && [ -z "${num_62}" ]); then
+        return 1
+    fi
+    return 0
+}
+
+## This function returns 0 if left rim sub-corner is available.
+##
+
+function is_left_rim_sub_corner_available()
+{
+    num_17=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]17:17[[:space:]]")
+    num_41=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]41:41[[:space:]]")
+    if ([ -z "${num_17}" ] && [ -z "${num_41}" ]); then
         return 1
     fi
     return 0
@@ -1046,11 +1098,9 @@ function is_sub_corner_available()
 
 function is_upper_rim_available()
 {
-    num_3=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*3:3.*")
-    num_4=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*4:4.*")
-    num_5=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*5:5.*")
-    num_6=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*6:6.*")
-    if ([ -z "${num_3}" ] && [ -z "${num_4}" ] && [ -z "${num_5}" ] && [ -z "${num_6}" ]); then
+    num_4=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]4:4[[:space:]]")
+    num_5=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]5:5[[:space:]]")
+    if ([ -z "${num_4}" ] && [ -z "${num_5}" ]); then
         return 1
     fi
     return 0
@@ -1061,11 +1111,9 @@ function is_upper_rim_available()
 
 function is_right_rim_available()
 {
-    num_24=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*24:24.*")
-    num_32=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*32:32.*")
-    num_40=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*40:40.*")
-    num_48=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*48:48.*")
-    if ([ -z "${num_24}" ] && [ -z "${num_32}" ] && [ -z "${num_40}" ] && [ -z "${num_48}" ]); then
+    num_32=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]32:32[[:space:]]")
+    num_40=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]40:40[[:space:]]")
+    if ([ -z "${num_32}" ] && [ -z "${num_40}" ]); then
         return 1
     fi
     return 0
@@ -1076,11 +1124,9 @@ function is_right_rim_available()
 
 function is_down_rim_available()
 {
-    num_59=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*59:59.*")
-    num_60=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*60:60.*")
-    num_61=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*61:61.*")
-    num_62=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*62:62.*")
-    if ([ -z "${num_59}" ] && [ -z "${num_60}" ] && [ -z "${num_61}" ] && [ -z "${num_62}" ]); then
+    num_60=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]60:60[[:space:]]")
+    num_61=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]61:61[[:space:]]")
+    if ([ -z "${num_60}" ] && [ -z "${num_61}" ]); then
         return 1
     fi
     return 0
@@ -1091,11 +1137,9 @@ function is_down_rim_available()
 
 function is_left_rim_available()
 {
-    num_17=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*17:17.*")
-    num_25=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*25:25.*")
-    num_33=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*33:33.*")
-    num_41=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*41:41.*")
-    if ([ -z "${num_17}" ] && [ -z "${num_25}" ] && [ -z "${num_33}" ] && [ -z "${num_41}" ]); then
+    num_25=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]25:25[[:space:]]")
+    num_33=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]33:33[[:space:]]")
+    if ([ -z "${num_25}" ] && [ -z "${num_33}" ]); then
         return 1
     fi
     return 0
@@ -1106,8 +1150,8 @@ function is_left_rim_available()
 
 function is_sub_upper_rim_available()
 {
-    num_20=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*20:20.*")
-    num_21=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*21:21.*")
+    num_20=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]20:20[[:space:]]")
+    num_21=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]21:21[[:space:]]")
     if ([ -z "${num_20}" ] && [ -z "${num_21}" ]); then
         return 1
     fi
@@ -1119,8 +1163,8 @@ function is_sub_upper_rim_available()
 
 function is_sub_right_rim_available()
 {
-    num_30=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*30:30.*")
-    num_38=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*38:38.*")
+    num_30=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]30:30[[:space:]]")
+    num_38=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]38:38[[:space:]]")
     if ([ -z "${num_30}" ] && [ -z "${num_38}" ]); then
         return 1
     fi
@@ -1132,8 +1176,8 @@ function is_sub_right_rim_available()
 
 function is_sub_down_rim_available()
 {
-    num_44=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*44:44.*")
-    num_45=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*45:45.*")
+    num_44=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]44:44[[:space:]]")
+    num_45=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]45:45[[:space:]]")
     if ([ -z "${num_44}" ] && [ -z "${num_45}" ]); then
         return 1
     fi
@@ -1145,8 +1189,8 @@ function is_sub_down_rim_available()
 
 function is_sub_left_rim_available()
 {
-    num_27=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*27:27.*")
-    num_35=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*35:35.*")
+    num_27=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]27:27[[:space:]]")
+    num_35=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]35:35[[:space:]]")
     if ([ -z "${num_27}" ] && [ -z "${num_35}" ]); then
         return 1
     fi
@@ -1158,8 +1202,8 @@ function is_sub_left_rim_available()
 
 function is_upper_rim_above_available()
 {
-    num_12=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*12:12.*")
-    num_13=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*13:13.*")
+    num_12=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]12:12[[:space:]]")
+    num_13=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]13:13[[:space:]]")
     if ([ -z "${num_12}" ] && [ -z "${num_13}" ]); then
         return 1
     fi
@@ -1171,8 +1215,8 @@ function is_upper_rim_above_available()
 
 function is_right_rim_above_available()
 {
-    num_31=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*31:31.*")
-    num_39=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*39:39.*")
+    num_31=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]31:31[[:space:]]")
+    num_39=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]39:39[[:space:]]")
     if ([ -z "${num_31}" ] && [ -z "${num_39}" ]); then
         return 1
     fi
@@ -1184,8 +1228,8 @@ function is_right_rim_above_available()
 
 function is_down_rim_above_available()
 {
-    num_52=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*52:52.*")
-    num_53=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*53:53.*")
+    num_52=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]52:52[[:space:]]")
+    num_53=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]53:53[[:space:]]")
     if ([ -z "${num_52}" ] && [ -z "${num_53}" ]); then
         return 1
     fi
@@ -1197,8 +1241,8 @@ function is_down_rim_above_available()
 
 function is_left_rim_above_available()
 {
-    num_26=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*26:26.*")
-    num_34=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*34:34.*")
+    num_26=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]26:26[[:space:]]")
+    num_34=$(echo "${AVAILABLE_ALL[*]}" | grep -e "[[:space:]]34:34[[:space:]]")
     if ([ -z "${num_26}" ] && [ -z "${num_34}" ]); then
         return 1
     fi
@@ -1314,6 +1358,10 @@ function judge_position()
     # This is the variable we want for the computer.
     local position=0
 
+    local position_upper_rim_sub_corner=0
+    local position_right_rim_sub_corner=0
+    local position_down_rim_sub_corner=0
+    local position_left_rim_sub_corner=0
     local position_upper_rim=0
     local position_right_rim=0
     local position_down_rim=0
@@ -1396,6 +1444,10 @@ function judge_position()
     local i 
     local n_is_corner_available=1 
     local n_is_sub_corner_available=1 
+    local n_is_upper_rim_sub_corner_available=1
+    local n_is_right_rim_sub_corner_available=1
+    local n_is_down_rim_sub_corner_available=1
+    local n_is_left_rim_sub_corner_available=1
     local n_is_upper_rim_available=1
     local n_is_right_rim_available=1
     local n_is_down_rim_available=1
@@ -1408,11 +1460,18 @@ function judge_position()
     local n_is_right_rim_above_available=1
     local n_is_down_rim_above_available=1
     local n_is_left_rim_above_available=1
-    #echo "${AVAILABLE_ALL[*]}"
     is_corner_available
     n_is_corner_available=$?
     is_sub_corner_available
     n_is_sub_corner_available=$?
+    is_upper_rim_sub_corner_available
+    n_is_upper_rim_sub_corner_available=$?
+    is_right_rim_sub_corner_available
+    n_is_right_rim_sub_corner_available=$?
+    is_down_rim_sub_corner_available
+    n_is_down_rim_sub_corner_available=$?
+    is_left_rim_sub_corner_available
+    n_is_left_rim_sub_corner_available=$?
     is_upper_rim_available
     n_is_upper_rim_available=$?
     is_right_rim_available
@@ -1498,7 +1557,7 @@ function judge_position()
             i=0
             i_pre=0
             # multiple array loop
-            position=0
+            #position=0
             for i in ${!array[@]};
             do
                 if [ ${array[i]} -gt $i_pre ]; then
@@ -1613,39 +1672,218 @@ function judge_position()
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
-        if [ -z $position_sub_upper_rim ]; then
-            position_sub_upper_rim=0   
+        is_number_available 20
+        if [ $? -eq 0 ]; then
+            flippables_20=$(count_flippables 20)
         fi
-        if [ -z $position_sub_right_rim ]; then
-            position_sub_right_rim=0   
+        is_number_available 21
+        if [ $? -eq 0 ]; then
+            flippables_21=$(count_flippables 21)
         fi
-        if [ -z $position_sub_down_rim ]; then
-            position_sub_down_rim=0   
+        is_number_available 30 
+        if [ $? -eq 0 ]; then
+            flippables_30=$(count_flippables 30)
         fi
-        if [ -z $position_sub_left_rim ]; then
-            position_sub_left_rim=0   
+        is_number_available 38 
+        if [ $? -eq 0 ]; then
+            flippables_38=$(count_flippables 38)
         fi
-        array=($position_sub_upper_rim $position_sub_right_rim $position_sub_down_rim $position_sub_left_rim)    
-        i=0
-        i_pre=0
-        # Note that here we do normal description.
-        position=0
-        for i in ${array[@]}
-        do
-            if [ $i -gt $i_pre ]; then
-                position=$i
-            fi
-            i_pre=$i
-        done
-    elif ([ $n_is_upper_rim_available -eq 0 ] || [ $n_is_right_rim_available -eq 0 ] || [ $n_is_down_rim_available -eq 0 ] || [ $n_is_left_rim_available -eq 0 ]); then
-        if [ $n_is_upper_rim_available -eq 0 ]; then
-            #echo "upper rim avaiable"
+        is_number_available 44 
+        if [ $? -eq 0 ]; then
+            flippables_44=$(count_flippables 44)
+        fi
+        is_number_available 45
+        if [ $? -eq 0 ]; then
+            flippables_45=$(count_flippables 45)
+        fi
+        is_number_available 27
+        if [ $? -eq 0 ]; then
+            flippables_27=$(count_flippables 27)
+        fi
+        is_number_available 35
+        if [ $? -eq 0 ]; then
+            flippables_35=$(count_flippables 35)
+        fi
+        if ([ $flippables_20 -ne 0 ] || [ $flippables_21 -ne 0 ] || [ $flippables_30 -ne 0 ] || [ $flippables_38 -ne 0 ] ||   
+                [ $flippables_44 -ne 0 ] || [ $flippables_45 -ne 0 ] || [ $flippables_27 -ne 0 ] || [ $flippables_35 -ne 0 ]); then    
+            array=()
+            array2=()
+            array=($flippables_20 $flippables_21 $flippables_30 $flippables_38 $flippables_44 $flippables_45 $flippables_27 $flippables_35)    
+            array2=(20 21 30 38 44 45 27 35)
+            i=0
+            i_pre=0
+            # multiple array loop
+            #position=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+    elif ([ $n_is_upper_rim_sub_corner_available -eq 0 ] || [ $n_is_right_rim_sub_corner_available -eq 0 ] || [ $n_is_down_rim_sub_corner_available -eq 0 ] || [ $n_is_left_rim_sub_corner_available -eq 0 ]); then
+        if [ $n_is_upper_rim_sub_corner_available -eq 0 ]; then
+            #echo "upper rim sub-corner avaiable"
             array=()
             array2=()
             is_number_available 3
             if [ $? -eq 0 ]; then
                 flippables_3=$(count_flippables 3)
             fi
+            is_number_available 6
+            if [ $? -eq 0 ]; then
+                flippables_6=$(count_flippables 6)
+            fi
+            array=($flippables_3 $flippables_6)    
+            array2=(3 6)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_upper_rim_sub_corner=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_upper_rim_sub_corner=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        # Here, not elif but if. Same below.
+        if [ $n_is_right_rim_sub_corner_available -eq 0 ]; then
+            #echo "right rim sub-corner avaiable"
+            array=()
+            array2=()
+            is_number_available 24
+            if [ $? -eq 0 ]; then
+                flippables_24=$(count_flippables 24)
+            fi
+            is_number_available 48
+            if [ $? -eq 0 ]; then
+                flippables_48=$(count_flippables 48)
+            fi
+            array=($flippables_24 $flippables_48)    
+            array2=(24 48)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_right_rim_sub_corner=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_right_rim_sub_corner=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        if [ $n_is_down_rim_sub_corner_available -eq 0 ]; then
+            #echo "down rim sub-corner vaiable"
+            array=()
+            array2=()
+            is_number_available 59
+            if [ $? -eq 0 ]; then
+                flippables_59=$(count_flippables 59)
+            fi
+            is_number_available 62
+            if [ $? -eq 0 ]; then
+                flippables_62=$(count_flippables 62)
+            fi
+            array=($flippables_59 $flippables_62)    
+            array2=(59 62)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_down_rim_sub_corner=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_down_rim_sub_corner=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        if [ $n_is_left_rim_sub_corner_available -eq 0 ]; then
+            #echo "left rim sub-corner avaiable"
+            array=()
+            array2=()
+            is_number_available 17
+            if [ $? -eq 0 ]; then
+                flippables_17=$(count_flippables 17)
+            fi
+            is_number_available 41
+            if [ $? -eq 0 ]; then
+                flippables_41=$(count_flippables 41)
+            fi
+            array=($flippables_17 $flippables_41)    
+            array2=(17 41)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_left_rim_sub_corner=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_left_rim_sub_corner=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        ### Compare positions and set the position which has largest flippable number.
+        is_number_available 3
+        if [ $? -eq 0 ]; then
+            flippables_3=$(count_flippables 3)
+        fi
+        is_number_available 6
+        if [ $? -eq 0 ]; then
+            flippables_6=$(count_flippables 6)
+        fi
+        is_number_available 24
+        if [ $? -eq 0 ]; then
+            flippables_24=$(count_flippables 24)
+        fi
+        is_number_available 48
+        if [ $? -eq 0 ]; then
+            flippables_48=$(count_flippables 48)
+        fi
+        is_number_available 59
+        if [ $? -eq 0 ]; then
+            flippables_59=$(count_flippables 59)
+        fi
+        is_number_available 62
+        if [ $? -eq 0 ]; then
+            flippables_62=$(count_flippables 62)
+        fi
+        is_number_available 17
+        if [ $? -eq 0 ]; then
+            flippables_17=$(count_flippables 17)
+        fi
+        is_number_available 41
+        if [ $? -eq 0 ]; then
+            flippables_41=$(count_flippables 41)
+        fi
+        if ([ $flippables_3 -ne 0 ] || [ $flippables_6 -ne 0 ] || [ $flippables_24 -ne 0 ] || [ $flippables_48 -ne 0 ] ||   
+                [ $flippables_59 -ne 0 ] || [ $flippables_62 -ne 0 ] || [ $flippables_17 -ne 0 ] || [ $flippables_41 -ne 0 ]); then    
+            array=()
+            array2=()
+            array=($flippables_3 $flippables_6 $flippables_24 $flippables_48 $flippables_59 $flippables_62 $flippables_17 $flippables_41)    
+            array2=(3 6 24 48 59 62 17 41)
+            i=0
+            i_pre=0
+            # multiple array loop
+            #position=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+    elif ([ $n_is_upper_rim_available -eq 0 ] || [ $n_is_right_rim_available -eq 0 ] || [ $n_is_down_rim_available -eq 0 ] || [ $n_is_left_rim_available -eq 0 ]); then
+        if [ $n_is_upper_rim_available -eq 0 ]; then
+            #echo "upper rim avaiable"
+            array=()
+            array2=()
             is_number_available 4
             if [ $? -eq 0 ]; then
                 flippables_4=$(count_flippables 4)
@@ -1654,12 +1892,8 @@ function judge_position()
             if [ $? -eq 0 ]; then
                 flippables_5=$(count_flippables 5)
             fi
-            is_number_available 6
-            if [ $? -eq 0 ]; then
-                flippables_6=$(count_flippables 6)
-            fi
-            array=($flippables_3 $flippables_4 $flippables_5 $flippables_6)    
-            array2=(3 4 5 6)
+            array=($flippables_4 $flippables_5)    
+            array2=(4 5)
             i=0
             i_pre=0
             # multiple array loop
@@ -1677,10 +1911,6 @@ function judge_position()
             #echo "right rim avaiable"
             array=()
             array2=()
-            is_number_available 24
-            if [ $? -eq 0 ]; then
-                flippables_24=$(count_flippables 24)
-            fi
             is_number_available 32
             if [ $? -eq 0 ]; then
                 flippables_32=$(count_flippables 32)
@@ -1689,12 +1919,8 @@ function judge_position()
             if [ $? -eq 0 ]; then
                 flippables_40=$(count_flippables 40)
             fi
-            is_number_available 48
-            if [ $? -eq 0 ]; then
-                flippables_48=$(count_flippables 48)
-            fi
-            array=($flippables_24 $flippables_32 $flippables_40 $flippables_48)    
-            array2=(24 32 40 48)
+            array=($flippables_32 $flippables_40)    
+            array2=(32 40)
             i=0
             i_pre=0
             # multiple array loop
@@ -1711,10 +1937,6 @@ function judge_position()
             #echo "down rim avaiable"
             array=()
             array2=()
-            is_number_available 59
-            if [ $? -eq 0 ]; then
-                flippables_59=$(count_flippables 59)
-            fi
             is_number_available 60
             if [ $? -eq 0 ]; then
                 flippables_60=$(count_flippables 60)
@@ -1723,12 +1945,8 @@ function judge_position()
             if [ $? -eq 0 ]; then
                 flippables_61=$(count_flippables 61)
             fi
-            is_number_available 62
-            if [ $? -eq 0 ]; then
-                flippables_62=$(count_flippables 62)
-            fi
-            array=($flippables_59 $flippables_60 $flippables_61 $flippables_62)    
-            array2=(59 60 61 62)
+            array=($flippables_60 $flippables_61)    
+            array2=(60 61)
             i=0
             i_pre=0
             # multiple array loop
@@ -1745,10 +1963,6 @@ function judge_position()
             #echo "left rim avaiable"
             array=()
             array2=()
-            is_number_available 17
-            if [ $? -eq 0 ]; then
-                flippables_17=$(count_flippables 17)
-            fi
             is_number_available 25
             if [ $? -eq 0 ]; then
                 flippables_25=$(count_flippables 25)
@@ -1757,12 +1971,8 @@ function judge_position()
             if [ $? -eq 0 ]; then
                 flippables_33=$(count_flippables 33)
             fi
-            is_number_available 41
-            if [ $? -eq 0 ]; then
-                flippables_41=$(count_flippables 41)
-            fi
-            array=($flippables_17 $flippables_25 $flippables_33 $flippables_41)    
-            array2=(17 25 33 41)
+            array=($flippables_25 $flippables_33)    
+            array2=(25 33)
             i=0
             i_pre=0
             # multiple array loop
@@ -1776,30 +1986,56 @@ function judge_position()
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
-        if [ -z $position_upper_rim ]; then
-            position_upper_rim=0
+        is_number_available 4 
+        if [ $? -eq 0 ]; then
+            flippables_4=$(count_flippables 4)
         fi
-        if [ -z $position_right_rim ]; then
-            position_right_rim=0
+        is_number_available 5 
+        if [ $? -eq 0 ]; then
+            flippables_5=$(count_flippables 5)
         fi
-        if [ -z $position_down_rim ]; then
-            position_down_rim=0
+        is_number_available 32 
+        if [ $? -eq 0 ]; then
+            flippables_32=$(count_flippables 32)
         fi
-        if [ -z $position_left_rim ]; then
-            position_left_rim=0
+        is_number_available 40 
+        if [ $? -eq 0 ]; then
+            flippables_40=$(count_flippables 40)
         fi
-        array=($position_upper_rim $position_right_rim $position_down_rim $position_left_rim)    
-        i=0
-        i_pre=0
-        # Note that here we do normal description.
-	position=0
-        for i in ${array[@]}
-        do
-            if [ $i -gt $i_pre ]; then
-                position=$i
-            fi
-            i_pre=$i
-        done
+        is_number_available 60 
+        if [ $? -eq 0 ]; then
+            flippables_60=$(count_flippables 60)
+        fi
+        is_number_available 61 
+        if [ $? -eq 0 ]; then
+            flippables_61=$(count_flippables 61)
+        fi
+        is_number_available 25 
+        if [ $? -eq 0 ]; then
+            flippables_25=$(count_flippables 25)
+        fi
+        is_number_available 33 
+        if [ $? -eq 0 ]; then
+            flippables_33=$(count_flippables 33)
+        fi
+        if ([ $flippables_4 -ne 0 ] || [ $flippables_5 -ne 0 ] || [ $flippables_32 -ne 0 ] || [ $flippables_40 -ne 0 ] ||   
+                [ $flippables_60 -ne 0 ] || [ $flippables_61 -ne 0 ] || [ $flippables_25 -ne 0 ] || [ $flippables_33 -ne 0 ]); then    
+            array=()
+            array2=()
+            array=($flippables_4 $flippables_5 $flippables_32 $flippables_40 $flippables_60 $flippables_61 $flippables_25 $flippables_33)    
+            array2=(4 5 32 40 60 61 25 33)
+            i=0
+            i_pre=0
+            # multiple array loop
+            #position=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
     elif ([ $n_is_upper_rim_above_available -eq 0 ] || [ $n_is_right_rim_above_available -eq 0 ] || [ $n_is_down_rim_above_available -eq 0 ] || [ $n_is_left_rim_above_available -eq 0 ]); then
         if [ $n_is_upper_rim_above_available -eq 0 ]; then
             #echo "upper rim above avaiable"
@@ -1813,7 +2049,6 @@ function judge_position()
             if [ $? -eq 0 ]; then
                 flippables_13=$(count_flippables 13)
             fi
-            #is_number_available 14
             array=($flippables_12 $flippables_13)    
             array2=(12 13)
             i=0
@@ -1840,7 +2075,6 @@ function judge_position()
             if [ $? -eq 0 ]; then
                 flippables_39=$(count_flippables 39)
             fi
-            #is_number_available 47 
             array=($flippables_31 $flippables_39)    
             array2=(31 39)
             i=0
@@ -1856,13 +2090,10 @@ function judge_position()
             done
         fi
         if [ $n_is_down_rim_above_available -eq 0 ]; then
-            # debug
             #echo "down rim above avaiable"
-            # end debug
             array=()
             array2=()
-            is_number_available 51
-            is_number_available 52 
+            is_number_available 52
             if [ $? -eq 0 ]; then
                 flippables_52=$(count_flippables 52)
             fi
@@ -1885,9 +2116,7 @@ function judge_position()
             done
         fi
         if [ $n_is_left_rim_above_available -eq 0 ]; then
-            # debug
             #echo "left rim above avaiable"
-            # end debug
             array=()
             array2=()
             is_number_available 26
@@ -1898,7 +2127,6 @@ function judge_position()
             if [ $? -eq 0 ]; then
                 flippables_34=$(count_flippables 34)
             fi
-            #is_number_available 42
             array=($flippables_26 $flippables_34)    
             array2=(26 34)
             i=0
@@ -1914,30 +2142,56 @@ function judge_position()
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
-        if [ -z $position_upper_rim_above ]; then
-            position_upper_rim_above=0
+        is_number_available 12
+        if [ $? -eq 0 ]; then
+            flippables_12=$(count_flippables 12)
         fi
-        if [ -z $position_right_rim_above ]; then
-            position_right_rim_above=0
+        is_number_available 13 
+        if [ $? -eq 0 ]; then
+            flippables_13=$(count_flippables 13)
         fi
-        if [ -z $position_down_rim_above ]; then
-            position_down_rim_above=0
+        is_number_available 31 
+        if [ $? -eq 0 ]; then
+            flippables_31=$(count_flippables 31)
         fi
-        if [ -z $position_left_rim_above ]; then
-            position_left_rim_above=0
+        is_number_available 39 
+        if [ $? -eq 0 ]; then
+            flippables_39=$(count_flippables 39)
         fi
-        array=($position_upper_rim_above $position_right_rim_above $position_down_rim_above $position_left_rim_above)    
-        i=0
-        i_pre=0
-        # Note that here we do normal description.
-        position=0
-        for i in ${array[@]}
-        do
-            if [ $i -gt $i_pre ]; then
-                position=$i
-            fi
-            i_pre=$i
-        done
+        is_number_available 52
+        if [ $? -eq 0 ]; then
+            flippables_52=$(count_flippables 52)
+        fi
+        is_number_available 53
+        if [ $? -eq 0 ]; then
+            flippables_53=$(count_flippables 53)
+        fi
+        is_number_available 26
+        if [ $? -eq 0 ]; then
+            flippables_26=$(count_flippables 26)
+        fi
+        is_number_available 34 
+        if [ $? -eq 0 ]; then
+            flippables_34=$(count_flippables 34)
+        fi
+        if ([ $flippables_12 -ne 0 ] || [ $flippables_13 -ne 0 ] || [ $flippables_31 -ne 0 ] || [ $flippables_52 -ne 0 ] ||   
+                [ $flippables_53 -ne 0 ] || [ $flippables_26 -ne 0 ] || [ $flippables_34 -ne 0 ]); then    
+            array=()
+            array2=()
+            array=($flippables_12 $flippables_13 $flippables_31 $flippables_39 $flippables_52 $flippables_53 $flippables_26 $flippables_34)    
+            array2=(12 13 31 39 52 53 26 34)
+            i=0
+            i_pre=0
+            # multiple array loop
+            #position=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
     fi
 
     if [ $position -eq 0 ]; then
@@ -2022,8 +2276,8 @@ function judge_position()
         flippables_56=0
         flippables_58=0
         flippables_63=0
-	array=()
-	array2=()
+        array=()
+        array2=()
         # Next to the corner.
         #2,7
         #9,16
@@ -2240,7 +2494,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver0.3"
+echo "CLI_Othello ver0.4"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file
@@ -2251,11 +2505,9 @@ do
     if [ -n "${answer}" ]; then
         case "${REPLY}" in
             1)  HUMAN="Black"
-                #show_kifu_present
                 break
                 ;;
             2)  HUMAN="White"
-                #show_kifu_present
                 break
                 ;;
             3) exit 1 ;;

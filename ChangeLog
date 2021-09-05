@@ -9,3 +9,7 @@ Fix bug when judging the position in some cases.
 0.3
 2021/09/05
 Fix bug in AVAILABLE array and add Mode1 mode.
+
+0.4
+2021/09/05
+Fix bug in regex, add new function and fix logic.

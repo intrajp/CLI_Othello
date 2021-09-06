@@ -2267,7 +2267,7 @@ function judge_position()
     position_last2=0
     position_last=0
 
-    if ([ $position -eq 0 ] || ([ $MODE = "Mode1" ] && [ $REMAIN -gt 4 ])); then
+    if ([ $position -eq 0 ] || ([ $MODE = "Mode1" ])); then
         #echo "XXXX I'm still checking remaining positions. XXXX"
         flippables_2=0
         flippables_7=0
@@ -2495,7 +2495,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver0.6"
+echo "CLI_Othello ver0.7"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file
@@ -2551,6 +2551,7 @@ done
 
 show_kifu_present
 
+HUMAN_PASS=0 
 echo "You are ${HUMAN}"
 while :
 do
@@ -2571,13 +2572,20 @@ do
             if [ $? -eq 0 ]; then
                 break
             else
+                if [ -z "${AVAILABLE_ALL[*]}" ]; then
+                    echo "You pass."
+                    HUMAN_PASS=1 
+                    break
+                fi
                 get_position_value
             fi
         done
-        judge_position "White" 1
-        place_and_flip $POSITION "White"
-        show_kifu_present
-        count_black_and_white
+        if [ $HUMAN_PASS -eq 0 ]; then
+            judge_position "White" 1
+            place_and_flip $POSITION "White"
+            show_kifu_present
+            count_black_and_white
+        fi
     else
         ## Human 
         search_available_positions "Black" 
@@ -2589,13 +2597,20 @@ do
             if [ $? -eq 0 ]; then
                 break
             else
+                if [ -z "${AVAILABLE_ALL[*]}" ]; then
+                    echo "You pass."
+                    HUMAN_PASS=1 
+                    break
+                fi
                 get_position_value
             fi
         done
-        judge_position "Black" 1
-        place_and_flip $POSITION "Black"
-        show_kifu_present
-        count_black_and_white
+        if [ $HUMAN_PASS -eq 0 ]; then
+            judge_position "Black" 1
+            place_and_flip $POSITION "Black"
+            show_kifu_present
+            count_black_and_white
+        fi
         # Computer
         echo "I'm White. Thinking..."
         search_available_positions "White" 

@@ -275,10 +275,10 @@ function search1()
             break
         fi
         if [ $_available -ne 1 ]; then
-            AVAILABLE_NO1+=("${position}:${position} ")
+            AVAILABLE_NO1+=("#${position}:${position}#")
             _available=1
         fi
-        FLIPPABLE_NO1+=("${position}:${position_chk} ")
+        FLIPPABLE_NO1+=("#${position}:${position_chk}#")
         if [ $position_calc -eq 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
                 AVAILABLE_NO1=("")
@@ -368,10 +368,10 @@ function search2()
             break
         fi
         if [ $_available -ne 1 ]; then
-            AVAILABLE_NO2+=("${position}:${position} ")
+            AVAILABLE_NO2+=("#${position}:${position}#")
             _available=1
         fi
-        FLIPPABLE_NO2+=("${position}:${position_calc} ")
+        FLIPPABLE_NO2+=("#${position}:${position_calc}#")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
                 AVAILABLE_NO2=("")
@@ -445,10 +445,10 @@ function search3()
             break
         fi
         if [ $_available -ne 1 ]; then
-            AVAILABLE_NO3+=("${position}:${position} ")
+            AVAILABLE_NO3+=("#${position}:${position}#")
             _available=1
         fi
-        FLIPPABLE_NO3+=("${position}:${position_calc} ")
+        FLIPPABLE_NO3+=("#${position}:${position_calc}#")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
                 AVAILABLE_NO3=("")
@@ -538,10 +538,10 @@ function search4()
             break
         fi
         if [ $_available -ne 1 ]; then
-            AVAILABLE_NO4+=("${position}:${position} ")
+            AVAILABLE_NO4+=("#${position}:${position}#")
             _available=1
         fi
-        FLIPPABLE_NO4+=("${position}:${position_calc} ")
+        FLIPPABLE_NO4+=("#${position}:${position_calc}#")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
                 AVAILABLE_NO4=("")
@@ -621,10 +621,10 @@ function search5()
             break
         fi
         if [ $_available -ne 1 ]; then
-            AVAILABLE_NO5+=("${position}:${position} ")
+            AVAILABLE_NO5+=("#${position}:${position}#")
             _available=1
         fi
-        FLIPPABLE_NO5+=("${position}:${position_chk} ")
+        FLIPPABLE_NO5+=("#${position}:${position_chk}#")
         if [ $position_calc -eq 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
                 AVAILABLE_NO5=("")
@@ -708,10 +708,10 @@ function search6()
             break
         fi
         if [ $_available -ne 1 ]; then
-            AVAILABLE_NO6+=("${position}:${position} ")
+            AVAILABLE_NO6+=("#${position}:${position}#")
             _available=1
         fi
-        FLIPPABLE_NO6+=("${position}:${position_calc} ")
+        FLIPPABLE_NO6+=("#${position}:${position_calc}#")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
                 AVAILABLE_NO6=(" ")
@@ -785,10 +785,10 @@ function search7()
             break
         fi
         if [ $_available -ne 1 ]; then
-            AVAILABLE_NO7+=("${position}:${position} ")
+            AVAILABLE_NO7+=("#${position}:${position}#")
             _available=1
         fi
-        FLIPPABLE_NO7+=("${position}:${position_calc} ")
+        FLIPPABLE_NO7+=("#${position}:${position_calc}#")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
                 AVAILABLE_NO7=("")
@@ -871,10 +871,10 @@ function search8()
             break
         fi
         if [ $_available -ne 1 ]; then
-            AVAILABLE_NO8+=("${position}:${position} ")
+            AVAILABLE_NO8+=("#${position}:${position}#")
             _available=1
         fi
-        FLIPPABLE_NO8+=("${position}:${position_calc} ")
+        FLIPPABLE_NO8+=("#${position}:${position_calc}#")
         if [ $position_calc -lt 1 ]; then
             if [ "${_check_str}" != "${color}" ]; then
                 AVAILABLE_NO8=("")
@@ -906,11 +906,11 @@ function search_available_positions()
         color="B"
     fi
 
-    AVAILABLE_ALL=("" )
+    AVAILABLE_ALL=("")
     FLIPPABLE_ALL=("")
 
     AVAILABLE_NO1_ALL=("")
-    AVAILABLE_NO2_ALL=("" )
+    AVAILABLE_NO2_ALL=("")
     AVAILABLE_NO3_ALL=("")
     AVAILABLE_NO4_ALL=("")
     AVAILABLE_NO5_ALL=("")
@@ -1004,7 +1004,8 @@ function is_number_available()
     fi
     local num="${1}" 
     # Try to match when only one member and not forget last one.
-    num_str=$(echo "${AVAILABLE_ALL[*]}" | grep -e ".*${num}:[[:digit:]]\+.*") 
+    pat="#$num:$num#"
+    num_str=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " -v pat="${pat}" '{for(i=1;i<=NF;i++) if ($i ~ pat) {printf("%s ",$i)}}')
     if [ -z "${num_str}" ]; then
         return 1
     fi
@@ -1016,10 +1017,10 @@ function is_number_available()
 
 function is_corner_available()
 {
-    num_1=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "1:1") {printf("%s ",$i)}}')
-    num_8=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "8:8") {printf("%s ",$i)}}')
-    num_57=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "57:57") {printf("%s ",$i)}}')
-    num_64=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "64:64") {printf("%s ",$i)}}')
+    num_1=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#1:1#") {printf("%s ",$i)}}')
+    num_8=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#8:8#") {printf("%s ",$i)}}')
+    num_57=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#57:57#") {printf("%s ",$i)}}')
+    num_64=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#64:64#") {printf("%s ",$i)}}')
     if ([ -z "${num_1}" ] && [ -z "${num_8}" ] && [ -z "${num_57}" ] && [ -z "${num_64}" ]); then
         return 1
     fi
@@ -1031,10 +1032,10 @@ function is_corner_available()
 
 function is_sub_corner_available()
 {
-    num_19=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "19:19") {printf("%s ",$i)}}')
-    num_22=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "22:22") {printf("%s ",$i)}}')
-    num_43=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "43:43") {printf("%s ",$i)}}')
-    num_46=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "46:46") {printf("%s ",$i)}}')
+    num_19=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#19:19#") {printf("%s ",$i)}}')
+    num_22=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#22:22#") {printf("%s ",$i)}}')
+    num_43=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#43:43#") {printf("%s ",$i)}}')
+    num_46=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#46:46#") {printf("%s ",$i)}}')
     if ([ -z "${num_19}" ] && [ -z "${num_22}" ] && [ -z "${num_43}" ] && [ -z "${num_46}" ]); then
         return 1
     fi
@@ -1046,8 +1047,8 @@ function is_sub_corner_available()
 
 function is_upper_rim_sub_corner_available()
 {
-    num_3=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "3:3") {printf("%s ",$i)}}')
-    num_6=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "6:6") {printf("%s ",$i)}}')
+    num_3=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#3:3#") {printf("%s ",$i)}}')
+    num_6=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#6:6#") {printf("%s ",$i)}}')
     if ([ -z "${num_3}" ] && [ -z "${num_6}" ]); then
         return 1
     fi
@@ -1059,8 +1060,8 @@ function is_upper_rim_sub_corner_available()
 
 function is_right_rim_sub_corner_available()
 {
-    num_24=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "24:24") {printf("%s ",$i)}}')
-    num_48=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "48:48") {printf("%s ",$i)}}')
+    num_24=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#24:24#") {printf("%s ",$i)}}')
+    num_48=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#48:48#") {printf("%s ",$i)}}')
     if ([ -z "${num_24}" ] && [ -z "${num_48}" ]); then
         return 1
     fi
@@ -1072,8 +1073,8 @@ function is_right_rim_sub_corner_available()
 
 function is_down_rim_sub_corner_available()
 {
-    num_59=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "59:59") {printf("%s ",$i)}}')
-    num_62=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "62:62") {printf("%s ",$i)}}')
+    num_59=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#59:59#") {printf("%s ",$i)}}')
+    num_62=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#62:62#") {printf("%s ",$i)}}')
     if ([ -z "${num_59}" ] && [ -z "${num_62}" ]); then
         return 1
     fi
@@ -1085,8 +1086,8 @@ function is_down_rim_sub_corner_available()
 
 function is_left_rim_sub_corner_available()
 {
-    num_17=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "17:17") {printf("%s ",$i)}}')
-    num_41=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "41:41") {printf("%s ",$i)}}')
+    num_17=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#17:17#") {printf("%s ",$i)}}')
+    num_41=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#41:41#") {printf("%s ",$i)}}')
     if ([ -z "${num_17}" ] && [ -z "${num_41}" ]); then
         return 1
     fi
@@ -1098,8 +1099,8 @@ function is_left_rim_sub_corner_available()
 
 function is_upper_rim_available()
 {
-    num_4=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "4:4") {printf("%s ",$i)}}')
-    num_5=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "5:5") {printf("%s ",$i)}}')
+    num_4=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#4:4#") {printf("%s ",$i)}}')
+    num_5=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#5:5#") {printf("%s ",$i)}}')
     if ([ -z "${num_4}" ] && [ -z "${num_5}" ]); then
         return 1
     fi
@@ -1111,8 +1112,8 @@ function is_upper_rim_available()
 
 function is_right_rim_available()
 {
-    num_32=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "32:32") {printf("%s ",$i)}}')
-    num_40=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "40:40") {printf("%s ",$i)}}')
+    num_32=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#32:32#") {printf("%s ",$i)}}')
+    num_40=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#40:40#") {printf("%s ",$i)}}')
     if ([ -z "${num_32}" ] && [ -z "${num_40}" ]); then
         return 1
     fi
@@ -1124,8 +1125,8 @@ function is_right_rim_available()
 
 function is_down_rim_available()
 {
-    num_60=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "60:60") {printf("%s ",$i)}}')
-    num_61=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "61:61") {printf("%s ",$i)}}')
+    num_60=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#60:60#") {printf("%s ",$i)}}')
+    num_61=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#61:61#") {printf("%s ",$i)}}')
     if ([ -z "${num_60}" ] && [ -z "${num_61}" ]); then
         return 1
     fi
@@ -1137,8 +1138,8 @@ function is_down_rim_available()
 
 function is_left_rim_available()
 {
-    num_25=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "25:25") {printf("%s ",$i)}}')
-    num_33=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "33:33") {printf("%s ",$i)}}')
+    num_25=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#25:25#") {printf("%s ",$i)}}')
+    num_33=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#33:33#") {printf("%s ",$i)}}')
     if ([ -z "${num_25}" ] && [ -z "${num_33}" ]); then
         return 1
     fi
@@ -1150,8 +1151,8 @@ function is_left_rim_available()
 
 function is_sub_upper_rim_available()
 {
-    num_20=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "20:20") {printf("%s ",$i)}}')
-    num_21=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "21:21") {printf("%s ",$i)}}')
+    num_20=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#20:20#") {printf("%s ",$i)}}')
+    num_21=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#21:21#") {printf("%s ",$i)}}')
     if ([ -z "${num_20}" ] && [ -z "${num_21}" ]); then
         return 1
     fi
@@ -1163,8 +1164,8 @@ function is_sub_upper_rim_available()
 
 function is_sub_right_rim_available()
 {
-    num_30=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "30:30") {printf("%s ",$i)}}')
-    num_38=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "38:38") {printf("%s ",$i)}}')
+    num_30=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#30:30#") {printf("%s ",$i)}}')
+    num_38=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#38:38#") {printf("%s ",$i)}}')
     if ([ -z "${num_30}" ] && [ -z "${num_38}" ]); then
         return 1
     fi
@@ -1176,8 +1177,8 @@ function is_sub_right_rim_available()
 
 function is_sub_down_rim_available()
 {
-    num_44=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "44:44") {printf("%s ",$i)}}')
-    num_45=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "45:45") {printf("%s ",$i)}}')
+    num_44=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#44:44#") {printf("%s ",$i)}}')
+    num_45=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#45:45#") {printf("%s ",$i)}}')
     if ([ -z "${num_44}" ] && [ -z "${num_45}" ]); then
         return 1
     fi
@@ -1189,8 +1190,8 @@ function is_sub_down_rim_available()
 
 function is_sub_left_rim_available()
 {
-    num_27=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "27:27") {printf("%s ",$i)}}')
-    num_35=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "35:35") {printf("%s ",$i)}}')
+    num_27=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#27:27#") {printf("%s ",$i)}}')
+    num_35=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#35:35#") {printf("%s ",$i)}}')
     if ([ -z "${num_27}" ] && [ -z "${num_35}" ]); then
         return 1
     fi
@@ -1202,8 +1203,8 @@ function is_sub_left_rim_available()
 
 function is_upper_rim_above_available()
 {
-    num_12=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "12:12") {printf("%s ",$i)}}')
-    num_13=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "13:13") {printf("%s ",$i)}}')
+    num_12=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#12:12#") {printf("%s ",$i)}}')
+    num_13=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#13:13#") {printf("%s ",$i)}}')
     if ([ -z "${num_12}" ] && [ -z "${num_13}" ]); then
         return 1
     fi
@@ -1215,8 +1216,8 @@ function is_upper_rim_above_available()
 
 function is_right_rim_above_available()
 {
-    num_31=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "31:31") {printf("%s ",$i)}}')
-    num_39=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "39:39") {printf("%s ",$i)}}')
+    num_31=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#31:31#") {printf("%s ",$i)}}')
+    num_39=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#39:39#") {printf("%s ",$i)}}')
     if ([ -z "${num_31}" ] && [ -z "${num_39}" ]); then
         return 1
     fi
@@ -1228,8 +1229,8 @@ function is_right_rim_above_available()
 
 function is_down_rim_above_available()
 {
-    num_52=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "52:52") {printf("%s ",$i)}}')
-    num_53=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "53:53") {printf("%s ",$i)}}')
+    num_52=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#52:52#") {printf("%s ",$i)}}')
+    num_53=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#53:53#") {printf("%s ",$i)}}')
     if ([ -z "${num_52}" ] && [ -z "${num_53}" ]); then
         return 1
     fi
@@ -1241,8 +1242,8 @@ function is_down_rim_above_available()
 
 function is_left_rim_above_available()
 {
-    num_26=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "26:26") {printf("%s ",$i)}}')
-    num_34=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "34:34") {printf("%s ",$i)}}')
+    num_26=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#26:26#") {printf("%s ",$i)}}')
+    num_34=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#34:34#") {printf("%s ",$i)}}')
     if ([ -z "${num_26}" ] && [ -z "${num_34}" ]); then
         return 1
     fi
@@ -1261,7 +1262,7 @@ function count_flippables()
     fi
     local num="${1}" 
     local str_c=0
-    number="^${num}:" 
+    number="#${num}:" 
     str_c=$(echo "${FLIPPABLE_ALL[*]}" | awk -F" " -v pat="$number" '{for(i=1;i<=NF;i++) if($i ~ pat) c++} END {print c}' | sed -e 's/ //g') 
     if [ -z $str_c ]; then
         str_c=0
@@ -1281,8 +1282,8 @@ function get_contents_flippables()
     fi
     local num="${1}" 
     local str_c=0
-    number="^${num}:" 
-    number_v="${num}:" 
+    number="#${num}:" 
+    number_v="#${num}:" 
     str=$(echo "${FLIPPABLE_ALL[*]}" | awk -F" " -v pat="$number" '{for(i=1;i<=NF;i++) if($i ~ pat){printf("%s ",$i)}}' | sed -e "s/${number_v}//g") 
     echo $str
 }
@@ -2494,7 +2495,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver0.5"
+echo "CLI_Othello ver0.6"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

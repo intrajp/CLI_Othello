@@ -21,8 +21,53 @@
 ##  02110-1301 USA
 ##
 
+HUMAN="Transparent"
+COMPUTER="Transparent"
+ALPHABET=""
+NUMBER=""
+POSITION=""
+SELECTED=""
+REMAIN=64
+HUMAN_PASS=0 
+COMPUTER_PASS=0
+REPLY=
+PS3=
+
 FILE="1.txt"
 FILE_KIFU_PRESENT="./data/kifu_present.txt"
+
+AVAILABLE_NO1=("")
+AVAILABLE_NO2=("")
+AVAILABLE_NO3=("")
+AVAILABLE_NO4=("")
+AVAILABLE_NO5=("")
+AVAILABLE_NO6=("")
+AVAILABLE_NO7=("")
+AVAILABLE_NO8=("")
+AVAILABLE_NO1_ALL=("")
+AVAILABLE_NO2_ALL=("")
+AVAILABLE_NO3_ALL=("")
+AVAILABLE_NO4_ALL=("")
+AVAILABLE_NO5_ALL=("")
+AVAILABLE_NO6_ALL=("")
+AVAILABLE_NO7_ALL=("")
+AVAILABLE_NO8_ALL=("")
+FLIPPABLE_NO1=("")
+FLIPPABLE_NO2=("")
+FLIPPABLE_NO3=("")
+FLIPPABLE_NO4=("")
+FLIPPABLE_NO5=("")
+FLIPPABLE_NO6=("")
+FLIPPABLE_NO7=("")
+FLIPPABLE_NO8=("")
+FLIPPABLE_NO1_ALL=("")
+FLIPPABLE_NO2_ALL=("")
+FLIPPABLE_NO3_ALL=("")
+FLIPPABLE_NO4_ALL=("")
+FLIPPABLE_NO5_ALL=("")
+FLIPPABLE_NO6_ALL=("")
+FLIPPABLE_NO7_ALL=("")
+FLIPPABLE_NO8_ALL=("")
 
 ## This function checks if the file exists.
 ## Only two files needed and only one line each.
@@ -41,13 +86,6 @@ function check_file()
         exit 1
     fi
 }
-
-HUMAN=""
-ALPHABET=""
-NUMBER=""
-POSITION=""
-SELECTED=""
-REMAIN=64
 
 ## This function shows present kifu
 ##
@@ -898,6 +936,7 @@ function search_available_positions()
     local file="${FILE_KIFU_PRESENT}"
     local _str=""
     local _check_str=""
+    local color=""
     local i=1
 
     if [ "${teban}" = "White" ]; then
@@ -993,19 +1032,33 @@ function search_available_positions()
 }
 
 ## This function returns 0 certain number if it's available (including flippable).
+## if var2 exists only flippable.
 ## var1: number
+## var2: number_flippable
 ##
 
 function is_number_available()
 {
+    local num=0
+    local num_flippable=0
     if [ -z "${1}" ]; then
         echo "Please give a variable as a number." >&2
         exit 1
     fi
-    local num="${1}" 
+    num="${1}" 
+    if [ ! -z "${2}" ]; then
+        num_flippable="${2}" 
+    fi
+    local num_str="" 
+    local pat="" 
     # Try to match when only one member and not forget last one.
-    pat="#$num:$num#"
-    num_str=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " -v pat="${pat}" '{for(i=1;i<=NF;i++) if ($i ~ pat) {printf("%s ",$i)}}')
+    if [ $num_flippable -eq 0 ]; then
+        pat="#$num:$num#"
+        num_str=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " -v pat="${pat}" '{for(i=1;i<=NF;i++) if ($i ~ pat) {printf("%s ",$i)}}')
+    else
+        pat="#[0-9]+:$num_flippable#"
+        num_str=$(echo "${FLIPPABLE_ALL[*]}" | awk -F" " -v pat="${pat}" '{for(i=1;i<=NF;i++) if ($i ~ pat) {printf("%s ",$i)}}')
+    fi
     if [ -z "${num_str}" ]; then
         return 1
     fi
@@ -1017,6 +1070,10 @@ function is_number_available()
 
 function is_corner_available()
 {
+    local num_1=""
+    local num_8=""
+    local num_57=""
+    local num_64=""
     num_1=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#1:1#") {printf("%s ",$i)}}')
     num_8=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#8:8#") {printf("%s ",$i)}}')
     num_57=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#57:57#") {printf("%s ",$i)}}')
@@ -1032,6 +1089,10 @@ function is_corner_available()
 
 function is_sub_corner_available()
 {
+    local num_19=""
+    local num_22=""
+    local num_43=""
+    local num_46=""
     num_19=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#19:19#") {printf("%s ",$i)}}')
     num_22=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#22:22#") {printf("%s ",$i)}}')
     num_43=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#43:43#") {printf("%s ",$i)}}')
@@ -1047,6 +1108,8 @@ function is_sub_corner_available()
 
 function is_upper_rim_sub_corner_available()
 {
+    local num_3=""
+    local num_6=""
     num_3=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#3:3#") {printf("%s ",$i)}}')
     num_6=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#6:6#") {printf("%s ",$i)}}')
     if ([ -z "${num_3}" ] && [ -z "${num_6}" ]); then
@@ -1060,6 +1123,8 @@ function is_upper_rim_sub_corner_available()
 
 function is_right_rim_sub_corner_available()
 {
+    local num_24=""
+    local num_48=""
     num_24=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#24:24#") {printf("%s ",$i)}}')
     num_48=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#48:48#") {printf("%s ",$i)}}')
     if ([ -z "${num_24}" ] && [ -z "${num_48}" ]); then
@@ -1073,6 +1138,8 @@ function is_right_rim_sub_corner_available()
 
 function is_down_rim_sub_corner_available()
 {
+    local num_59=""
+    local num_62=""
     num_59=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#59:59#") {printf("%s ",$i)}}')
     num_62=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#62:62#") {printf("%s ",$i)}}')
     if ([ -z "${num_59}" ] && [ -z "${num_62}" ]); then
@@ -1086,6 +1153,8 @@ function is_down_rim_sub_corner_available()
 
 function is_left_rim_sub_corner_available()
 {
+    local num_17=""
+    local num_41=""
     num_17=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#17:17#") {printf("%s ",$i)}}')
     num_41=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#41:41#") {printf("%s ",$i)}}')
     if ([ -z "${num_17}" ] && [ -z "${num_41}" ]); then
@@ -1099,6 +1168,8 @@ function is_left_rim_sub_corner_available()
 
 function is_upper_rim_available()
 {
+    local num_4=""
+    local num_5=""
     num_4=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#4:4#") {printf("%s ",$i)}}')
     num_5=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#5:5#") {printf("%s ",$i)}}')
     if ([ -z "${num_4}" ] && [ -z "${num_5}" ]); then
@@ -1112,6 +1183,8 @@ function is_upper_rim_available()
 
 function is_right_rim_available()
 {
+    local num_32=""
+    local num_40=""
     num_32=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#32:32#") {printf("%s ",$i)}}')
     num_40=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#40:40#") {printf("%s ",$i)}}')
     if ([ -z "${num_32}" ] && [ -z "${num_40}" ]); then
@@ -1125,6 +1198,8 @@ function is_right_rim_available()
 
 function is_down_rim_available()
 {
+    local num_60=""
+    local num_61=""
     num_60=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#60:60#") {printf("%s ",$i)}}')
     num_61=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#61:61#") {printf("%s ",$i)}}')
     if ([ -z "${num_60}" ] && [ -z "${num_61}" ]); then
@@ -1138,6 +1213,8 @@ function is_down_rim_available()
 
 function is_left_rim_available()
 {
+    local num_25=""
+    local num_33=""
     num_25=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#25:25#") {printf("%s ",$i)}}')
     num_33=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#33:33#") {printf("%s ",$i)}}')
     if ([ -z "${num_25}" ] && [ -z "${num_33}" ]); then
@@ -1151,6 +1228,8 @@ function is_left_rim_available()
 
 function is_sub_upper_rim_available()
 {
+    local num_20=""
+    local num_21=""
     num_20=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#20:20#") {printf("%s ",$i)}}')
     num_21=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#21:21#") {printf("%s ",$i)}}')
     if ([ -z "${num_20}" ] && [ -z "${num_21}" ]); then
@@ -1164,6 +1243,8 @@ function is_sub_upper_rim_available()
 
 function is_sub_right_rim_available()
 {
+    local num_30=""
+    local num_38=""
     num_30=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#30:30#") {printf("%s ",$i)}}')
     num_38=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#38:38#") {printf("%s ",$i)}}')
     if ([ -z "${num_30}" ] && [ -z "${num_38}" ]); then
@@ -1177,6 +1258,8 @@ function is_sub_right_rim_available()
 
 function is_sub_down_rim_available()
 {
+    local num_44=""
+    local num_45=""
     num_44=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#44:44#") {printf("%s ",$i)}}')
     num_45=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#45:45#") {printf("%s ",$i)}}')
     if ([ -z "${num_44}" ] && [ -z "${num_45}" ]); then
@@ -1190,6 +1273,8 @@ function is_sub_down_rim_available()
 
 function is_sub_left_rim_available()
 {
+    local num_27=""
+    local num_35=""
     num_27=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#27:27#") {printf("%s ",$i)}}')
     num_35=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#35:35#") {printf("%s ",$i)}}')
     if ([ -z "${num_27}" ] && [ -z "${num_35}" ]); then
@@ -1203,6 +1288,8 @@ function is_sub_left_rim_available()
 
 function is_upper_rim_above_available()
 {
+    local num_12=""
+    local num_13=""
     num_12=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#12:12#") {printf("%s ",$i)}}')
     num_13=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#13:13#") {printf("%s ",$i)}}')
     if ([ -z "${num_12}" ] && [ -z "${num_13}" ]); then
@@ -1216,6 +1303,8 @@ function is_upper_rim_above_available()
 
 function is_right_rim_above_available()
 {
+    local num_31=""
+    local num_39=""
     num_31=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#31:31#") {printf("%s ",$i)}}')
     num_39=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#39:39#") {printf("%s ",$i)}}')
     if ([ -z "${num_31}" ] && [ -z "${num_39}" ]); then
@@ -1229,6 +1318,8 @@ function is_right_rim_above_available()
 
 function is_down_rim_above_available()
 {
+    local num_52=""
+    local num_53=""
     num_52=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#52:52#") {printf("%s ",$i)}}')
     num_53=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#53:53#") {printf("%s ",$i)}}')
     if ([ -z "${num_52}" ] && [ -z "${num_53}" ]); then
@@ -1242,10 +1333,420 @@ function is_down_rim_above_available()
 
 function is_left_rim_above_available()
 {
+    local num_26=""
+    local num_34=""
     num_26=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#26:26#") {printf("%s ",$i)}}')
     num_34=$(echo "${AVAILABLE_ALL[*]}" | awk -F" " '{for(i=1;i<=NF;i++) if ($i ~ "#34:34#") {printf("%s ",$i)}}')
     if ([ -z "${num_26}" ] && [ -z "${num_34}" ]); then
         return 1
+    fi
+    return 0
+}
+
+## This function returns 0 if opponent exists in rim except corners and it is not flippable.
+##
+
+function opponent_exists_in_rim()
+{
+    #echo "I check if it's safe."
+    if [ -z "${1}" ]; then
+        echo "Please give a variable as a color." >&2
+        exit 1
+    fi
+    local teban=${1}
+    local file="${FILE_KIFU_PRESENT}"
+    local color=""
+    local color_opponent=""
+    local _check_str3=""
+    local _check_str4=""
+    local _check_str5=""
+    local _check_str6=""
+    local _check_str17=""
+    local _check_str25=""
+    local _check_str33=""
+    local _check_str41=""
+    local _check_str24=""
+    local _check_str32=""
+    local _check_str40=""
+    local _check_str48=""
+    local _check_str59=""
+    local _check_str60=""
+    local _check_str61=""
+    local _check_str62=""
+    local _str3_flippable=""
+    local _str4_flippable=""
+    local _str5_flippable=""
+    local _str6_flippable=""
+    local _str17_flippable=""
+    local _str25_flippable=""
+    local _str33_flippable=""
+    local _str41_flippable=""
+    local _str24_flippable=""
+    local _str32_flippable=""
+    local _str40_flippable=""
+    local _str48_flippable=""
+    local _str59_flippable=""
+    local _str60_flippable=""
+    local _str61_flippable=""
+    local _str62_flippable=""
+
+    if [ "${teban}" = "White" ]; then
+        color="W"
+        color_opponent="B"
+    elif [ "${teban}" = "Black" ]; then
+        color="B"
+        color_opponent="W"
+    fi
+    _check_str3=$(cut -f 3 -d" " "${file}")
+    _check_str4=$(cut -f 4 -d" " "${file}")
+    _check_str5=$(cut -f 5 -d" " "${file}")
+    _check_str6=$(cut -f 6 -d" " "${file}")
+    _check_str17=$(cut -f 17 -d" " "${file}")
+    _check_str25=$(cut -f 25 -d" " "${file}")
+    _check_str33=$(cut -f 33 -d" " "${file}")
+    _check_str41=$(cut -f 41 -d" " "${file}")
+    _check_str24=$(cut -f 24 -d" " "${file}")
+    _check_str32=$(cut -f 32 -d" " "${file}")
+    _check_str40=$(cut -f 40 -d" " "${file}")
+    _check_str48=$(cut -f 48 -d" " "${file}")
+    _check_str59=$(cut -f 59 -d" " "${file}")
+    _check_str60=$(cut -f 60 -d" " "${file}")
+    _check_str61=$(cut -f 61 -d" " "${file}")
+    _check_str62=$(cut -f 62 -d" " "${file}")
+
+    is_number_available 0 3
+    if [ $? -eq 0 ]; then
+        _str3_flippable="yes"
+        echo "3 is flippable"
+    fi
+    is_number_available 0 4
+    if [ $? -eq 0 ]; then
+        _str4_flippable="yes"
+        echo "4 is flippable"
+    fi
+    is_number_available 0 5
+    if [ $? -eq 0 ]; then
+        _str5_flippable="yes"
+        echo "5 is flippable"
+    fi
+    is_number_available 0 6
+    if [ $? -eq 0 ]; then
+        _str6_flippable="yes"
+        echo "6 is flippable"
+    fi
+    is_number_available 0 17
+    if [ $? -eq 0 ]; then
+        _str17_flippable="yes"
+        echo "17 is flippable"
+    fi
+    is_number_available 0 25
+    if [ $? -eq 0 ]; then
+        _str25_flippable="yes"
+        echo "25 is flippable"
+    fi
+    is_number_available 0 33
+    if [ $? -eq 0 ]; then
+        _str33_flippable="yes"
+        echo "33 is flippable"
+    fi
+    is_number_available 0 41
+    if [ $? -eq 0 ]; then
+        _str41_flippable="yes"
+        echo "41 is flippable"
+    fi
+    is_number_available 0 24
+    if [ $? -eq 0 ]; then
+        _str24_flippable="yes"
+        echo "24 is flippable"
+    fi
+    is_number_available 0 40
+    if [ $? -eq 0 ]; then
+        _str40_flippable="yes"
+        echo "40 is flippable"
+    fi
+    is_number_available 0 48
+    if [ $? -eq 0 ]; then
+        _str48_flippable="yes"
+        echo "48 is flippable"
+    fi
+    is_number_available 0 59
+    if [ $? -eq 0 ]; then
+        _str59_flippable="yes"
+        echo "59 is flippable"
+    fi
+    is_number_available 0 60 
+    if [ $? -eq 0 ]; then
+        _str60_flippable="yes"
+        echo "60 is flippable"
+    fi
+    is_number_available 0 61 
+    if [ $? -eq 0 ]; then
+        _str61_flippable="yes"
+        echo "61 is flippable"
+    fi
+    is_number_available 0 62
+    if [ $? -eq 0 ]; then
+        _str62_flippable="yes"
+        echo "62 is flippable"
+    fi
+
+    if ([ "${_check_str3}" = "${color_opponent}" ] && [ ! -z "${_str3_flippable}" ] ||
+            [ "${_check_str4}" = "${color_opponent}" ] && [ ! -z "${_str4_flippable}" ] ||
+            [ "${_check_str5}" = "${color_opponent}" ] && [ ! -z "${_str5_flippable}" ] ||
+            [ "${_check_str6}" = "${color_opponent}" ] && [ ! -z "${_str6_flippable}" ] ||
+            [ "${_check_str17}" = "${color_opponent}" ] && [ ! -z "${_str17_flippable}" ] ||
+            [ "${_check_str25}" = "${color_opponent}" ] && [ ! -z "${_str25_flippable}" ] ||
+            [ "${_check_str33}" = "${color_opponent}" ] && [ ! -z "${_str33_flippable}" ] ||
+            [ "${_check_str41}" = "${color_opponent}" ] && [ ! -z "${_str41_flippable}" ] ||
+            [ "${_check_str24}" = "${color_opponent}" ] && [ ! -z "${_str24_flippable}" ] ||
+            [ "${_check_str32}" = "${color_opponent}" ] && [ ! -z "${_str32_flippable}" ] ||
+            [ "${_check_str40}" = "${color_opponent}" ] && [ ! -z "${_str40_flippable}" ] ||
+            [ "${_check_str48}" = "${color_opponent}" ] && [ ! -z "${_str48_flippable}" ] ||
+            [ "${_check_str59}" = "${color_opponent}" ] && [ ! -z "${_str59_flippable}" ] ||
+            [ "${_check_str60}" = "${color_opponent}" ] && [ ! -z "${_str60_flippable}" ] ||
+            [ "${_check_str61}" = "${color_opponent}" ] && [ ! -z "${_str61_flippable}" ] ||
+            [ "${_check_str62}" = "${color_opponent}" ] && [ ! -z "${_str62_flippable}" ]); then
+        return 0
+    fi
+    return 1
+}
+
+## This function returns 0 if in some numbers are safe and if it's so, return 0.
+## var1: number
+## var2: color 
+##
+
+function is_number_safe()
+{
+    local num=0
+    local teban=""
+    local file="${FILE_KIFU_PRESENT}"
+    local color=""
+    local color_opponent=""
+    local _check_str2=""
+    local _check_str3=""
+    local _check_str4=""
+    local _check_str5=""
+    local _check_str6=""
+    local _check_str7=""
+    local _check_str58=""
+    local _check_str59=""
+    local _check_str60=""
+    local _check_str61=""
+    local _check_str62=""
+    local _check_str63=""
+    local _check_str25=""
+    local _check_str17=""
+    local _check_str9=""
+    local _check_str33=""
+    local _check_str41=""
+    local _check_str49=""
+    local _check_str32=""
+    local _check_str24=""
+    local _check_str16=""
+    local _check_str40=""
+    local _check_str48=""
+    local _check_str56=""
+    if [ -z "${1}" ]; then
+        echo "Please give a variable as a number." >&2
+        exit 1
+    fi
+    num="${1}" 
+    if [ -z "${2}" ]; then
+        echo "Please give a variable as a color." >&2
+        exit 1
+    fi
+    teban="${2}"
+    if [ "${teban}" = "White" ]; then
+        color="W"
+        color_opponent="B"
+    elif [ "${teban}" = "Black" ]; then
+        color="B"
+        color_opponent="W"
+    fi
+    ## pattern 1 ######
+    if ([ $num -eq 4 ] || [ $num -eq 5 ] || [ $num -eq 60 ] || [ $num -eq 61 ] ||
+            [ $num -eq 25 ] || [ $num -eq 33 ] || [ $num -eq 32 ] || [ $num -eq 40 ]); then    
+        if [ $num -eq 4 ]; then
+            _check_str2=$(cut -f 2 -d" " "${file}")
+            _check_str3=$(cut -f 3 -d" " "${file}")
+            _check_str5=$(cut -f 5 -d" " "${file}")
+            _check_str6=$(cut -f 6 -d" " "${file}")
+            _check_str7=$(cut -f 7 -d" " "${file}")
+            if (([ "${_check_str2}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && [ "${_check_str5}" = "${color_opponent}" ]) ||
+                    ([ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && [ "${_check_str7}" = "${color}" ] && [ "${_check_str3}" = "${color_opponent}" ])); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 5 ]; then
+            _check_str2=$(cut -f 2 -d" " "${file}")
+            _check_str3=$(cut -f 3 -d" " "${file}")
+            _check_str4=$(cut -f 4 -d" " "${file}")
+            _check_str6=$(cut -f 6 -d" " "${file}")
+            _check_str7=$(cut -f 7 -d" " "${file}")
+            if (([ "${_check_str6}" = "${color}" ] && [ "${_check_str7}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ]) ||
+                    ([ "${_check_str2}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && [ "${_check_str6}" = "${color_opponent}" ])); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 60 ]; then
+            _check_str58=$(cut -f 58 -d" " "${file}")
+            _check_str59=$(cut -f 59 -d" " "${file}")
+            _check_str61=$(cut -f 61 -d" " "${file}")
+            _check_str62=$(cut -f 62 -d" " "${file}")
+            _check_str63=$(cut -f 63 -d" " "${file}")
+            if (([ "${_check_str58}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && [ "${_check_str61}" = "${color_opponent}" ]) ||
+                    ([ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && [ "${_check_str63}" = "${color}" ] && [ "${_check_str59}" = "${color_opponent}" ])); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 61 ]; then
+            _check_str58=$(cut -f 58 -d" " "${file}")
+            _check_str59=$(cut -f 59 -d" " "${file}")
+            _check_str60=$(cut -f 60 -d" " "${file}")
+            _check_str62=$(cut -f 62 -d" " "${file}")
+            _check_str63=$(cut -f 63 -d" " "${file}")
+            if (([ "${_check_str62}" = "${color}" ] && [ "${_check_str63}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ]) ||
+                    ([ "${_check_str58}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ])); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 25 ]; then
+            _check_str17=$(cut -f 17 -d" " "${file}")
+            _check_str9=$(cut -f 9 -d" " "${file}")
+            _check_str33=$(cut -f 33 -d" " "${file}")
+            _check_str41=$(cut -f 41 -d" " "${file}")
+            _check_str49=$(cut -f 49 -d" " "${file}")
+            if (([ "${_check_str17}" = "${color}" ] && [ "${_check_str9}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ]) ||
+                    ([ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && [ "${_check_str49}" = "${color}" ] && [ "${_check_str17}" = "${color_opponent}" ])); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 33 ]; then
+            _check_str25=$(cut -f 25 -d" " "${file}")
+            _check_str17=$(cut -f 17 -d" " "${file}")
+            _check_str9=$(cut -f 9 -d" " "${file}")
+            _check_str41=$(cut -f 41 -d" " "${file}")
+            _check_str49=$(cut -f 49 -d" " "${file}")
+            if (([ "${_check_str41}" = "${color}" ] && [ "${_check_str49}" = "${color}" ] && [ "${_check_str25}" = "${color_opponent}" ]) ||
+                    ([ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && [ "${_check_str9}" = "${color}" ] && [ "${_check_str41}" = "${color_opponent}" ])); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 32 ]; then
+            _check_str24=$(cut -f 24 -d" " "${file}")
+            _check_str16=$(cut -f 16 -d" " "${file}")
+            _check_str40=$(cut -f 40 -d" " "${file}")
+            _check_str48=$(cut -f 48 -d" " "${file}")
+            _check_str56=$(cut -f 56 -d" " "${file}")
+            if (([ "${_check_str24}" = "${color}" ] && [ "${_check_str16}" = "${color}" ] && [ "${_check_str40}" = "${color_opponent}" ]) ||
+                    ([ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && [ "${_check_str56}" = "${color}" ] && [ "${_check_str24}" = "${color_opponent}" ])); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 40 ]; then
+            _check_str32=$(cut -f 32 -d" " "${file}")
+            _check_str24=$(cut -f 24 -d" " "${file}")
+            _check_str16=$(cut -f 16 -d" " "${file}")
+            _check_str48=$(cut -f 48 -d" " "${file}")
+            _check_str56=$(cut -f 56 -d" " "${file}")
+            if (([ "${_check_str48}" = "${color}" ] && [ "${_check_str56}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ]) ||
+                    ([ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && [ "${_check_str16}" = "${color}" ] && [ "${_check_str48}" = "${color_opponent}" ])); then
+                return 1
+            fi
+        fi
+    fi
+    ## pattern 2 ######
+    if ([ $num -eq 41 ] || [ $num -eq 17 ] || [ $num -eq 48 ] || [ $num -eq 24 ] ||
+            [ $num -eq 3 ] || [ $num -eq 6 ] || [ $num -eq 59 ] || [ $num -eq 62 ]); then
+        if [ $num -eq 41 ]; then
+            _check_str49=$(cut -f 49 -d" " "${file}")
+            _check_str33=$(cut -f 33 -d" " "${file}")
+            _check_str25=$(cut -f 25 -d" " "${file}")
+            _check_str17=$(cut -f 17 -d" " "${file}")
+            _check_str9=$(cut -f 9 -d" " "${file}")
+            if ([ "${_check_str49}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                    [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str9}" = "${color_opponent}" ]); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 17 ]; then
+            _check_str9=$(cut -f 9 -d" " "${file}")
+            _check_str25=$(cut -f 25 -d" " "${file}")
+            _check_str33=$(cut -f 33 -d" " "${file}")
+            _check_str41=$(cut -f 41 -d" " "${file}")
+            _check_str49=$(cut -f 49 -d" " "${file}")
+            if ([ "${_check_str9}" = "${color}" ] && [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                    [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str49}" = "${color_opponent}" ]); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 48 ]; then
+            _check_str56=$(cut -f 56 -d" " "${file}")
+            _check_str40=$(cut -f 40 -d" " "${file}")
+            _check_str32=$(cut -f 32 -d" " "${file}")
+            _check_str24=$(cut -f 24 -d" " "${file}")
+            _check_str16=$(cut -f 16 -d" " "${file}")
+            if ([ "${_check_str56}" = "${color}" ] && [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                    [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str16}" = "${color_opponent}" ]); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 24 ]; then
+            _check_str16=$(cut -f 16 -d" " "${file}")
+            _check_str32=$(cut -f 32 -d" " "${file}")
+            _check_str40=$(cut -f 40 -d" " "${file}")
+            _check_str48=$(cut -f 48 -d" " "${file}")
+            _check_str56=$(cut -f 56 -d" " "${file}")
+            if ([ "${_check_str16}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                    [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str56}" = "${color_opponent}" ]); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 3 ]; then
+            _check_str2=$(cut -f 2 -d" " "${file}")
+            _check_str4=$(cut -f 4 -d" " "${file}")
+            _check_str5=$(cut -f 5 -d" " "${file}")
+            _check_str6=$(cut -f 6 -d" " "${file}")
+            _check_str7=$(cut -f 7 -d" " "${file}")
+            if ([ "${_check_str2}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                    [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str7}" = "${color_opponent}" ]); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 6 ]; then
+            _check_str7=$(cut -f 7 -d" " "${file}")
+            _check_str2=$(cut -f 2 -d" " "${file}")
+            _check_str3=$(cut -f 3 -d" " "${file}")
+            _check_str4=$(cut -f 4 -d" " "${file}")
+            _check_str5=$(cut -f 5 -d" " "${file}")
+            if ([ "${_check_str7}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                    [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ]); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 59 ]; then
+            _check_str59=$(cut -f 59 -d" " "${file}")
+            _check_str60=$(cut -f 60 -d" " "${file}")
+            _check_str61=$(cut -f 61 -d" " "${file}")
+            _check_str62=$(cut -f 62 -d" " "${file}")
+            _check_str63=$(cut -f 63 -d" " "${file}")
+            if ([ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                    [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str63}" = "${color_opponent}" ]); then
+                return 1
+            fi
+        fi
+        if [ $num -eq 62 ]; then
+            _check_str63=$(cut -f 63 -d" " "${file}")
+            _check_str58=$(cut -f 58 -d" " "${file}")
+            _check_str59=$(cut -f 59 -d" " "${file}")
+            _check_str60=$(cut -f 60 -d" " "${file}")
+            _check_str61=$(cut -f 61 -d" " "${file}")
+            if ([ "${_check_str63}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                    [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ]); then
+                return 1
+            fi
+        fi
     fi
     return 0
 }
@@ -1673,38 +2174,6 @@ function judge_position()
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
-        is_number_available 20
-        if [ $? -eq 0 ]; then
-            flippables_20=$(count_flippables 20)
-        fi
-        is_number_available 21
-        if [ $? -eq 0 ]; then
-            flippables_21=$(count_flippables 21)
-        fi
-        is_number_available 30 
-        if [ $? -eq 0 ]; then
-            flippables_30=$(count_flippables 30)
-        fi
-        is_number_available 38 
-        if [ $? -eq 0 ]; then
-            flippables_38=$(count_flippables 38)
-        fi
-        is_number_available 44 
-        if [ $? -eq 0 ]; then
-            flippables_44=$(count_flippables 44)
-        fi
-        is_number_available 45
-        if [ $? -eq 0 ]; then
-            flippables_45=$(count_flippables 45)
-        fi
-        is_number_available 27
-        if [ $? -eq 0 ]; then
-            flippables_27=$(count_flippables 27)
-        fi
-        is_number_available 35
-        if [ $? -eq 0 ]; then
-            flippables_35=$(count_flippables 35)
-        fi
         if ([ $flippables_20 -ne 0 ] || [ $flippables_21 -ne 0 ] || [ $flippables_30 -ne 0 ] || [ $flippables_38 -ne 0 ] ||   
                 [ $flippables_44 -ne 0 ] || [ $flippables_45 -ne 0 ] || [ $flippables_27 -ne 0 ] || [ $flippables_35 -ne 0 ]); then    
             array=()
@@ -1813,7 +2282,10 @@ function judge_position()
             fi
             is_number_available 41
             if [ $? -eq 0 ]; then
-                flippables_41=$(count_flippables 41)
+                is_number_safe 41 "${COMPUTER}"
+                if [ $? -eq 0 ]; then
+                    flippables_41=$(count_flippables 41)
+                fi
             fi
             array=($flippables_17 $flippables_41)    
             array2=(17 41)
@@ -1830,201 +2302,12 @@ function judge_position()
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
-        is_number_available 3
-        if [ $? -eq 0 ]; then
-            flippables_3=$(count_flippables 3)
-        fi
-        is_number_available 6
-        if [ $? -eq 0 ]; then
-            flippables_6=$(count_flippables 6)
-        fi
-        is_number_available 24
-        if [ $? -eq 0 ]; then
-            flippables_24=$(count_flippables 24)
-        fi
-        is_number_available 48
-        if [ $? -eq 0 ]; then
-            flippables_48=$(count_flippables 48)
-        fi
-        is_number_available 59
-        if [ $? -eq 0 ]; then
-            flippables_59=$(count_flippables 59)
-        fi
-        is_number_available 62
-        if [ $? -eq 0 ]; then
-            flippables_62=$(count_flippables 62)
-        fi
-        is_number_available 17
-        if [ $? -eq 0 ]; then
-            flippables_17=$(count_flippables 17)
-        fi
-        is_number_available 41
-        if [ $? -eq 0 ]; then
-            flippables_41=$(count_flippables 41)
-        fi
         if ([ $flippables_3 -ne 0 ] || [ $flippables_6 -ne 0 ] || [ $flippables_24 -ne 0 ] || [ $flippables_48 -ne 0 ] ||   
                 [ $flippables_59 -ne 0 ] || [ $flippables_62 -ne 0 ] || [ $flippables_17 -ne 0 ] || [ $flippables_41 -ne 0 ]); then    
             array=()
             array2=()
             array=($flippables_3 $flippables_6 $flippables_24 $flippables_48 $flippables_59 $flippables_62 $flippables_17 $flippables_41)    
             array2=(3 6 24 48 59 62 17 41)
-            i=0
-            i_pre=0
-            # multiple array loop
-            #position=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position=${array2[i]}
-                fi
-                i_pre=${array[i]}
-            done
-        fi
-    elif ([ $n_is_upper_rim_available -eq 0 ] || [ $n_is_right_rim_available -eq 0 ] || [ $n_is_down_rim_available -eq 0 ] || [ $n_is_left_rim_available -eq 0 ]); then
-        if [ $n_is_upper_rim_available -eq 0 ]; then
-            #echo "upper rim avaiable"
-            array=()
-            array2=()
-            is_number_available 4
-            if [ $? -eq 0 ]; then
-                flippables_4=$(count_flippables 4)
-            fi
-            is_number_available 5
-            if [ $? -eq 0 ]; then
-                flippables_5=$(count_flippables 5)
-            fi
-            array=($flippables_4 $flippables_5)    
-            array2=(4 5)
-            i=0
-            i_pre=0
-            # multiple array loop
-            position_upper_rim=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position_upper_rim=${array2[i]}
-                fi
-                i_pre=${array[i]}
-            done
-        fi
-        # Here, not elif but if. Same below.
-        if [ $n_is_right_rim_available -eq 0 ]; then
-            #echo "right rim avaiable"
-            array=()
-            array2=()
-            is_number_available 32
-            if [ $? -eq 0 ]; then
-                flippables_32=$(count_flippables 32)
-            fi
-            is_number_available 40
-            if [ $? -eq 0 ]; then
-                flippables_40=$(count_flippables 40)
-            fi
-            array=($flippables_32 $flippables_40)    
-            array2=(32 40)
-            i=0
-            i_pre=0
-            # multiple array loop
-            position_right_rim=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position_right_rim=${array2[i]}
-                fi
-                i_pre=${array[i]}
-            done
-        fi
-        if [ $n_is_down_rim_available -eq 0 ]; then
-            #echo "down rim avaiable"
-            array=()
-            array2=()
-            is_number_available 60
-            if [ $? -eq 0 ]; then
-                flippables_60=$(count_flippables 60)
-            fi
-            is_number_available 61
-            if [ $? -eq 0 ]; then
-                flippables_61=$(count_flippables 61)
-            fi
-            array=($flippables_60 $flippables_61)    
-            array2=(60 61)
-            i=0
-            i_pre=0
-            # multiple array loop
-            position_down_rim=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position_down_rim=${array2[i]}
-                fi
-                i_pre=${array[i]}
-            done
-        fi
-        if [ $n_is_left_rim_available -eq 0 ]; then
-            #echo "left rim avaiable"
-            array=()
-            array2=()
-            is_number_available 25
-            if [ $? -eq 0 ]; then
-                flippables_25=$(count_flippables 25)
-            fi
-            is_number_available 33
-            if [ $? -eq 0 ]; then
-                flippables_33=$(count_flippables 33)
-            fi
-            array=($flippables_25 $flippables_33)    
-            array2=(25 33)
-            i=0
-            i_pre=0
-            # multiple array loop
-            position_left_rim=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position_left_rim=${array2[i]}
-                fi
-                i_pre=${array[i]}
-            done
-        fi
-        ### Compare positions and set the position which has largest flippable number.
-        is_number_available 4 
-        if [ $? -eq 0 ]; then
-            flippables_4=$(count_flippables 4)
-        fi
-        is_number_available 5 
-        if [ $? -eq 0 ]; then
-            flippables_5=$(count_flippables 5)
-        fi
-        is_number_available 32 
-        if [ $? -eq 0 ]; then
-            flippables_32=$(count_flippables 32)
-        fi
-        is_number_available 40 
-        if [ $? -eq 0 ]; then
-            flippables_40=$(count_flippables 40)
-        fi
-        is_number_available 60 
-        if [ $? -eq 0 ]; then
-            flippables_60=$(count_flippables 60)
-        fi
-        is_number_available 61 
-        if [ $? -eq 0 ]; then
-            flippables_61=$(count_flippables 61)
-        fi
-        is_number_available 25 
-        if [ $? -eq 0 ]; then
-            flippables_25=$(count_flippables 25)
-        fi
-        is_number_available 33 
-        if [ $? -eq 0 ]; then
-            flippables_33=$(count_flippables 33)
-        fi
-        if ([ $flippables_4 -ne 0 ] || [ $flippables_5 -ne 0 ] || [ $flippables_32 -ne 0 ] || [ $flippables_40 -ne 0 ] ||   
-                [ $flippables_60 -ne 0 ] || [ $flippables_61 -ne 0 ] || [ $flippables_25 -ne 0 ] || [ $flippables_33 -ne 0 ]); then    
-            array=()
-            array2=()
-            array=($flippables_4 $flippables_5 $flippables_32 $flippables_40 $flippables_60 $flippables_61 $flippables_25 $flippables_33)    
-            array2=(4 5 32 40 60 61 25 33)
             i=0
             i_pre=0
             # multiple array loop
@@ -2143,38 +2426,6 @@ function judge_position()
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
-        is_number_available 12
-        if [ $? -eq 0 ]; then
-            flippables_12=$(count_flippables 12)
-        fi
-        is_number_available 13 
-        if [ $? -eq 0 ]; then
-            flippables_13=$(count_flippables 13)
-        fi
-        is_number_available 31 
-        if [ $? -eq 0 ]; then
-            flippables_31=$(count_flippables 31)
-        fi
-        is_number_available 39 
-        if [ $? -eq 0 ]; then
-            flippables_39=$(count_flippables 39)
-        fi
-        is_number_available 52
-        if [ $? -eq 0 ]; then
-            flippables_52=$(count_flippables 52)
-        fi
-        is_number_available 53
-        if [ $? -eq 0 ]; then
-            flippables_53=$(count_flippables 53)
-        fi
-        is_number_available 26
-        if [ $? -eq 0 ]; then
-            flippables_26=$(count_flippables 26)
-        fi
-        is_number_available 34 
-        if [ $? -eq 0 ]; then
-            flippables_34=$(count_flippables 34)
-        fi
         if ([ $flippables_12 -ne 0 ] || [ $flippables_13 -ne 0 ] || [ $flippables_31 -ne 0 ] || [ $flippables_52 -ne 0 ] ||   
                 [ $flippables_53 -ne 0 ] || [ $flippables_26 -ne 0 ] || [ $flippables_34 -ne 0 ]); then    
             array=()
@@ -2193,10 +2444,145 @@ function judge_position()
                 i_pre=${array[i]}
             done
         fi
+    elif ([ $n_is_upper_rim_available -eq 0 ] || [ $n_is_right_rim_available -eq 0 ] || [ $n_is_down_rim_available -eq 0 ] || [ $n_is_left_rim_available -eq 0 ]); then
+        if [ $n_is_upper_rim_available -eq 0 ]; then
+            #echo "upper rim avaiable"
+            array=()
+            array2=()
+            is_number_available 4
+            if [ $? -eq 0 ]; then
+                is_number_safe 4 "${COMPUTER}"
+                if [ $? -eq 0 ]; then
+                    flippables_4=$(count_flippables 4)
+                fi
+            fi
+            is_number_available 5
+            if [ $? -eq 0 ]; then
+                is_number_safe 5 "${COMPUTER}"
+                if [ $? -eq 0 ]; then
+                    flippables_5=$(count_flippables 5)
+                fi
+            fi
+            array=($flippables_4 $flippables_5)    
+            array2=(4 5)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_upper_rim=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_upper_rim=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        # Here, not elif but if. Same below.
+        if [ $n_is_right_rim_available -eq 0 ]; then
+            #echo "right rim avaiable"
+            array=()
+            array2=()
+            is_number_available 32
+            if [ $? -eq 0 ]; then
+                flippables_32=$(count_flippables 32)
+            fi
+            is_number_available 40
+            if [ $? -eq 0 ]; then
+                flippables_40=$(count_flippables 40)
+            fi
+            array=($flippables_32 $flippables_40)    
+            array2=(32 40)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_right_rim=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_right_rim=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        if [ $n_is_down_rim_available -eq 0 ]; then
+            #echo "down rim avaiable"
+            array=()
+            array2=()
+            is_number_available 60
+            if [ $? -eq 0 ]; then
+                flippables_60=$(count_flippables 60)
+            fi
+            is_number_available 61
+            if [ $? -eq 0 ]; then
+                flippables_61=$(count_flippables 61)
+            fi
+            array=($flippables_60 $flippables_61)    
+            array2=(60 61)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_down_rim=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_down_rim=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        if [ $n_is_left_rim_available -eq 0 ]; then
+            #echo "left rim avaiable"
+            array=()
+            array2=()
+            is_number_available 25
+            if [ $? -eq 0 ]; then
+                flippables_25=$(count_flippables 25)
+            fi
+            is_number_available 33
+            if [ $? -eq 0 ]; then
+                flippables_33=$(count_flippables 33)
+            fi
+            array=($flippables_25 $flippables_33)    
+            array2=(25 33)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_left_rim=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_left_rim=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        ### Compare positions and set the position which has largest flippable number.
+        if ([ $flippables_4 -ne 0 ] || [ $flippables_5 -ne 0 ] || [ $flippables_32 -ne 0 ] || [ $flippables_40 -ne 0 ] ||   
+                [ $flippables_60 -ne 0 ] || [ $flippables_61 -ne 0 ] || [ $flippables_25 -ne 0 ] || [ $flippables_33 -ne 0 ]); then    
+            array=()
+            array2=()
+            array=($flippables_4 $flippables_5 $flippables_32 $flippables_40 $flippables_60 $flippables_61 $flippables_25 $flippables_33)    
+            array2=(4 5 32 40 60 61 25 33)
+            i=0
+            i_pre=0
+            # multiple array loop
+            #position=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
     fi
 
-    if [ $position -eq 0 ]; then
+    #echo "position:$position"
+    if ([ $position -eq 0 ] || [ $position -eq 4 ] || [ $position -eq 5 ] || [ $position -eq 32 ] || [ $position -eq 40 ] ||
+            [ $position -eq 60 ] || [ $position -eq 61 ] || [ $position -eq 25 ] || [ $position -eq 33 ]); then
         #echo "==== I check remaining positions. ===="
+        local better_one=0
+        better_one=1
         # corner 2nd next inner. 
         #11,14
         #23,47
@@ -2264,10 +2650,12 @@ function judge_position()
         fi
     fi
 
+
+    #echo "position_includeing others equals position:$position"
     position_last2=0
     position_last=0
 
-    if ([ $position -eq 0 ] || ([ $MODE = "Mode1" ])); then
+    if ([ $position -eq 0 ] || ([ $MODE = "Mode1" ] || [ $MODE = "Mode2" ])); then
         #echo "XXXX I'm still checking remaining positions. XXXX"
         flippables_2=0
         flippables_7=0
@@ -2358,6 +2746,7 @@ function judge_position()
         fi
     fi
 
+    #echo "position_last2:$position_last2"
     if [ $position_last2 -eq 0 ]; then
         # Next to the corner. 
         flippables_10=0
@@ -2412,6 +2801,8 @@ function judge_position()
             done
         fi
     fi
+
+    #echo "position_last:$position_last"
     # Still 'position' is 0.
     if [ $position -eq 0 ]; then
         if ([ $position_last2 -ne 0 ] || [ $position_last -ne 0 ]); then
@@ -2423,8 +2814,30 @@ function judge_position()
         fi
     fi
 
+    #echo "position:$position"
+    # Go aggressive if safe.
+    if [ $MODE = "Mode2" ]; then
+        if [ $position -eq 0 ]; then
+            is_corner_available
+            if [ $? -eq 1 ]; then
+                opponent_exists_in_rim "${HUMAN}"
+                if [ $? -eq 1 ]; then
+                    if [ $position_last2 -ne 0 ]; then
+                        echo "I go aggressive."
+                        position=$position_last2
+                    fi
+                fi
+            fi
+        fi
+    fi
+
     if [ $position -eq 0 ]; then
+        COMPUTER_PASS=1
         echo "I pass." >&2
+        if [ $HUMAN_PASS -eq 1 ]; then
+            echo "Game ends."
+            exit 0
+        fi
         return 1
     fi
 
@@ -2480,11 +2893,19 @@ function count_black_and_white()
     REMAIN=$((64 - $count_all - 1))
     if [ $count_all -eq 64 ]; then
         if [ $black -gt $white ]; then
-            echo "Black wins."
+            if [ "${HUMAN}" = "Black" ]; then
+                echo "Black (You) wins."
+            else
+                echo "Black (Computer) wins."
+            fi
         elif [ $black -eq $white ]; then
             echo "Tie."
         else
-            echo "White wins."
+            if [ "${HUMAN}" = "White" ]; then
+                echo "White (You) wins."
+            else
+                echo "White (Computer) wins."
+            fi
         fi
         echo "Game ends."
         exit 0
@@ -2495,7 +2916,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver0.7"
+echo "CLI_Othello ver0.8"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file
@@ -2506,9 +2927,11 @@ do
     if [ -n "${answer}" ]; then
         case "${REPLY}" in
             1)  HUMAN="Black"
+                COMPUTER="White"
                 break
                 ;;
             2)  HUMAN="White"
+                COMPUTER="Black"
                 break
                 ;;
             3) exit 1 ;;
@@ -2525,7 +2948,7 @@ echo ""
 echo "Mode"
 
 PS3="Select mode:"
-select answer in Normal Mode1 
+select answer in Normal Mode1 Mode2
 do
     if [ -n "${answer}" ]; then
         case "${REPLY}" in
@@ -2541,7 +2964,13 @@ do
                 echo ""
                 break
                 ;;
-            3) exit 1 ;;
+            3)  MODE="Mode2"
+                echo ""
+                echo "I'm in 'Mode2 (Aggressive)'."
+                echo ""
+                break
+                ;;
+            4) exit 1 ;;
             *) echo "Invalid." ;;
         esac
     else
@@ -2551,7 +2980,6 @@ done
 
 show_kifu_present
 
-HUMAN_PASS=0 
 echo "You are ${HUMAN}"
 while :
 do

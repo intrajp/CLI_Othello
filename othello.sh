@@ -1518,6 +1518,9 @@ function opponent_exists_in_rim()
 
 function is_number_safe()
 {
+    if [ $REMAIN -eq 0 ]; then
+        return 0
+    fi
     local num=0
     local teban=""
     local file="${FILE_KIFU_PRESENT}"
@@ -3003,7 +3006,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver1.0"
+echo "CLI_Othello ver1.1"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

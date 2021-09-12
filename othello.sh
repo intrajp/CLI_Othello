@@ -2095,31 +2095,122 @@ function judge_position()
             fi
             i_pre=${array[i]}
         done
-    elif [ $n_is_sub_corner_available -eq 0 ]; then
-        #echo "sub-corner avaiable"
-        array=()
-        array2=()
-        is_number_available 19
-        if [ $? -eq 0 ]; then
-            flippables_19=$(count_flippables 19)
-        fi
-        is_number_available 22
-        if [ $? -eq 0 ]; then
-            flippables_22=$(count_flippables 22)
-        fi
-        is_number_available 43
-        if [ $? -eq 0 ]; then
-            flippables_43=$(count_flippables 43)
-        fi
-        is_number_available 46
-        if [ $? -eq 0 ]; then
-            flippables_46=$(count_flippables 46)
-        fi
-        if ([ $flippables_19 -ne 0 ] || [ $flippables_22 -ne 0 ] || [ $flippables_43 -ne 0 ] || [ $flippables_46 -ne 0 ]); then    
+    elif ([ $n_is_upper_rim_sub_corner_available -eq 0 ] || [ $n_is_right_rim_sub_corner_available -eq 0 ] || [ $n_is_down_rim_sub_corner_available -eq 0 ] || [ $n_is_left_rim_sub_corner_available -eq 0 ]); then
+        if [ $n_is_upper_rim_sub_corner_available -eq 0 ]; then
+            #echo "upper rim sub-corner avaiable"
             array=()
             array2=()
-            array=($flippables_19 $flippables_22 $flippables_43 $flippables_46)    
-            array2=(19 22 43 46)
+            is_number_available 3
+            if [ $? -eq 0 ]; then
+                flippables_3=$(count_flippables 3)
+            fi
+            is_number_available 6
+            if [ $? -eq 0 ]; then
+                flippables_6=$(count_flippables 6)
+            fi
+            array=($flippables_3 $flippables_6)    
+            array2=(3 6)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_upper_rim_sub_corner=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_upper_rim_sub_corner=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        # Here, not elif but if. Same below.
+        if [ $n_is_right_rim_sub_corner_available -eq 0 ]; then
+            #echo "right rim sub-corner avaiable"
+            array=()
+            array2=()
+            is_number_available 24
+            if [ $? -eq 0 ]; then
+                flippables_24=$(count_flippables 24)
+            fi
+            is_number_available 48
+            if [ $? -eq 0 ]; then
+                flippables_48=$(count_flippables 48)
+            fi
+            array=($flippables_24 $flippables_48)    
+            array2=(24 48)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_right_rim_sub_corner=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_right_rim_sub_corner=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        if [ $n_is_down_rim_sub_corner_available -eq 0 ]; then
+            #echo "down rim sub-corner vaiable"
+            array=()
+            array2=()
+            is_number_available 59
+            if [ $? -eq 0 ]; then
+                flippables_59=$(count_flippables 59)
+            fi
+            is_number_available 62
+            if [ $? -eq 0 ]; then
+                flippables_62=$(count_flippables 62)
+            fi
+            array=($flippables_59 $flippables_62)    
+            array2=(59 62)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_down_rim_sub_corner=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_down_rim_sub_corner=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        if [ $n_is_left_rim_sub_corner_available -eq 0 ]; then
+            #echo "left rim sub-corner avaiable"
+            array=()
+            array2=()
+            is_number_available 17
+            if [ $? -eq 0 ]; then
+                flippables_17=$(count_flippables 17)
+            fi
+            is_number_available 41
+            if [ $? -eq 0 ]; then
+                is_number_safe 41 "${COMPUTER}"
+                if [ $? -eq 0 ]; then
+                    flippables_41=$(count_flippables 41)
+                fi
+            fi
+            array=($flippables_17 $flippables_41)    
+            array2=(17 41)
+            i=0
+            i_pre=0
+            # multiple array loop
+            position_left_rim_sub_corner=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position_left_rim_sub_corner=${array2[i]}
+                fi
+                i_pre=${array[i]}
+            done
+        fi
+        ### Compare positions and set the position which has largest flippable number.
+        if ([ $flippables_3 -ne 0 ] || [ $flippables_6 -ne 0 ] || [ $flippables_24 -ne 0 ] || [ $flippables_48 -ne 0 ] ||   
+                [ $flippables_59 -ne 0 ] || [ $flippables_62 -ne 0 ] || [ $flippables_17 -ne 0 ] || [ $flippables_41 -ne 0 ]); then    
+            array=()
+            array2=()
+            array=($flippables_3 $flippables_6 $flippables_24 $flippables_48 $flippables_59 $flippables_62 $flippables_17 $flippables_41)    
+            array2=(3 6 24 48 59 62 17 41)
             i=0
             i_pre=0
             # multiple array loop
@@ -2256,122 +2347,31 @@ function judge_position()
                 i_pre=${array[i]}
             done
         fi
-    elif ([ $n_is_upper_rim_sub_corner_available -eq 0 ] || [ $n_is_right_rim_sub_corner_available -eq 0 ] || [ $n_is_down_rim_sub_corner_available -eq 0 ] || [ $n_is_left_rim_sub_corner_available -eq 0 ]); then
-        if [ $n_is_upper_rim_sub_corner_available -eq 0 ]; then
-            #echo "upper rim sub-corner avaiable"
-            array=()
-            array2=()
-            is_number_available 3
-            if [ $? -eq 0 ]; then
-                flippables_3=$(count_flippables 3)
-            fi
-            is_number_available 6
-            if [ $? -eq 0 ]; then
-                flippables_6=$(count_flippables 6)
-            fi
-            array=($flippables_3 $flippables_6)    
-            array2=(3 6)
-            i=0
-            i_pre=0
-            # multiple array loop
-            position_upper_rim_sub_corner=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position_upper_rim_sub_corner=${array2[i]}
-                fi
-                i_pre=${array[i]}
-            done
+    elif [ $n_is_sub_corner_available -eq 0 ]; then
+        #echo "sub-corner avaiable"
+        array=()
+        array2=()
+        is_number_available 19
+        if [ $? -eq 0 ]; then
+            flippables_19=$(count_flippables 19)
         fi
-        # Here, not elif but if. Same below.
-        if [ $n_is_right_rim_sub_corner_available -eq 0 ]; then
-            #echo "right rim sub-corner avaiable"
-            array=()
-            array2=()
-            is_number_available 24
-            if [ $? -eq 0 ]; then
-                flippables_24=$(count_flippables 24)
-            fi
-            is_number_available 48
-            if [ $? -eq 0 ]; then
-                flippables_48=$(count_flippables 48)
-            fi
-            array=($flippables_24 $flippables_48)    
-            array2=(24 48)
-            i=0
-            i_pre=0
-            # multiple array loop
-            position_right_rim_sub_corner=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position_right_rim_sub_corner=${array2[i]}
-                fi
-                i_pre=${array[i]}
-            done
+        is_number_available 22
+        if [ $? -eq 0 ]; then
+            flippables_22=$(count_flippables 22)
         fi
-        if [ $n_is_down_rim_sub_corner_available -eq 0 ]; then
-            #echo "down rim sub-corner vaiable"
-            array=()
-            array2=()
-            is_number_available 59
-            if [ $? -eq 0 ]; then
-                flippables_59=$(count_flippables 59)
-            fi
-            is_number_available 62
-            if [ $? -eq 0 ]; then
-                flippables_62=$(count_flippables 62)
-            fi
-            array=($flippables_59 $flippables_62)    
-            array2=(59 62)
-            i=0
-            i_pre=0
-            # multiple array loop
-            position_down_rim_sub_corner=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position_down_rim_sub_corner=${array2[i]}
-                fi
-                i_pre=${array[i]}
-            done
+        is_number_available 43
+        if [ $? -eq 0 ]; then
+            flippables_43=$(count_flippables 43)
         fi
-        if [ $n_is_left_rim_sub_corner_available -eq 0 ]; then
-            #echo "left rim sub-corner avaiable"
-            array=()
-            array2=()
-            is_number_available 17
-            if [ $? -eq 0 ]; then
-                flippables_17=$(count_flippables 17)
-            fi
-            is_number_available 41
-            if [ $? -eq 0 ]; then
-                is_number_safe 41 "${COMPUTER}"
-                if [ $? -eq 0 ]; then
-                    flippables_41=$(count_flippables 41)
-                fi
-            fi
-            array=($flippables_17 $flippables_41)    
-            array2=(17 41)
-            i=0
-            i_pre=0
-            # multiple array loop
-            position_left_rim_sub_corner=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position_left_rim_sub_corner=${array2[i]}
-                fi
-                i_pre=${array[i]}
-            done
+        is_number_available 46
+        if [ $? -eq 0 ]; then
+            flippables_46=$(count_flippables 46)
         fi
-        ### Compare positions and set the position which has largest flippable number.
-        if ([ $flippables_3 -ne 0 ] || [ $flippables_6 -ne 0 ] || [ $flippables_24 -ne 0 ] || [ $flippables_48 -ne 0 ] ||   
-                [ $flippables_59 -ne 0 ] || [ $flippables_62 -ne 0 ] || [ $flippables_17 -ne 0 ] || [ $flippables_41 -ne 0 ]); then    
+        if ([ $flippables_19 -ne 0 ] || [ $flippables_22 -ne 0 ] || [ $flippables_43 -ne 0 ] || [ $flippables_46 -ne 0 ]); then    
             array=()
             array2=()
-            array=($flippables_3 $flippables_6 $flippables_24 $flippables_48 $flippables_59 $flippables_62 $flippables_17 $flippables_41)    
-            array2=(3 6 24 48 59 62 17 41)
+            array=($flippables_19 $flippables_22 $flippables_43 $flippables_46)    
+            array2=(19 22 43 46)
             i=0
             i_pre=0
             # multiple array loop
@@ -2490,7 +2490,7 @@ function judge_position()
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
-        if ([ $flippables_12 -ne 0 ] || [ $flippables_13 -ne 0 ] || [ $flippables_31 -ne 0 ] || [ $flippables_52 -ne 0 ] ||   
+        if ([ $flippables_12 -ne 0 ] || [ $flippables_13 -ne 0 ] || [ $flippables_31 -ne 0 ] || [ $flippables_39 -ne 0 ] || [ $flippables_52 -ne 0 ] ||   
                 [ $flippables_53 -ne 0 ] || [ $flippables_26 -ne 0 ] || [ $flippables_34 -ne 0 ]); then    
             array=()
             array2=()
@@ -2713,7 +2713,6 @@ function judge_position()
             done
         fi
     fi
-
 
     #echo "position_includeing others equals position:$position"
     position_last2=0
@@ -3004,7 +3003,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver0.9"
+echo "CLI_Othello ver1.0"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file
@@ -3081,6 +3080,7 @@ do
         # Human 
         search_available_positions "White" 
         echo "Your turn."
+        HUMAN_PASS=0
         get_position_value
         while :
         do
@@ -3106,6 +3106,7 @@ do
         ## Human 
         search_available_positions "Black" 
         echo "Your turn."
+        HUMAN_PASS=0
         get_position_value
         while :
         do

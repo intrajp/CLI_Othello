@@ -1765,9 +1765,15 @@ function is_number_safe()
             _check_str33=$(cut -f 33 -d" " "${file}")
             _check_str25=$(cut -f 25 -d" " "${file}")
             _check_str17=$(cut -f 17 -d" " "${file}")
-            if ([ "${_check_str1}" != "${color_opponent}" ] && [ "${_check_str57}" = "${color_opponent}" ]); then 
+            #if ([ "${_check_str1}" != "${color_opponent}" ] && [ "${_check_str57}" = "${color_opponent}" ]); then 
+            if ([ "${_check_str1}" != "${color_opponent}" ] && [ "${_check_str57}" != "${color_opponent}" ]); then 
                 if ([ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
                         [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ]); then
+                    if [ $num -eq 9 ]; then
+                        if [ "${_check_str1}" = "${color}" ]; then
+                            return 0
+                        fi
+                    fi
                     return 1
                 fi
             fi
@@ -1779,7 +1785,8 @@ function is_number_safe()
             _check_str40=$(cut -f 40 -d" " "${file}")
             _check_str32=$(cut -f 32 -d" " "${file}")
             _check_str24=$(cut -f 24 -d" " "${file}")
-            if ([ "${_check_str8}" != "${color_opponent}" ] && [ "${_check_str64}" = "${color_opponent}" ]); then 
+            #if ([ "${_check_str8}" != "${color_opponent}" ] && [ "${_check_str64}" = "${color_opponent}" ]); then 
+            if ([ "${_check_str8}" != "${color_opponent}" ] && [ "${_check_str64}" != "${color_opponent}" ]); then 
                 if ([ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
                         [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ]); then
                     return 1
@@ -1788,14 +1795,26 @@ function is_number_safe()
         fi
         if ([ $num -eq 2 ] || [ $num -eq 7 ]); then
             _check_str1=$(cut -f 1 -d" " "${file}")
+            _check_str2=$(cut -f 2 -d" " "${file}")
             _check_str8=$(cut -f 8 -d" " "${file}")
             _check_str3=$(cut -f 3 -d" " "${file}")
             _check_str4=$(cut -f 4 -d" " "${file}")
             _check_str5=$(cut -f 5 -d" " "${file}")
             _check_str6=$(cut -f 6 -d" " "${file}")
+            _check_str7=$(cut -f 7 -d" " "${file}")
             if ([ "${_check_str1}" != "${color_opponent}" ] && [ "${_check_str8}" = "${color_opponent}" ]); then 
                 if ([ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
                         [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ]); then
+                    if [ $num -eq 2 ]; then
+                        if [ "${_check_str7}" = "${color_opponent}" ]; then
+                            return 0
+                        fi
+                    fi
+                    if [ $num -eq 7 ]; then
+                        if [ "${_check_str2}" = "${color_opponent}" ]; then
+                            return 0
+                        fi
+                    fi
                     return 1
                 fi
             fi
@@ -1807,7 +1826,8 @@ function is_number_safe()
             _check_str60=$(cut -f 60 -d" " "${file}")
             _check_str61=$(cut -f 61 -d" " "${file}")
             _check_str62=$(cut -f 62 -d" " "${file}")
-            if ([ "${_check_str57}" != "${color_opponent}" ] && [ "${_check_str64}" = "${color_opponent}" ]); then 
+            #if ([ "${_check_str57}" != "${color_opponent}" ] && [ "${_check_str64}" = "${color_opponent}" ]); then 
+            if ([ "${_check_str57}" != "${color_opponent}" ] && [ "${_check_str64}" != "${color_opponent}" ]); then 
                 if ([ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
                         [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ]); then
                     return 1
@@ -3006,7 +3026,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver1.1"
+echo "CLI_Othello ver1.2"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

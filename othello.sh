@@ -1765,13 +1765,25 @@ function is_number_safe()
             _check_str33=$(cut -f 33 -d" " "${file}")
             _check_str25=$(cut -f 25 -d" " "${file}")
             _check_str17=$(cut -f 17 -d" " "${file}")
+            _check_str49=$(cut -f 49 -d" " "${file}")
+            _check_str9=$(cut -f 9 -d" " "${file}")
             if [ $num -eq 9 ]; then
+                if ([ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] &&
+                        [ "${_check_str49}" = "${color}" ]); then
+                    return 0
+                fi
                 if ([ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
                         [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ]); then
                     return 1
                 fi
             fi
             if [ $num -eq 49 ]; then
+                if ([ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] &&
+                        [ "${_check_str9}" = "${color}" ]); then
+                    return 0
+                fi
                 if ([ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
                         [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ]); then
                     return 1
@@ -1800,6 +1812,8 @@ function is_number_safe()
             _check_str40=$(cut -f 40 -d" " "${file}")
             _check_str32=$(cut -f 32 -d" " "${file}")
             _check_str24=$(cut -f 24 -d" " "${file}")
+            _check_str56=$(cut -f 56 -d" " "${file}")
+            _check_str16=$(cut -f 16 -d" " "${file}")
             if ([ "${_check_str8}" != "${color_opponent}" ] && [ "${_check_str64}" != "${color_opponent}" ]); then 
                 if ([ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
                         [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ]); then
@@ -1811,12 +1825,22 @@ function is_number_safe()
                 return 1
             fi
             if [ $num -eq 16 ]; then
+                if ([ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] &&
+                        [ "${_check_str56}" = "${color}" ]); then
+                    return 0
+                fi
                 if ([ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
                         [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ]); then
                     return 1
                 fi
             fi
             if [ $num -eq 56 ]; then
+                if ([ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] &&
+                        [ "${_check_str16}" = "${color}" ]); then
+                    return 0
+                fi
                 if ([ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
                         [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ]); then
                     return 1
@@ -1833,12 +1857,22 @@ function is_number_safe()
             _check_str6=$(cut -f 6 -d" " "${file}")
             _check_str7=$(cut -f 7 -d" " "${file}")
             if [ $num -eq 2 ]; then
+                if ([ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] &&
+                        [ "${_check_str7}" = "${color}" ]); then
+                    return 0
+                fi
                 if ([ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
                         [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ]); then
                     return 1
                 fi
             fi
             if [ $num -eq 7 ]; then
+                if ([ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] &&
+                        [ "${_check_str2}" = "${color}" ]); then
+                    return 0
+                fi
                 if ([ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
                         [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ]); then
                     return 1
@@ -1878,13 +1912,24 @@ function is_number_safe()
             _check_str60=$(cut -f 60 -d" " "${file}")
             _check_str61=$(cut -f 61 -d" " "${file}")
             _check_str62=$(cut -f 62 -d" " "${file}")
+            _check_str63=$(cut -f 63 -d" " "${file}")
             if [ $num -eq 58 ]; then
+                if ([ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] &&
+                        [ "${_check_str63}" = "${color}" ]); then
+                    return 0
+                fi
                 if ([ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
                         [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ]); then
                     return 1
                 fi
             fi
             if [ $num -eq 63 ]; then
+                if ([ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] &&
+                        [ "${_check_str58}" = "${color}" ]); then
+                    return 0
+                fi
                 if ([ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
                         [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ]); then
                     return 1
@@ -2195,9 +2240,46 @@ function judge_position()
         do
             if [ ${array[i]} -gt $i_pre ]; then
                 position=${array2[i]}
+                i_pre=${array[i]}
             fi
-            i_pre=${array[i]}
         done
+    elif [ $n_is_sub_corner_available -eq 0 ]; then
+        #echo "sub-corner avaiable"
+        array=()
+        array2=()
+        is_number_available 19
+        if [ $? -eq 0 ]; then
+            flippables_19=$(count_flippables 19)
+        fi
+        is_number_available 22
+        if [ $? -eq 0 ]; then
+            flippables_22=$(count_flippables 22)
+        fi
+        is_number_available 43
+        if [ $? -eq 0 ]; then
+            flippables_43=$(count_flippables 43)
+        fi
+        is_number_available 46
+        if [ $? -eq 0 ]; then
+            flippables_46=$(count_flippables 46)
+        fi
+        if ([ $flippables_19 -ne 0 ] || [ $flippables_22 -ne 0 ] || [ $flippables_43 -ne 0 ] || [ $flippables_46 -ne 0 ]); then    
+            array=()
+            array2=()
+            array=($flippables_19 $flippables_22 $flippables_43 $flippables_46)    
+            array2=(19 22 43 46)
+            i=0
+            i_pre=0
+            # multiple array loop
+            #position=0
+            for i in ${!array[@]};
+            do
+                if [ ${array[i]} -gt $i_pre ]; then
+                    position=${array2[i]}
+                    i_pre=${array[i]}
+                fi
+            done
+        fi
     elif ([ $n_is_upper_rim_available -eq 0 ] || [ $n_is_right_rim_available -eq 0 ] || [ $n_is_down_rim_available -eq 0 ] || [ $n_is_left_rim_available -eq 0 ]); then
         if [ $n_is_upper_rim_available -eq 0 ]; then
             #echo "upper rim avaiable"
@@ -2253,8 +2335,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_right_rim=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_down_rim_available -eq 0 ]; then
@@ -2279,8 +2361,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_down_rim=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_left_rim_available -eq 0 ]; then
@@ -2305,8 +2387,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_left_rim=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
@@ -2324,8 +2406,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
     elif ([ $n_is_upper_rim_sub_corner_available -eq 0 ] || [ $n_is_right_rim_sub_corner_available -eq 0 ] || [ $n_is_down_rim_sub_corner_available -eq 0 ] || [ $n_is_left_rim_sub_corner_available -eq 0 ]); then
@@ -2351,8 +2433,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_upper_rim_sub_corner=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         # Here, not elif but if. Same below.
@@ -2378,8 +2460,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_right_rim_sub_corner=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_down_rim_sub_corner_available -eq 0 ]; then
@@ -2404,8 +2486,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_down_rim_sub_corner=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_left_rim_sub_corner_available -eq 0 ]; then
@@ -2433,8 +2515,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_left_rim_sub_corner=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
@@ -2452,8 +2534,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
     elif ([ $n_is_sub_upper_rim_available -eq 0 ] || [ $n_is_sub_right_rim_available -eq 0 ] || [ $n_is_sub_down_rim_available -eq 0 ] || [ $n_is_sub_left_rim_available -eq 0 ]); then
@@ -2479,8 +2561,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_sub_upper_rim=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_sub_right_rim_available -eq 0 ]; then
@@ -2505,8 +2587,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_sub_right_rim=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_sub_down_rim_available -eq 0 ]; then
@@ -2531,8 +2613,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_sub_down_rim=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_sub_left_rim_available -eq 0 ]; then
@@ -2557,8 +2639,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_sub_left_rim=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
@@ -2576,45 +2658,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
-            done
-        fi
-    elif [ $n_is_sub_corner_available -eq 0 ]; then
-        #echo "sub-corner avaiable"
-        array=()
-        array2=()
-        is_number_available 19
-        if [ $? -eq 0 ]; then
-            flippables_19=$(count_flippables 19)
-        fi
-        is_number_available 22
-        if [ $? -eq 0 ]; then
-            flippables_22=$(count_flippables 22)
-        fi
-        is_number_available 43
-        if [ $? -eq 0 ]; then
-            flippables_43=$(count_flippables 43)
-        fi
-        is_number_available 46
-        if [ $? -eq 0 ]; then
-            flippables_46=$(count_flippables 46)
-        fi
-        if ([ $flippables_19 -ne 0 ] || [ $flippables_22 -ne 0 ] || [ $flippables_43 -ne 0 ] || [ $flippables_46 -ne 0 ]); then    
-            array=()
-            array2=()
-            array=($flippables_19 $flippables_22 $flippables_43 $flippables_46)    
-            array2=(19 22 43 46)
-            i=0
-            i_pre=0
-            # multiple array loop
-            #position=0
-            for i in ${!array[@]};
-            do
-                if [ ${array[i]} -gt $i_pre ]; then
-                    position=${array2[i]}
-                fi
-                i_pre=${array[i]}
             done
         fi
     elif ([ $n_is_upper_rim_above_available -eq 0 ] || [ $n_is_right_rim_above_available -eq 0 ] || [ $n_is_down_rim_above_available -eq 0 ] || [ $n_is_left_rim_above_available -eq 0 ]); then
@@ -2640,8 +2685,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_upper_rim_above=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_right_rim_above_available -eq 0 ]; then
@@ -2666,8 +2711,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_right_rim_above=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_down_rim_above_available -eq 0 ]; then
@@ -2692,8 +2737,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_down_rim_above=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         if [ $n_is_left_rim_above_available -eq 0 ]; then
@@ -2718,8 +2763,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_left_rim_above=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
         ### Compare positions and set the position which has largest flippable number.
@@ -2737,8 +2782,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
     fi
@@ -2810,8 +2855,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_including_others=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
     fi
@@ -2938,8 +2983,8 @@ function judge_position()
             do
                 if [ ${array[i]} -gt $i_pre ]; then
                     position_last2=${array2[i]}
+                    i_pre=${array[i]}
                 fi
-                i_pre=${array[i]}
             done
         fi
     fi
@@ -3114,7 +3159,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver1.5"
+echo "CLI_Othello ver1.6"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

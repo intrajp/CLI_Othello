@@ -30,6 +30,7 @@ SELECTED=""
 REMAIN=64
 HUMAN_PASS=0 
 COMPUTER_PASS=0
+EMERGENCY=1
 REPLY=
 PS3=
 
@@ -1511,6 +1512,41 @@ function opponent_exists_in_rim()
     return 1
 }
 
+## This function returns 0 if flippable is safe.
+## var1: number
+## var2: color 
+##
+
+function is_flippable_safe()
+{
+    if [ $REMAIN -eq 0 ]; then
+        return 0
+    fi
+    local num=0
+    local str_c=""
+    local _chk55=""
+    if [ -z "${1}" ]; then
+        echo "Please give a variable as a number." >&2
+        exit 1
+    fi
+    num="${1}" 
+    str_c=$(get_contents_flippables $num)
+    echo "str_c:$str_c"
+    _chk10=$(echo "${str_c}" | grep "10#")
+    _chk17=$(echo "${str_c}" | grep "15#")
+    _chk50=$(echo "${str_c}" | grep "50#")
+    _chk55=$(echo "${str_c}" | grep "55#")
+    if ([ $num  -eq 3 ] || [ $num -eq 6 ] || [ $num -eq 17 ] || [ $num -eq 24 ] ||
+            [ $num  -eq 41 ] || [ $num -eq 47 ] || [ $num -eq 48 ] || [ $num -eq 59 ] ||
+            [ $num -eq 62 ]); then
+        if ([ ! -z "${_chk10}" ] || [ ! -z "${_chk17}" ] || [ ! -z "${_chk50}" ] || [ ! -z "${_chk55}" ]); then
+            echo "$num is not safe!"
+            return 1 
+        fi
+    fi
+    return 0 
+}
+
 ## This function returns 0 if in some numbers are safe and if it's so, return 0.
 ## var1: number
 ## var2: color 
@@ -1778,6 +1814,20 @@ function is_number_safe()
                         [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
                         [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
                         [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color}" ] && 
+                        [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color_opponent}" ] && 
+                        [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
                     return 0
                 fi
                 if ([ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
@@ -1795,6 +1845,14 @@ function is_number_safe()
                         [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
                         [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
                         [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
+                        [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    EMERGENCY=0
                     return 0
                 fi
                 if ([ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
@@ -1853,6 +1911,20 @@ function is_number_safe()
                         [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
                         [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
                         [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color}" ] && 
+                        [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color_opponent}" ] && 
+                        [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
                     return 0
                 fi
                 if ([ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
@@ -1866,6 +1938,20 @@ function is_number_safe()
                 fi
             fi
             if [ $num -eq 56 ]; then
+                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
+                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
+                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
                 if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
                         [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
                         [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
@@ -1903,6 +1989,20 @@ function is_number_safe()
                         [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
                         [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
                         [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str7}" = "${color}" ] && 
+                        [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color_opponent}" ] && 
+                        [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
                     return 0
                 fi
                 if ([ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
@@ -1916,6 +2016,20 @@ function is_number_safe()
                 fi
             fi
             if [ $num -eq 7 ]; then
+                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
+                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
+                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
                 if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
                         [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
                         [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
@@ -1967,6 +2081,17 @@ function is_number_safe()
             _check_str61=$(cut -f 61 -d" " "${file}")
             _check_str62=$(cut -f 62 -d" " "${file}")
             _check_str63=$(cut -f 63 -d" " "${file}")
+
+            is_number_available $num
+            if [ $? -eq 0 ]; then 
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] && 
+                        [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+                        [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+            fi
             if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                     [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] && 
                     [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
@@ -1974,6 +2099,20 @@ function is_number_safe()
                 return 1
             fi
             if [ $num -eq 58 ]; then
+                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color_opponent}" ] && 
+                        [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str63}" = "${color}" ] && 
+                        [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
                 if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color_opponent}" ] && 
                         [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
                         [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
@@ -1991,6 +2130,20 @@ function is_number_safe()
                 fi
             fi
             if [ $num -eq 63 ]; then
+                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
+                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
+                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    EMERGENCY=0
+                    return 0
+                fi
                 if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
                         [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
                         [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
@@ -2028,7 +2181,6 @@ function is_number_safe()
                 fi
             fi
         fi
-
 
     fi
     return 0
@@ -2116,6 +2268,7 @@ function place_and_flip()
         mv "${FILE_KIFU_PRESENT}_tmp" "${FILE_KIFU_PRESENT}"
         flippable_cnt=$((flippable_cnt - 1))
     done
+    EMERGENCY=1
 }
 
 ## This function check every flippables and finalize the position.
@@ -2520,7 +2673,13 @@ function judge_position()
             fi
             is_number_available 48
             if [ $? -eq 0 ]; then
-                flippables_48=$(count_flippables 48)
+                is_flippable_safe 48
+                if [ $? -eq 0 ]; then
+                    flippables_48=$(count_flippables 48)
+                else
+                    echo "48 is not safe."
+                    echo ""
+                fi
             fi
             array=($flippables_24 $flippables_48)    
             array2=(24 48)
@@ -2610,7 +2769,12 @@ function judge_position()
                 fi
             done
         fi
-    elif ([ $n_is_sub_upper_rim_available -eq 0 ] || [ $n_is_sub_right_rim_available -eq 0 ] || [ $n_is_sub_down_rim_available -eq 0 ] || [ $n_is_sub_left_rim_available -eq 0 ]); then
+
+fi
+# Here we start anew.
+if [ $position -eq 0 ]; then
+    #elif ([ $n_is_sub_upper_rim_available -eq 0 ] || [ $n_is_sub_right_rim_available -eq 0 ] || [ $n_is_sub_down_rim_available -eq 0 ] || [ $n_is_sub_left_rim_available -eq 0 ]); then
+    if ([ $n_is_sub_upper_rim_available -eq 0 ] || [ $n_is_sub_right_rim_available -eq 0 ] || [ $n_is_sub_down_rim_available -eq 0 ] || [ $n_is_sub_left_rim_available -eq 0 ]); then
         if [ $n_is_sub_upper_rim_available -eq 0 ]; then
             #echo "sub upper rim avaiable"
             array=()
@@ -2735,6 +2899,7 @@ function judge_position()
             done
         fi
     elif ([ $n_is_upper_rim_above_available -eq 0 ] || [ $n_is_right_rim_above_available -eq 0 ] || [ $n_is_down_rim_above_available -eq 0 ] || [ $n_is_left_rim_above_available -eq 0 ]); then
+        #echo "debug---------------"
         if [ $n_is_upper_rim_above_available -eq 0 ]; then
             #echo "upper rim above avaiable"
             array=()
@@ -2859,8 +3024,10 @@ function judge_position()
             done
         fi
     fi
+fi
 
-    #echo "position:$position"
+    #echo "position_authentic:$position"
+
     if ([ $position -eq 0 ] || [ $position -eq 4 ] || [ $position -eq 5 ] || [ $position -eq 32 ] || [ $position -eq 40 ] ||
             [ $position -eq 60 ] || [ $position -eq 61 ] || [ $position -eq 25 ] || [ $position -eq 33 ]); then
         #echo "==== I check remaining positions. ===="
@@ -2895,7 +3062,13 @@ function judge_position()
         fi
         is_number_available 47
         if [ $? -eq 0 ]; then
-            flippables_47=$(count_flippables 47)
+            is_flippable_safe 47
+            if [ $? -eq 0 ]; then
+                flippables_47=$(count_flippables 47)
+            else
+                #echo "47 is not safe"
+                echo ""
+            fi
         fi
         is_number_available 51
         if [ $? -eq 0 ]; then
@@ -2934,6 +3107,11 @@ function judge_position()
     fi
 
     #echo "position:$position"
+    #is_flippable_safe $position
+    #if [ $? -eq 1 ]; then
+    #    position=0
+    #fi
+
     #echo "position_includeing others:$position_including_others"
     # Set other positions if not in first stage when position is 0.
     if [ $position_including_others -ne 0 ]; then
@@ -3119,6 +3297,7 @@ function judge_position()
 
     #echo "position_last:$position_last"
     # Still 'position' is 0.
+
     if [ $position -eq 0 ]; then
         if ([ $position_last2 -ne 0 ] || [ $position_last -ne 0 ]); then
             if [ $position_last2 -gt $position_last ]; then
@@ -3145,6 +3324,12 @@ function judge_position()
             fi
         fi
     fi
+
+    if [ $EMERGENCY -eq 0 ]; then
+        position=$position_last2
+    fi
+
+    #echo "position:$position"
 
     if [ $position -eq 0 ]; then
         COMPUTER_PASS=1
@@ -3231,7 +3416,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver1.8"
+echo "CLI_Othello ver1.9"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

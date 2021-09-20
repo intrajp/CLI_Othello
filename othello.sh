@@ -4439,7 +4439,7 @@ function count_black_and_white()
     local count_all=0
     local pattern_b="B"
     local pattern_w="W"
-    if [ ! -z ${1} ]; then
+    if [ ! -z "${1}" ]; then
         only_count=1    
     fi
     black=$(awk -F" " -v pat="$pattern_b" '{for(i=1;i<=NF;i++) if($i ~ pat) c++} END {print c}' "${FILE_KIFU_PRESENT}")
@@ -4447,12 +4447,12 @@ function count_black_and_white()
     remain=$((64 - $black - $white))
 
     # Note that 'remain(local)' and 'REMAIN(global)' is different.
-    echo "Black:$black White:$white Remain:$remain"
     count_all=$((black + white))
     REMAIN=$((64 - count_all))
     if [ $only_count -eq 1 ]; then
         return 0
     fi
+    echo "Black:$black White:$white Remain:$remain"
     if [ $count_all -eq 64 ]; then
         if [ $black -gt $white ]; then
             if [ "${HUMAN}" = "Black" ]; then
@@ -4478,7 +4478,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver2.5"
+echo "CLI_Othello ver2.6"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

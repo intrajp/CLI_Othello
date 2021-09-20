@@ -2056,11 +2056,13 @@ function is_number_safe()
         if ([ $num -eq 49 ] || [ $num -eq 9 ]); then
             _check_str1=$(cut -f 1 -d" " "${file}")
             _check_str9=$(cut -f 9 -d" " "${file}")
+            _check_str10=$(cut -f 10 -d" " "${file}")
             _check_str17=$(cut -f 17 -d" " "${file}")
             _check_str25=$(cut -f 25 -d" " "${file}")
             _check_str33=$(cut -f 33 -d" " "${file}")
             _check_str41=$(cut -f 41 -d" " "${file}")
             _check_str49=$(cut -f 49 -d" " "${file}")
+            _check_str50=$(cut -f 50 -d" " "${file}")
             _check_str57=$(cut -f 57 -d" " "${file}")
             if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                     [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] && 
@@ -2117,7 +2119,8 @@ function is_number_safe()
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
-                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [ "${_check_str10}" != "${color_opponent}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2131,6 +2134,12 @@ function is_number_safe()
                             [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
                             [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color}" ] && 
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                            [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "-" ]); then
                         return 0
                     fi
                 fi
@@ -2231,7 +2240,8 @@ function is_number_safe()
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
-                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [ "${_check_str50}" != "${color_opponent}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2245,6 +2255,12 @@ function is_number_safe()
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
                             [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
+                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "${color}" ]); then
                         return 0
                     fi
                 fi
@@ -2308,11 +2324,13 @@ function is_number_safe()
         fi
         if ([ $num -eq 16 ] || [ $num -eq 56 ]); then
             _check_str8=$(cut -f 8 -d" " "${file}")
+            _check_str15=$(cut -f 15 -d" " "${file}")
             _check_str16=$(cut -f 16 -d" " "${file}")
             _check_str24=$(cut -f 24 -d" " "${file}")
             _check_str32=$(cut -f 32 -d" " "${file}")
             _check_str40=$(cut -f 40 -d" " "${file}")
             _check_str48=$(cut -f 48 -d" " "${file}")
+            _check_str55=$(cut -f 55 -d" " "${file}")
             _check_str56=$(cut -f 56 -d" " "${file}")
             _check_str64=$(cut -f 64 -d" " "${file}")
             if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
@@ -2380,7 +2398,8 @@ function is_number_safe()
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
-                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ "${_check_str15}" != "${color_opponent}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2394,6 +2413,12 @@ function is_number_safe()
                             [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
                             [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color}" ] && 
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                            [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "-" ]); then
                         return 0
                     fi
                 fi
@@ -2500,7 +2525,8 @@ function is_number_safe()
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
-                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ "${_check_str55}" != "${color_opponent}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2514,6 +2540,12 @@ function is_number_safe()
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
                             [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
+                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
                         return 0
                     fi
                 fi
@@ -2581,6 +2613,11 @@ function is_number_safe()
             _check_str6=$(cut -f 6 -d" " "${file}")
             _check_str7=$(cut -f 7 -d" " "${file}")
             _check_str8=$(cut -f 8 -d" " "${file}")
+            _check_str10=$(cut -f 10 -d" " "${file}")
+            _check_str15=$(cut -f 15 -d" " "${file}")
+            if [ $REMAIN -lt 5 ]; then
+                return 0
+            fi
             if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                     [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] && 
                     [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
@@ -2636,7 +2673,8 @@ function is_number_safe()
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
-                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ "${_check_str10}" != "${color_opponent}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2650,6 +2688,12 @@ function is_number_safe()
                             [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
                             [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color}" ] && 
                             [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                            [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "-" ]); then
                         return 0
                     fi
                 fi
@@ -2750,7 +2794,8 @@ function is_number_safe()
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
-                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ "${_check_str15}" != "${color_opponent}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2764,6 +2809,12 @@ function is_number_safe()
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
                             [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
                             [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
+                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "${color}" ]); then
                         return 0
                     fi
                 fi
@@ -2843,6 +2894,8 @@ function is_number_safe()
             fi
         fi
         if ([ $num -eq 58 ] || [ $num -eq 63 ]); then
+            _check_str50=$(cut -f 50 -d" " "${file}")
+            _check_str55=$(cut -f 55 -d" " "${file}")
             _check_str57=$(cut -f 57 -d" " "${file}")
             _check_str58=$(cut -f 58 -d" " "${file}")
             _check_str59=$(cut -f 59 -d" " "${file}")
@@ -2852,15 +2905,6 @@ function is_number_safe()
             _check_str63=$(cut -f 63 -d" " "${file}")
             _check_str64=$(cut -f 64 -d" " "${file}")
             is_number_available $num
-            if [ $? -eq 0 ]; then 
-                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] && 
-                        [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
-                        [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-            fi
             if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                     [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] && 
                     [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
@@ -2916,7 +2960,8 @@ function is_number_safe()
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ "${_check_str50}" != "${color_opponent}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2930,6 +2975,12 @@ function is_number_safe()
                             [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
                             [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color}" ] && 
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                            [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "-" ]); then
                         return 0
                     fi
                 fi
@@ -3032,7 +3083,8 @@ function is_number_safe()
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ "${_check_str55}" != "${color_opponent}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -3046,6 +3098,12 @@ function is_number_safe()
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
                             [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
+                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
                         return 0
                     fi
                 fi
@@ -3117,6 +3175,15 @@ function is_number_safe()
                     return 1
                 fi
             fi
+            #if [ $? -eq 0 ]; then 
+            #    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+            #            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] && 
+            #            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+            #            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ]); then
+            #        EMERGENCY=0
+            #        return 0
+            #    fi
+            #fi
         fi
 
     fi
@@ -4361,16 +4428,20 @@ function judge_position()
 }
 
 ## This function counts black and white.
-##
+## var1: 1 only count and return.
 
 function count_black_and_white()
 {
+    local only_count=0
     local black=0
     local white=0
     local remain=0
     local count_all=0
     local pattern_b="B"
     local pattern_w="W"
+    if [ ! -z ${1} ]; then
+        only_count=1    
+    fi
     black=$(awk -F" " -v pat="$pattern_b" '{for(i=1;i<=NF;i++) if($i ~ pat) c++} END {print c}' "${FILE_KIFU_PRESENT}")
     white=$(awk -F" " -v pat="$pattern_w" '{for(i=1;i<=NF;i++) if($i ~ pat) c++} END {print c}' "${FILE_KIFU_PRESENT}")
     remain=$((64 - $black - $white))
@@ -4378,7 +4449,10 @@ function count_black_and_white()
     # Note that 'remain(local)' and 'REMAIN(global)' is different.
     echo "Black:$black White:$white Remain:$remain"
     count_all=$((black + white))
-    REMAIN=$((64 - $count_all - 1))
+    REMAIN=$((64 - count_all))
+    if [ $only_count -eq 1 ]; then
+        return 0
+    fi
     if [ $count_all -eq 64 ]; then
         if [ $black -gt $white ]; then
             if [ "${HUMAN}" = "Black" ]; then
@@ -4404,7 +4478,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver2.4"
+echo "CLI_Othello ver2.5"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file
@@ -4471,15 +4545,13 @@ show_kifu_present
 echo "You are ${HUMAN}"
 while :
 do
+    count_black_and_white 1
     if [ "${HUMAN}" = "White" ]; then
         # Computer
         echo "I'm Black. Thinking..."
         search_available_positions "Black" 
         COMPUTER_PASS=0
         judge_position "Black" 0
-        #if [ $COMPUTER_PASS -eq 1 ]; then
-        #    continue
-        #fi
        	show_kifu_present
         count_black_and_white
         # Human 

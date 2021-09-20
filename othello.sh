@@ -31,6 +31,7 @@ REMAIN=64
 HUMAN_PASS=0 
 COMPUTER_PASS=0
 EMERGENCY=1
+SAFEST=0
 REPLY=
 PS3=
 
@@ -2117,6 +2118,7 @@ function is_number_safe()
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        SAFEST=$num
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
@@ -2224,6 +2226,7 @@ function is_number_safe()
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        SAFEST=$num
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
@@ -2366,6 +2369,7 @@ function is_number_safe()
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        SAFEST=$num
                         return 0
                     fi
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
@@ -2479,6 +2483,7 @@ function is_number_safe()
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        SAFEST=$num
                         return 0
                     fi
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
@@ -2608,6 +2613,7 @@ function is_number_safe()
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
                             [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        SAFEST=$num
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
@@ -2715,6 +2721,7 @@ function is_number_safe()
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
                             [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        SAFEST=$num
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
@@ -2874,6 +2881,7 @@ function is_number_safe()
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        SAFEST=$num
                         return 0
                     fi
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
@@ -2964,7 +2972,6 @@ function is_number_safe()
                                 [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
                                 [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
                                 [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
-echo "debug"
                             return 0
                         fi
                     fi
@@ -2984,6 +2991,7 @@ echo "debug"
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        SAFEST=$num
                         return 0
                     fi
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
@@ -4236,6 +4244,12 @@ function judge_position()
         fi
     fi
 
+    # We select safest option.
+    if [ $SAFEST -ne 0 ]; then
+        position=$SAFEST
+        SAFEST=0
+    fi
+
     # Lastly we select best option.
     if [ $EMERGENCY -eq 0 ]; then
         position=$position_last2
@@ -4248,15 +4262,15 @@ function judge_position()
 
     #echo "#position:$position"
 
-    #if [ $position -eq 0 ]; then
-    #    COMPUTER_PASS=1
-    #    echo "I pass." >&2
-    #    if [ $HUMAN_PASS -eq 1 ]; then
-    #        echo "Game ends."
-    #        exit 0
-    #    fi
-    #    return 1
-    #fi
+    if [ $position -eq 0 ]; then
+        COMPUTER_PASS=1
+        echo "I pass." >&2
+        if [ $HUMAN_PASS -eq 1 ]; then
+            echo "Game ends."
+            exit 0
+        fi
+        return 1
+    fi
     # if ([ $human -eq 1 ] && [ $position -eq 0 ]); then
     #     COMPUTER_PASS=1
     #     echo "I pass." >&2
@@ -4320,17 +4334,17 @@ function count_black_and_white()
     if [ $count_all -eq 64 ]; then
         if [ $black -gt $white ]; then
             if [ "${HUMAN}" = "Black" ]; then
-                echo "You (Black) win."
+                echo "You (Black) won."
             else
-                echo "Computer (Black) wins."
+                echo "Computer (Black) won."
             fi
         elif [ $black -eq $white ]; then
             echo "Tie."
         else
             if [ "${HUMAN}" = "White" ]; then
-                echo "You (White) win."
+                echo "You (White) won."
             else
-                echo "Computer (White) wins."
+                echo "Computer (White) won."
             fi
         fi
         echo "Game ends."
@@ -4342,7 +4356,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver2.2"
+echo "CLI_Othello ver2.3"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file
@@ -4473,6 +4487,7 @@ do
         # Computer
         echo "I'm White. Thinking..."
         search_available_positions "White" 
+        COMPUTER_PASS=0
         judge_position "White" 0
         if [ $COMPUTER_PASS -eq 1 ]; then
             continue

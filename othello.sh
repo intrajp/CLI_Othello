@@ -1532,7 +1532,6 @@ function is_flippable_safe()
     fi
     num="${1}" 
     str_c=$(get_contents_flippables $num)
-    echo "str_c:$str_c"
     _chk10=$(echo "${str_c}" | grep "10#")
     _chk17=$(echo "${str_c}" | grep "15#")
     _chk50=$(echo "${str_c}" | grep "50#")
@@ -2054,6 +2053,7 @@ function is_number_safe()
     if ([ $num -eq 49 ] || [ $num -eq 9 ] || [ $num -eq 16 ] || [ $num -eq 56 ] ||
             [ $num -eq 2 ] || [ $num -eq 7 ] || [ $num -eq 58 ] || [ $num -eq 63 ]); then
         if ([ $num -eq 49 ] || [ $num -eq 9 ]); then
+            _check_flippable=
             _check_str1=$(cut -f 1 -d" " "${file}")
             _check_str9=$(cut -f 9 -d" " "${file}")
             _check_str10=$(cut -f 10 -d" " "${file}")
@@ -2116,11 +2116,20 @@ function is_number_safe()
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
                         return 0
                     fi
+                    _check_flippable=$(get_contents_flippables 9 | grep "10#")
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
-                            [ "${_check_str10}" != "${color_opponent}" ]); then
+                            [ -z "${_check_flippable}" ]); then
+                        SAFEST=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "-" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2140,6 +2149,18 @@ function is_number_safe()
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
                             [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color_opponent}" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str57}" = "${color_opponent}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                            [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "${color_opponent}" ]); then
                         return 0
                     fi
                 fi
@@ -2237,11 +2258,20 @@ function is_number_safe()
                             [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
                         return 0
                     fi
+                    _check_flippable=$(get_contents_flippables 49 | grep "50#")
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
-                            [ "${_check_str50}" != "${color_opponent}" ]); then
+                            [ -z "${_check_flippable}" ]); then
+                        SAFEST=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "-" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2261,6 +2291,18 @@ function is_number_safe()
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color_opponent}" ] && [ "${_check_str9}" = "${color_opponent}" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "${color_opponent}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color_opponent}" ] && [ "${_check_str9}" = "${color}" ] && 
+                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
                         return 0
                     fi
                 fi
@@ -2323,6 +2365,7 @@ function is_number_safe()
             fi
         fi
         if ([ $num -eq 16 ] || [ $num -eq 56 ]); then
+            _check_flippable=
             _check_str8=$(cut -f 8 -d" " "${file}")
             _check_str15=$(cut -f 15 -d" " "${file}")
             _check_str16=$(cut -f 16 -d" " "${file}")
@@ -2395,11 +2438,20 @@ function is_number_safe()
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
                         return 0
                     fi
+                    _check_flippable=$(get_contents_flippables 16 | grep "15#")
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                            [ "${_check_str15}" != "${color_opponent}" ]); then
+                            [ -z "${_check_flippable}" ]); then
+                        SAFEST=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2419,6 +2471,18 @@ function is_number_safe()
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
                             [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color_opponent}" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color_opponent}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                            [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "${color_opponent}" ]); then
                         return 0
                     fi
                 fi
@@ -2522,11 +2586,20 @@ function is_number_safe()
                             [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
                         return 0
                     fi
+                    _check_flippable=$(get_contents_flippables 56 | grep "55#")
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                            [ "${_check_str55}" != "${color_opponent}" ]); then
+                            [ -z "${_check_flippable}" ]); then
+                        SAFEST=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2546,6 +2619,18 @@ function is_number_safe()
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color_opponent}" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color_opponent}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color_opponent}" ] && [ "${_check_str16}" = "${color}" ] && 
+                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
                         return 0
                     fi
                 fi
@@ -2605,6 +2690,7 @@ function is_number_safe()
             fi
         fi
         if ([ $num -eq 2 ] || [ $num -eq 7 ]); then
+            _check_flippable=
             _check_str1=$(cut -f 1 -d" " "${file}")
             _check_str2=$(cut -f 2 -d" " "${file}")
             _check_str3=$(cut -f 3 -d" " "${file}")
@@ -2670,11 +2756,20 @@ function is_number_safe()
                             [ "${_check_str7}" = "-" ] && [ "${_check_str57}" = "-" ]); then
                         return 0
                     fi
+                    _check_flippable=$(get_contents_flippables 2 | grep "10#")
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
                             [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                            [ "${_check_str10}" != "${color_opponent}" ]); then
+                            [ -z "${_check_flippable}" ]); then
+                        SAFEST=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "-" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2694,6 +2789,18 @@ function is_number_safe()
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
                             [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color_opponent}" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str8}" = "${color_opponent}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                            [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "${color_opponent}" ]); then
                         return 0
                     fi
                 fi
@@ -2791,11 +2898,20 @@ function is_number_safe()
                             [ "${_check_str2}" = "-" ] && [ "${_check_str8}" = "-" ]); then
                         return 0
                     fi
+                    _check_flippable=$(get_contents_flippables 7 | grep "15#")
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
                             [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                            [ "${_check_str15}" != "${color_opponent}" ]); then
+                            [ -z "${_check_flippable}" ]); then
+                        SAFEST=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "-" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2815,6 +2931,18 @@ function is_number_safe()
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
                             [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color_opponent}" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "${color_opponent}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color_opponent}" ] && [ "${_check_str2}" = "${color}" ] && 
+                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
                         return 0
                     fi
                 fi
@@ -2894,6 +3022,7 @@ function is_number_safe()
             fi
         fi
         if ([ $num -eq 58 ] || [ $num -eq 63 ]); then
+            _check_flippable=
             _check_str50=$(cut -f 50 -d" " "${file}")
             _check_str55=$(cut -f 55 -d" " "${file}")
             _check_str57=$(cut -f 57 -d" " "${file}")
@@ -2957,11 +3086,20 @@ function is_number_safe()
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
                         return 0
                     fi
+                    _check_flippable=$(get_contents_flippables 58 | grep "50#")
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                            [ "${_check_str50}" != "${color_opponent}" ]); then
+                            [ -z "${_check_flippable}" ]); then
+                        SAFEST=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "-" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -2981,6 +3119,18 @@ function is_number_safe()
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
                             [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color_opponent}" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color_opponent}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                            [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "${color_opponent}" ]); then
                         return 0
                     fi
                 fi
@@ -3080,11 +3230,20 @@ function is_number_safe()
                             [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
                         return 0
                     fi
+                    _check_flippable=$(get_contents_flippables 63 | grep "55#")
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                            [ "${_check_str55}" != "${color_opponent}" ]); then
+                            [ -z "${_check_flippable}" ]); then
+                        SAFEST=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
                         SAFEST=$num
                         return 0
                     fi
@@ -3104,6 +3263,18 @@ function is_number_safe()
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color_opponent}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "${color_opponent}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color_opponent}" ] && [ "${_check_str58}" = "${color}" ] && 
+                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
                         return 0
                     fi
                 fi
@@ -4478,7 +4649,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver2.6"
+echo "CLI_Othello ver2.7"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

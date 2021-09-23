@@ -33,6 +33,7 @@ COMPUTER_PASS=0
 EMERGENCY=1
 SAFEST=0
 PRIORITY=0
+CORNER_PRIORITY=0
 REPLY=
 PS3=
 
@@ -2078,6 +2079,10 @@ function is_number_safe()
             if [ $num -eq 9 ]; then
                 is_number_available 9
                 if [ $? -eq 0 ]; then
+                    # Check orner has priority. 
+                    if ([ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str58}" = "${color_opponent}" ]); then
+                        CORNER_PRIORITY=1
+                    fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color_opponent}" ] && 
                             [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
@@ -2247,6 +2252,10 @@ function is_number_safe()
             if [ $num -eq 49 ]; then
                 is_number_available 49
                 if [ $? -eq 0 ]; then
+                    # Check orner has priority. 
+                    if ([ "${_check_str9}" = "${color_opponent}" ] && [ "${_check_str2}" = "${color_opponent}" ]); then
+                        CORNER_PRIORITY=1
+                    fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color_opponent}" ] && 
                             [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
@@ -2448,6 +2457,10 @@ function is_number_safe()
             if [ $num -eq 16 ]; then
                 is_number_available 16
                 if [ $? -eq 0 ]; then
+                    # Check orner has priority. 
+                    if ([ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str63}" = "${color_opponent}" ]); then
+                        CORNER_PRIORITY=1
+                    fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color_opponent}" ] && 
                             [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
@@ -2623,6 +2636,10 @@ function is_number_safe()
             if [ $num -eq 56 ]; then
                 is_number_available 56
                 if [ $? -eq 0 ]; then
+                    # Check orner has priority. 
+                    if ([ "${_check_str16}" = "${color_opponent}" ] && [ "${_check_str7}" = "${color_opponent}" ]); then
+                        CORNER_PRIORITY=1
+                    fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
                             [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
@@ -2806,6 +2823,7 @@ function is_number_safe()
             _check_str6=$(cut -f 6 -d" " "${file}")
             _check_str7=$(cut -f 7 -d" " "${file}")
             _check_str8=$(cut -f 8 -d" " "${file}")
+            _check_str9=$(cut -f 9 -d" " "${file}")
             _check_str10=$(cut -f 10 -d" " "${file}")
             _check_str15=$(cut -f 15 -d" " "${file}")
             if [ $REMAIN -lt 5 ]; then
@@ -2820,6 +2838,10 @@ function is_number_safe()
             if [ $num -eq 2 ]; then
                 is_number_available 2
                 if [ $? -eq 0 ]; then
+                    # Check orner has priority. 
+                    if ([ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str16}" = "${color_opponent}" ]); then
+                        CORNER_PRIORITY=1
+                    fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color_opponent}" ] && 
                             [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
@@ -2989,6 +3011,10 @@ function is_number_safe()
             if [ $num -eq 7 ]; then
                 is_number_available 7
                 if [ $? -eq 0 ]; then
+                    # Check orner has priority. 
+                    if ([ "${_check_str2}" = "${color_opponent}" ] && [ "${_check_str9}" = "${color_opponent}" ]); then
+                        CORNER_PRIORITY=1
+                    fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
                             [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
@@ -3204,6 +3230,10 @@ function is_number_safe()
             if [ $num -eq 58 ]; then
                 is_number_available 58
                 if [ $? -eq 0 ]; then
+                    # Check orner has priority. 
+                    if ([ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str56}" = "${color_opponent}" ]); then
+                        CORNER_PRIORITY=1
+                    fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color_opponent}" ] && 
                             [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
@@ -3380,6 +3410,10 @@ function is_number_safe()
             if [ $num -eq 63 ]; then
                 is_number_available 63
                 if [ $? -eq 0 ]; then
+                    # Check orner has priority. 
+                    if ([ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str49}" = "${color_opponent}" ]); then
+                        CORNER_PRIORITY=1
+                    fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
                             [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
@@ -3837,6 +3871,7 @@ function judge_position()
                 is_number_safe 7 "${COMPUTER}"
                 if [ $? -eq 0 ]; then
                     position_reliable_than_corner=7
+
                 fi
             fi
             flippables_1=$(count_flippables 1)
@@ -4761,7 +4796,11 @@ function judge_position()
     # Lastly we select best option even the corner is available.
     if [ $position_reliable_than_corner -ne 0 ]; then
         #echo "position_reliable_than_corner:$position_reliable_than_corner"
-        position=$position_reliable_than_corner
+        if [ $CORNER_PRIORITY -eq 1 ]; then
+            CORNER_PRIORITY=0
+        else
+            position=$position_reliable_than_corner
+        fi
     fi
 
     #echo "#position:$position"
@@ -4867,7 +4906,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver2.8"
+echo "CLI_Othello ver2.9"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

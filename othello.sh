@@ -2128,7 +2128,7 @@ function is_number_safe()
             if [ $num -eq 9 ]; then
                 is_number_available 9
                 if [ $? -eq 0 ]; then
-                    # Check orner has priority. 
+                    # Check corner has priority. 
                     if ([ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str58}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
                     fi
@@ -2180,6 +2180,14 @@ function is_number_safe()
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
                             [ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str57}" = "${color}" ] &&
                             [ $REMAIN -le 5 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str57}" = "${color_opponent}" ] &&
+                            [ $REMAIN -le 2 ]); then
                         EMERGENCY=$num
                         return 0
                     fi
@@ -2301,7 +2309,7 @@ function is_number_safe()
             if [ $num -eq 49 ]; then
                 is_number_available 49
                 if [ $? -eq 0 ]; then
-                    # Check orner has priority. 
+                    # Check corner has priority. 
                     if ([ "${_check_str9}" = "${color_opponent}" ] && [ "${_check_str2}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
                     fi
@@ -2353,6 +2361,14 @@ function is_number_safe()
                             [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
                             [ "${_check_str9}" = "${color_opponent}" ] && [ "${_check_str1}" = "${color}" ] &&
                             [ $REMAIN -le 5 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
+                            [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color}" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                            [ "${_check_str9}" = "${color_opponent}" ] && [ "${_check_str1}" = "${color_opponent}" ] &&
+                            [ $REMAIN -le 2 ]); then
                         EMERGENCY=$num
                         return 0
                     fi
@@ -2499,14 +2515,10 @@ function is_number_safe()
                     [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ]); then
                 return 1
             fi
-            if ([ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color}" ] && 
-                    [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color_opponent}" ]); then
-                return 1
-            fi
             if [ $num -eq 16 ]; then
                 is_number_available 16
                 if [ $? -eq 0 ]; then
-                    # Check orner has priority. 
+                    # Check corner has priority. 
                     if ([ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str63}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
                     fi
@@ -2558,6 +2570,14 @@ function is_number_safe()
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
                             [ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color}" ] &&
                             [ $REMAIN -le 5 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color_opponent}" ] &&
+                            [ $REMAIN -le 2 ]); then
                         EMERGENCY=$num
                         return 0
                     fi
@@ -2685,7 +2705,7 @@ function is_number_safe()
             if [ $num -eq 56 ]; then
                 is_number_available 56
                 if [ $? -eq 0 ]; then
-                    # Check orner has priority. 
+                    # Check corner has priority. 
                     if ([ "${_check_str16}" = "${color_opponent}" ] && [ "${_check_str7}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
                     fi
@@ -2737,6 +2757,14 @@ function is_number_safe()
                             [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
                             [ "${_check_str16}" = "${color_opponent}" ] && [ "${_check_str8}" = "${color}" ] &&
                             [ $REMAIN -le 5 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
+                            [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color}" ] && 
+                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                            [ "${_check_str16}" = "${color_opponent}" ] && [ "${_check_str8}" = "${color_opponent}" ] &&
+                            [ $REMAIN -le 2 ]); then
                         EMERGENCY=$num
                         return 0
                     fi
@@ -2887,7 +2915,7 @@ function is_number_safe()
             if [ $num -eq 2 ]; then
                 is_number_available 2
                 if [ $? -eq 0 ]; then
-                    # Check orner has priority. 
+                    # Check corner has priority. 
                     if ([ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str16}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
                     fi
@@ -2939,6 +2967,14 @@ function is_number_safe()
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
                             [ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str8}" = "${color}" ] &&
                             [ $REMAIN -le 5 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str8}" = "${color_opponent}" ] &&
+                            [ $REMAIN -le 2 ]); then
                         EMERGENCY=$num
                         return 0
                     fi
@@ -3060,7 +3096,7 @@ function is_number_safe()
             if [ $num -eq 7 ]; then
                 is_number_available 7
                 if [ $? -eq 0 ]; then
-                    # Check orner has priority. 
+                    # Check corner has priority. 
                     if ([ "${_check_str2}" = "${color_opponent}" ] && [ "${_check_str9}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
                     fi
@@ -3112,6 +3148,14 @@ function is_number_safe()
                             [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
                             [ "${_check_str2}" = "${color_opponent}" ] && [ "${_check_str1}" = "${color}" ] &&
                             [ $REMAIN -le 5 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
+                            [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color}" ] && 
+                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                            [ "${_check_str2}" = "${color_opponent}" ] && [ "${_check_str1}" = "${color_opponent}" ] &&
+                            [ $REMAIN -le 2 ]); then
                         EMERGENCY=$num
                         return 0
                     fi
@@ -3279,7 +3323,7 @@ function is_number_safe()
             if [ $num -eq 58 ]; then
                 is_number_available 58
                 if [ $? -eq 0 ]; then
-                    # Check orner has priority. 
+                    # Check corner has priority. 
                     if ([ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str56}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
                     fi
@@ -3331,6 +3375,14 @@ function is_number_safe()
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
                             [ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color}" ] &&
                             [ $REMAIN -le 5 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color_opponent}" ] &&
+                            [ $REMAIN -le 2 ]); then
                         EMERGENCY=$num
                         return 0
                     fi
@@ -3459,7 +3511,7 @@ function is_number_safe()
             if [ $num -eq 63 ]; then
                 is_number_available 63
                 if [ $? -eq 0 ]; then
-                    # Check orner has priority. 
+                    # Check corner has priority. 
                     if ([ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str49}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
                     fi
@@ -3513,6 +3565,14 @@ function is_number_safe()
                             [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
                             [ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str57}" = "${color}" ] &&
                             [ $REMAIN -le 5 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
+                            [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color}" ] && 
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                            [ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str57}" = "${color_opponent}" ] &&
+                            [ $REMAIN -le 2 ]); then
                         EMERGENCY=$num
                         return 0
                     fi
@@ -4947,7 +5007,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver3.0"
+echo "CLI_Othello ver3.1"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

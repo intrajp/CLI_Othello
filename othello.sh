@@ -37,6 +37,7 @@ PRIORITY=0
 CORNER_PRIORITY=0
 LAST_RESORT=0
 PROBABLY_BEST=0
+AGGRESSIVE_SAVE=0
 REPLY=
 PS3=
 
@@ -1444,77 +1445,62 @@ function opponent_exists_in_rim()
     is_number_available 0 3
     if [ $? -eq 0 ]; then
         _str3_flippable="yes"
-        echo "3 is flippable"
     fi
     is_number_available 0 4
     if [ $? -eq 0 ]; then
         _str4_flippable="yes"
-        echo "4 is flippable"
     fi
     is_number_available 0 5
     if [ $? -eq 0 ]; then
         _str5_flippable="yes"
-        echo "5 is flippable"
     fi
     is_number_available 0 6
     if [ $? -eq 0 ]; then
         _str6_flippable="yes"
-        echo "6 is flippable"
     fi
     is_number_available 0 17
     if [ $? -eq 0 ]; then
         _str17_flippable="yes"
-        echo "17 is flippable"
     fi
     is_number_available 0 25
     if [ $? -eq 0 ]; then
         _str25_flippable="yes"
-        echo "25 is flippable"
     fi
     is_number_available 0 33
     if [ $? -eq 0 ]; then
         _str33_flippable="yes"
-        echo "33 is flippable"
     fi
     is_number_available 0 41
     if [ $? -eq 0 ]; then
         _str41_flippable="yes"
-        echo "41 is flippable"
     fi
     is_number_available 0 24
     if [ $? -eq 0 ]; then
         _str24_flippable="yes"
-        echo "24 is flippable"
     fi
     is_number_available 0 40
     if [ $? -eq 0 ]; then
         _str40_flippable="yes"
-        echo "40 is flippable"
     fi
     is_number_available 0 48
     if [ $? -eq 0 ]; then
         _str48_flippable="yes"
-        echo "48 is flippable"
     fi
     is_number_available 0 59
     if [ $? -eq 0 ]; then
         _str59_flippable="yes"
-        echo "59 is flippable"
     fi
     is_number_available 0 60 
     if [ $? -eq 0 ]; then
         _str60_flippable="yes"
-        echo "60 is flippable"
     fi
     is_number_available 0 61 
     if [ $? -eq 0 ]; then
         _str61_flippable="yes"
-        echo "61 is flippable"
     fi
     is_number_available 0 62
     if [ $? -eq 0 ]; then
         _str62_flippable="yes"
-        echo "62 is flippable"
     fi
 
     if ([ "${_check_str3}" = "${color_opponent}" ] && [ ! -z "${_str3_flippable}" ] ||
@@ -1640,108 +1626,222 @@ function is_number_safe()
     if ([ $num -eq 4 ] || [ $num -eq 5 ] || [ $num -eq 60 ] || [ $num -eq 61 ] ||
             [ $num -eq 25 ] || [ $num -eq 33 ] || [ $num -eq 32 ] || [ $num -eq 40 ]); then    
         if [ $num -eq 4 ]; then
-            _check_str2=$(cut -f 2 -d" " "${file}")
-            _check_str3=$(cut -f 3 -d" " "${file}")
-            _check_str5=$(cut -f 5 -d" " "${file}")
-            _check_str6=$(cut -f 6 -d" " "${file}")
-            _check_str7=$(cut -f 7 -d" " "${file}")
-            if (([ "${_check_str2}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ]) ||
-                    ([ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && [ "${_check_str7}" = "${color}" ] && [ "${_check_str3}" = "${color_opponent}" ])); then
-                return 1
-            fi
-            return 0
-        fi
-        if [ $num -eq 5 ]; then
-            _check_str2=$(cut -f 2 -d" " "${file}")
-            _check_str3=$(cut -f 3 -d" " "${file}")
-            _check_str4=$(cut -f 4 -d" " "${file}")
-            _check_str6=$(cut -f 6 -d" " "${file}")
-            _check_str7=$(cut -f 7 -d" " "${file}")
-            if (([ "${_check_str6}" = "${color}" ] && [ "${_check_str7}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ]) ||
-                    ([ "${_check_str2}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && [ "${_check_str6}" = "${color_opponent}" ])); then
-                return 1
-            fi
-            return 0
-        fi
-        if [ $num -eq 60 ]; then
-            _check_str58=$(cut -f 58 -d" " "${file}")
-            _check_str59=$(cut -f 59 -d" " "${file}")
-            _check_str61=$(cut -f 61 -d" " "${file}")
-            _check_str62=$(cut -f 62 -d" " "${file}")
-            _check_str63=$(cut -f 63 -d" " "${file}")
-            if (([ "${_check_str58}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ]) ||
-                    ([ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && [ "${_check_str63}" = "${color}" ] && [ "${_check_str59}" = "${color_opponent}" ])); then
-                return 1
-            fi
-            return 0
-        fi
-        if [ $num -eq 61 ]; then
-            _check_str58=$(cut -f 58 -d" " "${file}")
-            _check_str59=$(cut -f 59 -d" " "${file}")
-            _check_str60=$(cut -f 60 -d" " "${file}")
-            _check_str62=$(cut -f 62 -d" " "${file}")
-            _check_str63=$(cut -f 63 -d" " "${file}")
-            if (([ "${_check_str62}" = "${color}" ] && [ "${_check_str63}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ]) ||
-                    ([ "${_check_str58}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ])); then
-                return 1
-            fi
-            return 0
-        fi
-        if [ $num -eq 25 ]; then
-            _check_str17=$(cut -f 17 -d" " "${file}")
-            _check_str9=$(cut -f 9 -d" " "${file}")
-            _check_str33=$(cut -f 33 -d" " "${file}")
-            _check_str41=$(cut -f 41 -d" " "${file}")
-            _check_str49=$(cut -f 49 -d" " "${file}")
-            if (([ "${_check_str17}" = "${color}" ] && [ "${_check_str9}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ]) ||
-                    ([ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && [ "${_check_str49}" = "${color}" ] && [ "${_check_str17}" = "${color_opponent}" ])); then
-                return 1
-            fi
-            return 0
-        fi
-        if [ $num -eq 33 ]; then
-            _check_str25=$(cut -f 25 -d" " "${file}")
-            _check_str17=$(cut -f 17 -d" " "${file}")
-            _check_str9=$(cut -f 9 -d" " "${file}")
-            _check_str41=$(cut -f 41 -d" " "${file}")
-            _check_str49=$(cut -f 49 -d" " "${file}")
-            if (([ "${_check_str41}" = "${color}" ] && [ "${_check_str49}" = "${color}" ] && [ "${_check_str25}" = "${color_opponent}" ]) ||
-                    ([ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && [ "${_check_str9}" = "${color}" ] && [ "${_check_str41}" = "${color_opponent}" ])); then
-                return 1
-            fi
-            return 0
-        fi
-        if [ $num -eq 32 ]; then
-            _check_str8=$(cut -f 8 -d" " "${file}")
-            _check_str16=$(cut -f 16 -d" " "${file}")
-            _check_str24=$(cut -f 24 -d" " "${file}")
-            _check_str32=$(cut -f 32 -d" " "${file}")
-            _check_str40=$(cut -f 40 -d" " "${file}")
-            _check_str48=$(cut -f 48 -d" " "${file}")
-            _check_str56=$(cut -f 56 -d" " "${file}")
-            _check_str64=$(cut -f 64 -d" " "${file}")
-            if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && [ "${_check_str24}" = "-" ] && 
-                    [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                    [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
+            is_number_available 4
+            if [ $? -eq 0 ]; then
+                _check_str1=$(cut -f 1 -d" " "${file}")
+                _check_str2=$(cut -f 2 -d" " "${file}")
+                _check_str3=$(cut -f 3 -d" " "${file}")
+                _check_str4=$(cut -f 4 -d" " "${file}")
+                _check_str5=$(cut -f 5 -d" " "${file}")
+                _check_str6=$(cut -f 6 -d" " "${file}")
+                _check_str7=$(cut -f 7 -d" " "${file}")
+                _check_str8=$(cut -f 8 -d" " "${file}")
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && [ "${_check_str3}" = "-" ] && [ "${_check_str4}" = "-" ] &&
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "-" ] && [ "${_check_str7}" = "${color}" ] &&
+                        [ "${_check_str8}" = "-" ]);then
+                    return 1
+                fi
+                if (([ "${_check_str2}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && [ "${_check_str6}" = "${color_opponent}" ] &&
+                        [ "${_check_str5}" = "${color_opponent}" ]) ||
+                        ([ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && [ "${_check_str7}" = "${color}" ] &&
+                        [ "${_check_str3}" = "${color_opponent}" ])); then
+                    return 1
+                fi
+                if [ "${_check_str3}" = "${color_opponent}" ]; then
+                    AGGRESSIVE_SAVE=$num
+                fi
                 return 0
             fi
-            if (([ "${_check_str24}" = "${color}" ] && [ "${_check_str16}" = "${color}" ] && [ "${_check_str40}" = "${color_opponent}" ]) ||
-                    ([ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && [ "${_check_str56}" = "${color}" ] && [ "${_check_str24}" = "${color_opponent}" ])); then
-                return 1
+        fi
+        if [ $num -eq 5 ]; then
+            is_number_available 5
+            if [ $? -eq 0 ]; then
+                _check_str1=$(cut -f 1 -d" " "${file}")
+                _check_str2=$(cut -f 2 -d" " "${file}")
+                _check_str3=$(cut -f 3 -d" " "${file}")
+                _check_str4=$(cut -f 4 -d" " "${file}")
+                _check_str5=$(cut -f 5 -d" " "${file}")
+                _check_str6=$(cut -f 6 -d" " "${file}")
+                _check_str7=$(cut -f 7 -d" " "${file}")
+                _check_str8=$(cut -f 8 -d" " "${file}")
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && [ "${_check_str6}" = "-" ] && [ "${_check_str5}" = "-" ] &&
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "-" ] && [ "${_check_str2}" = "${color}" ] &&
+                        [ "${_check_str1}" = "-" ]);then
+                    return 1
+                fi
+                if (([ "${_check_str6}" = "${color}" ] && [ "${_check_str7}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ]) ||
+                        ([ "${_check_str2}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] &&
+                        [ "${_check_str6}" = "${color_opponent}" ])); then
+                    return 1
+                fi
+                if [ "${_check_str4}" = "${color_opponent}" ]; then
+                    AGGRESSIVE_SAVE=$num
+                fi
+                return 0
             fi
-            return 0
+        fi
+        if [ $num -eq 60 ]; then
+            is_number_available 60
+            if [ $? -eq 0 ]; then
+                _check_str57=$(cut -f 57 -d" " "${file}")
+                _check_str58=$(cut -f 58 -d" " "${file}")
+                _check_str59=$(cut -f 59 -d" " "${file}")
+                _check_str60=$(cut -f 60 -d" " "${file}")
+                _check_str61=$(cut -f 61 -d" " "${file}")
+                _check_str62=$(cut -f 62 -d" " "${file}")
+                _check_str63=$(cut -f 63 -d" " "${file}")
+                _check_str64=$(cut -f 64 -d" " "${file}")
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "-" ] &&
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "-" ] && [ "${_check_str63}" = "${color}" ] &&
+                        [ "${_check_str64}" = "-" ]);then
+                    return 1
+                fi
+                if (([ "${_check_str58}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ] &&
+                        [ "${_check_str61}" = "${color_opponent}" ]) ||
+                        ([ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && [ "${_check_str63}" = "${color}" ] &&
+                        [ "${_check_str59}" = "${color_opponent}" ])); then
+                    return 1
+                fi
+                if [ "${_check_str59}" = "${color_opponent}" ]; then
+                    AGGRESSIVE_SAVE=$num
+                fi
+                return 0
+            fi
+        fi
+        if [ $num -eq 61 ]; then
+            is_number_available 61
+            if [ $? -eq 0 ]; then
+                _check_str57=$(cut -f 57 -d" " "${file}")
+                _check_str58=$(cut -f 58 -d" " "${file}")
+                _check_str59=$(cut -f 59 -d" " "${file}")
+                _check_str60=$(cut -f 60 -d" " "${file}")
+                _check_str61=$(cut -f 61 -d" " "${file}")
+                _check_str62=$(cut -f 62 -d" " "${file}")
+                _check_str63=$(cut -f 63 -d" " "${file}")
+                _check_str64=$(cut -f 64 -d" " "${file}")
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && [ "${_check_str62}" = "-" ] && [ "${_check_str61}" = "-" ] &&
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "-" ] && [ "${_check_str58}" = "${color}" ] &&
+                        [ "${_check_str57}" = "-" ]);then
+                    return 1
+                fi
+                if (([ "${_check_str62}" = "${color}" ] && [ "${_check_str63}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ]) ||
+                        ([ "${_check_str58}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] &&
+                        [ "${_check_str62}" = "${color_opponent}" ])); then
+                    return 1
+                fi
+                if [ "${_check_str60}" = "${color_opponent}" ]; then
+                    AGGRESSIVE_SAVE=$num
+                fi
+                return 0
+            fi
+        fi
+        if [ $num -eq 25 ]; then
+            is_number_available 25 
+            if [ $? -eq 0 ]; then
+                _check_str1=$(cut -f 1 -d" " "${file}")
+                _check_str9=$(cut -f 9 -d" " "${file}")
+                _check_str17=$(cut -f 17 -d" " "${file}")
+                _check_str25=$(cut -f 25 -d" " "${file}")
+                _check_str33=$(cut -f 33 -d" " "${file}")
+                _check_str41=$(cut -f 41 -d" " "${file}")
+                _check_str49=$(cut -f 49 -d" " "${file}")
+                _check_str57=$(cut -f 57 -d" " "${file}")
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && [ "${_check_str17}" = "-" ] && [ "${_check_str25}" = "-" ] &&
+                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "-" ] && [ "${_check_str49}" = "${color}" ] &&
+                        [ "${_check_str57}" = "-" ]);then
+                    return 1
+                fi
+                if (([ "${_check_str17}" = "${color}" ] && [ "${_check_str9}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ]) ||
+                        ([ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && [ "${_check_str49}" = "${color}" ] &&
+                        [ "${_check_str17}" = "${color_opponent}" ])); then
+                    return 1
+                fi
+                if [ "${_check_str17}" = "${color_opponent}" ]; then
+                    AGGRESSIVE_SAVE=$num
+                fi
+                return 0
+            fi
+        fi
+        if [ $num -eq 33 ]; then
+            is_number_available  33
+            if [ $? -eq 0 ]; then
+                _check_str1=$(cut -f 1 -d" " "${file}")
+                _check_str9=$(cut -f 9 -d" " "${file}")
+                _check_str17=$(cut -f 17 -d" " "${file}")
+                _check_str25=$(cut -f 25 -d" " "${file}")
+                _check_str33=$(cut -f 33 -d" " "${file}")
+                _check_str41=$(cut -f 41 -d" " "${file}")
+                _check_str49=$(cut -f 49 -d" " "${file}")
+                _check_str57=$(cut -f 57 -d" " "${file}")
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && [ "${_check_str41}" = "-" ] && [ "${_check_str33}" = "-" ] &&
+                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "-" ] && [ "${_check_str9}" = "${color}" ] &&
+                        [ "${_check_str1}" = "-" ]);then
+                    return 1
+                fi
+                if (([ "${_check_str41}" = "${color}" ] && [ "${_check_str49}" = "${color}" ] && [ "${_check_str25}" = "${color_opponent}" ]) ||
+                        ([ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && [ "${_check_str9}" = "${color}" ] &&
+                        [ "${_check_str41}" = "${color_opponent}" ])); then
+                    return 1
+                fi
+                if [ "${_check_str25}" = "${color_opponent}" ]; then
+                    AGGRESSIVE_SAVE=$num
+                fi
+                return 0
+            fi
+        fi
+        if [ $num -eq 32 ]; then
+            is_number_available  32
+            if [ $? -eq 0 ]; then
+                _check_str8=$(cut -f 8 -d" " "${file}")
+                _check_str16=$(cut -f 16 -d" " "${file}")
+                _check_str24=$(cut -f 24 -d" " "${file}")
+                _check_str32=$(cut -f 32 -d" " "${file}")
+                _check_str40=$(cut -f 40 -d" " "${file}")
+                _check_str48=$(cut -f 48 -d" " "${file}")
+                _check_str56=$(cut -f 56 -d" " "${file}")
+                _check_str64=$(cut -f 64 -d" " "${file}")
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "-" ] &&
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "-" ] && [ "${_check_str56}" = "${color}" ] &&
+                        [ "${_check_str64}" = "-" ]);then
+                    return 1
+                fi
+                if (([ "${_check_str24}" = "${color}" ] && [ "${_check_str16}" = "${color}" ] && [ "${_check_str40}" = "${color_opponent}" ]) ||
+                        ([ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && [ "${_check_str56}" = "${color}" ] &&
+                        [ "${_check_str24}" = "${color_opponent}" ])); then
+                    return 1
+                fi
+                if [ "${_check_str24}" = "${color_opponent}" ]; then
+                    AGGRESSIVE_SAVE=$num
+                fi
+                return 0
+            fi
         fi
         if [ $num -eq 40 ]; then
-            _check_str32=$(cut -f 32 -d" " "${file}")
-            _check_str24=$(cut -f 24 -d" " "${file}")
-            _check_str16=$(cut -f 16 -d" " "${file}")
-            _check_str48=$(cut -f 48 -d" " "${file}")
-            _check_str56=$(cut -f 56 -d" " "${file}")
-            if (([ "${_check_str48}" = "${color}" ] && [ "${_check_str56}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ]) ||
-                    ([ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && [ "${_check_str16}" = "${color}" ] && [ "${_check_str48}" = "${color_opponent}" ])); then
-                return 1
+            is_number_available 40 
+            if [ $? -eq 0 ]; then
+                _check_str8=$(cut -f 8 -d" " "${file}")
+                _check_str16=$(cut -f 16 -d" " "${file}")
+                _check_str24=$(cut -f 24 -d" " "${file}")
+                _check_str32=$(cut -f 32 -d" " "${file}")
+                _check_str40=$(cut -f 40 -d" " "${file}")
+                _check_str48=$(cut -f 48 -d" " "${file}")
+                _check_str56=$(cut -f 56 -d" " "${file}")
+                _check_str64=$(cut -f 64 -d" " "${file}")
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && [ "${_check_str48}" = "-" ] && [ "${_check_str40}" = "-" ] &&
+                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "-" ] && [ "${_check_str16}" = "${color}" ] &&
+                        [ "${_check_str8}" = "-" ]);then
+                    return 1
+                fi
+                if (([ "${_check_str48}" = "${color}" ] && [ "${_check_str56}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ]) ||
+                        ([ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && [ "${_check_str16}" = "${color}" ] &&
+                        [ "${_check_str48}" = "${color_opponent}" ])); then
+                    return 1
+                fi
+                if [ "${_check_str32}" = "${color_opponent}" ]; then
+                    AGGRESSIVE_SAVE=$num
+                fi
+                return 0
             fi
-            return 0
         fi
     fi
     ## pattern 2 ######
@@ -1756,8 +1856,40 @@ function is_number_safe()
             _check_str17=$(cut -f 17 -d" " "${file}")
             _check_str9=$(cut -f 9 -d" " "${file}")
             _check_str1=$(cut -f 1 -d" " "${file}")
+            _check_flippable=$(get_contents_flippables 41 | grep "50#")
             is_number_available 41
             if [ $? -eq 0 ]; then
+                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color_opponent}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color}" ] &&
+                        [ "${_check_str41}" = "-" ] && [ "${_check_str33}" = "${color_opponent}" ] &&
+                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color}" ] &&
+                        [ "${_check_str9}" = "${color}" ] && [ "${_check_str1}" = "${color}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color}" ] && 
+                        [ "${_check_str41}" = "-" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    return 1
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color}" ] && 
+                        [ "${_check_str41}" = "-" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                        [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "-" ] && 
+                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
+                        [ "${_check_str41}" = "-" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                        [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
+                        [ "${_check_str9}" = "${color}" ] && [ "${_check_str1}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color_opponent}" ] && 
                         [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
                         [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "-" ] && 
@@ -1788,7 +1920,6 @@ function is_number_safe()
                         [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
                     return 0
                 fi
-                _check_flippable=$(get_contents_flippables 41 | grep "50#")
                 if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                         [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                         [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "-" ] && 
@@ -1796,14 +1927,33 @@ function is_number_safe()
                         [ -z "${_check_flippable}" ]); then
                     return 0
                 fi
-            fi
-            if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str41}" = "-" ] && 
-                    [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
-                    [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "${color}" ]); then
-                return 0
-            fi
-            if ([ "${_check_str49}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
-                    [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str9}" = "${color_opponent}" ]); then
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
+                        [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
+                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "-" ] && 
+                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                        [ -z "${_check_flippable}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str41}" = "-" ] && 
+                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] &&
+                        [ "${_check_str17}" = "${color_opponent}" ] && 
+                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "${color}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && [ "${_check_str41}" = "-" ] && 
+                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] &&
+                        [ "${_check_str17}" = "${color_opponent}" ] && 
+                        [ "${_check_str9}" = "${color}" ] && [ "${_check_str1}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color}" ] && [ "${_check_str41}" = "-" ] && 
+                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] &&
+                        [ "${_check_str17}" = "-" ] && 
+                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -1816,8 +1966,40 @@ function is_number_safe()
             _check_str41=$(cut -f 41 -d" " "${file}")
             _check_str49=$(cut -f 49 -d" " "${file}")
             _check_str57=$(cut -f 57 -d" " "${file}")
+            _check_flippable=$(get_contents_flippables 17 | grep "10#")
             is_number_available 17 
             if [ $? -eq 0 ]; then
+                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color_opponent}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] &&
+                        [ "${_check_str17}" = "-" ] && [ "${_check_str25}" = "${color_opponent}" ] &&
+                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color}" ] &&
+                        [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "${color}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
+                        [ "${_check_str17}" = "-" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    return 1
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
+                        [ "${_check_str17}" = "-" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                        [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "-" ] && 
+                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                        [ "${_check_str17}" = "-" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                        [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                        [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "-" ] && 
                         [ "${_check_str17}" = "-" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
                         [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
@@ -1848,7 +2030,6 @@ function is_number_safe()
                         [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
                     return 0
                 fi
-                _check_flippable=$(get_contents_flippables 17 | grep "10#")
                 if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
                         [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] && 
                         [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "-" ] && 
@@ -1856,14 +2037,26 @@ function is_number_safe()
                         [ -z "${_check_flippable}" ]); then
                     return 0
                 fi
-            fi
-            if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color_opponent}" ] && [ "${_check_str17}" = "-" ] && 
-                    [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
-                    [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "${color}" ]); then
-                return 0
-            fi
-            if ([ "${_check_str9}" = "${color}" ] && [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
-                    [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str49}" = "${color_opponent}" ]); then
+                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color_opponent}" ] && [ "${_check_str17}" = "-" ] && 
+                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] &&
+                        [ "${_check_str41}" = "${color_opponent}" ] && 
+                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "${color}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && [ "${_check_str17}" = "-" ] && 
+                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] &&
+                        [ "${_check_str41}" = "${color_opponent}" ] && 
+                        [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color}" ] && [ "${_check_str17}" = "-" ] && 
+                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] &&
+                        [ "${_check_str41}" = "-" ] && 
+                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -1876,8 +2069,40 @@ function is_number_safe()
             _check_str24=$(cut -f 24 -d" " "${file}")
             _check_str16=$(cut -f 16 -d" " "${file}")
             _check_str8=$(cut -f 8 -d" " "${file}")
+            _check_flippable=$(get_contents_flippables 48 | grep "55#")
             is_number_available 48
             if [ $? -eq 0 ]; then
+                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color_opponent}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color}" ] &&
+                        [ "${_check_str48}" = "-" ] && [ "${_check_str40}" = "${color_opponent}" ] &&
+                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color}" ] &&
+                        [ "${_check_str16}" = "${color}" ] && [ "${_check_str8}" = "${color}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color}" ] && 
+                        [ "${_check_str48}" = "-" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    return 1
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color}" ] && 
+                        [ "${_check_str48}" = "-" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                        [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "-" ] && 
+                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
+                        [ "${_check_str48}" = "-" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                        [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
+                        [ "${_check_str16}" = "${color}" ] && [ "${_check_str8}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
                         [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
                         [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "-" ] && 
@@ -1908,7 +2133,6 @@ function is_number_safe()
                         [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
                     return 0
                 fi
-                _check_flippable=$(get_contents_flippables 48 | grep "55#")
                 if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
                         [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                         [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "-" ] && 
@@ -1916,14 +2140,33 @@ function is_number_safe()
                         [ -z "${_check_flippable}" ]); then
                     return 0
                 fi
-            fi
-            if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str48}" = "-" ] && 
-                    [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
-                    [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "${color}" ]); then
-                return 0
-            fi
-            if ([ "${_check_str56}" = "${color}" ] && [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                    [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str16}" = "${color_opponent}" ]); then
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
+                        [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "-" ] && 
+                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                        [ -z "${_check_flippable}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str48}" = "-" ] && 
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] &&
+                        [ "${_check_str24}" = "${color_opponent}" ] && 
+                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "${color}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && [ "${_check_str48}" = "-" ] && 
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] &&
+                        [ "${_check_str24}" = "${color_opponent}" ] && 
+                        [ "${_check_str16}" = "${color}" ] && [ "${_check_str8}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color}" ] && [ "${_check_str48}" = "-" ] && 
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] &&
+                        [ "${_check_str24}" = "-" ] && 
+                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -1936,8 +2179,40 @@ function is_number_safe()
             _check_str48=$(cut -f 48 -d" " "${file}")
             _check_str56=$(cut -f 56 -d" " "${file}")
             _check_str64=$(cut -f 64 -d" " "${file}")
+            _check_flippable=$(get_contents_flippables 24 | grep "15#")
             is_number_available 24 
             if [ $? -eq 0 ]; then
+                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] &&
+                        [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "${color_opponent}" ] &&
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color}" ] &&
+                        [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "${color}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
+                        [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    return 1
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
+                        [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                        [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "-" ] && 
+                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                        [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                        [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                        [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "-" ] && 
                         [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
                         [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
@@ -1968,7 +2243,6 @@ function is_number_safe()
                         [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
                     return 0
                 fi
-                _check_flippable=$(get_contents_flippables 24 | grep "15#")
                 if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
                         [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && 
                         [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "-" ] && 
@@ -1976,14 +2250,26 @@ function is_number_safe()
                         [ -z "${_check_flippable}" ]); then
                     return 0
                 fi
-            fi
-            if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && [ "${_check_str24}" = "-" ] && 
-                    [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                    [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
-                return 0
-            fi
-            if ([ "${_check_str16}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
-                    [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str56}" = "${color_opponent}" ]); then
+                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && [ "${_check_str24}" = "-" ] && 
+                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] &&
+                        [ "${_check_str48}" = "${color_opponent}" ] && 
+                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && [ "${_check_str24}" = "-" ] && 
+                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] &&
+                        [ "${_check_str48}" = "${color_opponent}" ] && 
+                        [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color}" ] && [ "${_check_str24}" = "-" ] && 
+                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] &&
+                        [ "${_check_str48}" = "-" ] && 
+                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -1996,8 +2282,40 @@ function is_number_safe()
             _check_str6=$(cut -f 6 -d" " "${file}")
             _check_str7=$(cut -f 7 -d" " "${file}")
             _check_str8=$(cut -f 8 -d" " "${file}")
+            _check_flippable=$(get_contents_flippables 3 | grep "10#")
             is_number_available 3 
             if [ $? -eq 0 ]; then
+                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] &&
+                        [ "${_check_str3}" = "-" ] && [ "${_check_str4}" = "${color_opponent}" ] &&
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color}" ] &&
+                        [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "${color}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
+                        [ "${_check_str3}" = "-" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    return 1
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
+                        [ "${_check_str3}" = "-" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                        [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "-" ] && 
+                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                        [ "${_check_str3}" = "-" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                        [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                        [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "-" ] && 
                         [ "${_check_str3}" = "-" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
                         [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
@@ -2028,7 +2346,6 @@ function is_number_safe()
                         [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
                     return 0
                 fi
-                _check_flippable=$(get_contents_flippables 3 | grep "10#")
                 if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
                         [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && 
                         [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "-" ] && 
@@ -2036,14 +2353,26 @@ function is_number_safe()
                         [ -z "${_check_flippable}" ]); then
                     return 0
                 fi
-            fi
-            if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && [ "${_check_str3}" = "-" ] && 
-                    [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
-                    [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "${color}" ]); then
-                return 0
-            fi
-            if ([ "${_check_str2}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
-                    [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str7}" = "${color_opponent}" ]); then
+                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && [ "${_check_str3}" = "-" ] && 
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] &&
+                        [ "${_check_str6}" = "${color_opponent}" ] && 
+                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "${color}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && [ "${_check_str3}" = "-" ] && 
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] &&
+                        [ "${_check_str6}" = "${color_opponent}" ] && 
+                        [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color}" ] && [ "${_check_str3}" = "-" ] && 
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] &&
+                        [ "${_check_str6}" = "-" ] && 
+                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -2056,8 +2385,40 @@ function is_number_safe()
             _check_str6=$(cut -f 6 -d" " "${file}")
             _check_str7=$(cut -f 7 -d" " "${file}")
             _check_str8=$(cut -f 8 -d" " "${file}")
+            _check_flippable=$(get_contents_flippables 6 | grep "15#")
             is_number_available 6 
             if [ $? -eq 0 ]; then
+                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color_opponent}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color}" ] &&
+                        [ "${_check_str6}" = "-" ] && [ "${_check_str5}" = "${color_opponent}" ] &&
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color}" ] &&
+                        [ "${_check_str2}" = "${color}" ] && [ "${_check_str1}" = "${color}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color}" ] && 
+                        [ "${_check_str6}" = "-" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    return 1
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color}" ] && 
+                        [ "${_check_str6}" = "-" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                        [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "-" ] && 
+                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
+                        [ "${_check_str6}" = "-" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                        [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
+                        [ "${_check_str2}" = "${color}" ] && [ "${_check_str1}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
                         [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
                         [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "-" ] && 
@@ -2088,7 +2449,6 @@ function is_number_safe()
                         [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
                     return 0
                 fi
-                _check_flippable=$(get_contents_flippables 6 | grep "15#")
                 if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                         [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                         [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "-" ] && 
@@ -2096,14 +2456,26 @@ function is_number_safe()
                         [ -z "${_check_flippable}" ]); then
                     return 0
                 fi
-            fi
-            if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str6}" = "-" ] && 
-                    [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
-                    [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "${color}" ]); then
-                return 0
-            fi
-            if ([ "${_check_str7}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
-                    [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ]); then
+                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str6}" = "-" ] && 
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] &&
+                        [ "${_check_str3}" = "${color_opponent}" ] && 
+                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "${color}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && [ "${_check_str6}" = "-" ] && 
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] &&
+                        [ "${_check_str3}" = "${color_opponent}" ] && 
+                        [ "${_check_str2}" = "${color}" ] && [ "${_check_str1}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color}" ] && [ "${_check_str6}" = "-" ] && 
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] &&
+                        [ "${_check_str3}" = "-" ] && 
+                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -2116,8 +2488,40 @@ function is_number_safe()
             _check_str62=$(cut -f 62 -d" " "${file}")
             _check_str63=$(cut -f 63 -d" " "${file}")
             _check_str64=$(cut -f 64 -d" " "${file}")
+            _check_flippable=$(get_contents_flippables 59 | grep "50#")
             is_number_available 59 
             if [ $? -eq 0 ]; then
+                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] &&
+                        [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "${color_opponent}" ] &&
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color}" ] &&
+                        [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "${color}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
+                        [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    return 1
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
+                        [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                        [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "-" ] && 
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                        [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                        [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                        [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
                         [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
                         [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
@@ -2148,7 +2552,6 @@ function is_number_safe()
                         [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
                     return 0
                 fi
-                _check_flippable=$(get_contents_flippables 59 | grep "50#")
                 if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
                         [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && 
                         [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "-" ] && 
@@ -2156,19 +2559,31 @@ function is_number_safe()
                         [ -z "${_check_flippable}" ]); then
                     return 0
                 fi
-            fi
-            if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && [ "${_check_str59}" = "-" ] && 
-                    [ "${_check_str60}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                    [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
-                return 0
-            fi
-            if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str59}" = "-" ] && 
-                    [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
-                    [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
-                return 0
-            fi
-            if ([ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
-                    [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str63}" = "${color_opponent}" ]); then
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && [ "${_check_str59}" = "-" ] && 
+                        [ "${_check_str60}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str59}" = "-" ] && 
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] &&
+                        [ "${_check_str62}" = "${color_opponent}" ] && 
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && [ "${_check_str59}" = "-" ] && 
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] &&
+                        [ "${_check_str62}" = "${color_opponent}" ] && 
+                        [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color}" ] && [ "${_check_str59}" = "-" ] && 
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] &&
+                        [ "${_check_str62}" = "-" ] && 
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -2181,8 +2596,40 @@ function is_number_safe()
             _check_str62=$(cut -f 62 -d" " "${file}")
             _check_str63=$(cut -f 63 -d" " "${file}")
             _check_str64=$(cut -f 64 -d" " "${file}")
+            _check_flippable=$(get_contents_flippables 62 | grep "55#")
             is_number_available 62
             if [ $? -eq 0 ]; then
+                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color_opponent}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color}" ] &&
+                        [ "${_check_str62}" = "-" ] && [ "${_check_str61}" = "${color_opponent}" ] &&
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color}" ] &&
+                        [ "${_check_str58}" = "${color}" ] && [ "${_check_str57}" = "${color}" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color}" ] && 
+                        [ "${_check_str62}" = "-" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    return 1
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color}" ] && 
+                        [ "${_check_str62}" = "-" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                        [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "-" ] && 
+                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
+                        [ "${_check_str62}" = "-" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                        [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
+                        [ "${_check_str58}" = "${color}" ] && [ "${_check_str57}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
                         [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
                         [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "-" ] && 
@@ -2213,7 +2660,6 @@ function is_number_safe()
                         [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
                     return 0
                 fi
-                _check_flippable=$(get_contents_flippables 62 | grep "55#")
                 if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                         [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                         [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "-" ] && 
@@ -2221,19 +2667,35 @@ function is_number_safe()
                         [ -z "${_check_flippable}" ]); then
                     return 0
                 fi
-            fi
-            if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && [ "${_check_str62}" = "-" ] && 
-                    [ "${_check_str61}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
-                    [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
-                return 0
-            fi
-            if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str62}" = "-" ] && 
-                    [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
-                    [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "${color}" ]); then
-                return 0
-            fi
-            if ([ "${_check_str63}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
-                    [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ]); then
+                if [ "${_check_str61}" = "${color_opponent}" ]; then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && [ "${_check_str62}" = "-" ] && 
+                        [ "${_check_str61}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
+                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str62}" = "-" ] && 
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] &&
+                        [ "${_check_str59}" = "${color_opponent}" ] && 
+                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "${color}" ]); then
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && [ "${_check_str62}" = "-" ] && 
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] &&
+                        [ "${_check_str59}" = "${color_opponent}" ] && 
+                        [ "${_check_str58}" = "${color}" ] && [ "${_check_str57}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color}" ] && [ "${_check_str62}" = "-" ] && 
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] &&
+                        [ "${_check_str59}" = "-" ] && 
+                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                    AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -2241,6 +2703,9 @@ function is_number_safe()
     ## pattern 3 ######
     if ([ $num -eq 49 ] || [ $num -eq 9 ] || [ $num -eq 16 ] || [ $num -eq 56 ] ||
             [ $num -eq 2 ] || [ $num -eq 7 ] || [ $num -eq 58 ] || [ $num -eq 63 ]); then
+        if [ $REMAIN -le 4 ]; then
+            return 0
+        fi
         if ([ $num -eq 49 ] || [ $num -eq 9 ]); then
             _check_flippable=
             _check_str1=$(cut -f 1 -d" " "${file}")
@@ -2265,6 +2730,32 @@ function is_number_safe()
                     # Check corner has priority. 
                     if ([ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str58}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "-" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        return 1
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "-" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "-" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        return 1
+                    fi
+                    _check_flippable=$(get_contents_flippables 9 | grep "10#")
+                    ## We go aggressive in first stage.
+                    if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str17}" != "${color_opponent}" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    # We may see this in early stage when aggressive mode.
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color}" ] && 
+                            [ "${_check_str41}" = "-" ] && [ "${_check_str33}" = "-" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        AGGRESSIVE_SAVE=$num
+                        return 0
                     fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color_opponent}" ] && 
@@ -2343,7 +2834,6 @@ function is_number_safe()
                         EMERGENCY=$num
                         return 0
                     fi
-                    _check_flippable=$(get_contents_flippables 9 | grep "10#")
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
@@ -2430,79 +2920,94 @@ function is_number_safe()
                         PROBABLY_BEST=$num
                         return 0
                     fi
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color_opponent}" ] && 
-                        [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
-                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
-                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color}" ] && 
-                        [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
-                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
-                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color_opponent}" ] && [ "${_check_str9}" = "-" ] && 
-                        [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
-                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
-                        [ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str57}" = "-" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color_opponent}" ] && 
-                        [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
-                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
-                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
-                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] &&
-                        [ "${_check_str49}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "-" ] && 
-                        [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
-                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
-                        [ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str57}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str9}" = "-" ] && [ "${_check_str17}" = "-" ] && 
-                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
-                        [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str49}" = "${color}" ] && 
-                        [ "${_check_str57}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num                    
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "-" ] && 
-                        [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
-                        [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
-                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "-" ] && 
-                        [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
-                        [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
-                        [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "${color}" ] &&
-                        [ $REMAIN -le 2 ]); then
-                    EMERGENCY=$num
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
-                        [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color}" ] && 
-                        [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
-                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
-                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ]); then
-                    return 1
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color_opponent}" ] && 
+                            [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                            [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color}" ] && 
+                            [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                            [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color_opponent}" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str57}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color_opponent}" ] && 
+                            [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                            [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] &&
+                            [ "${_check_str49}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "${color_opponent}" ] && [ "${_check_str57}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str9}" = "-" ] && [ "${_check_str17}" = "-" ] && 
+                            [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                            [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str49}" = "${color}" ] && 
+                            [ "${_check_str57}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num                    
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                            [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "${color}" ] &&
+                            [ $REMAIN -le 2 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                            [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
+                            [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "${color_opponent}" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ]); then
+                        return 1
+                    fi
                 fi
             fi
             if [ $num -eq 49 ]; then
@@ -2511,6 +3016,32 @@ function is_number_safe()
                     # Check corner has priority. 
                     if ([ "${_check_str9}" = "${color_opponent}" ] && [ "${_check_str2}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
+                            [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "-" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color_opponent}" ] && 
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        return 1
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
+                            [ "${_check_str41}" = "-" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "-" ] && 
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        return 1
+                    fi
+                    _check_flippable=$(get_contents_flippables 49 | grep "50#")
+                    ## We go aggressive in first stage.
+                    if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str41}" != "${color_opponent}" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    # We may see this in early stage when aggressive mode.
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
+                            [ "${_check_str17}" = "-" ] && [ "${_check_str25}" = "-" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        AGGRESSIVE_SAVE=$num
+                        return 0
                     fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color_opponent}" ] && 
@@ -2589,7 +3120,6 @@ function is_number_safe()
                         EMERGENCY=$num
                         return 0
                     fi
-                    _check_flippable=$(get_contents_flippables 49 | grep "50#")
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
@@ -2678,65 +3208,80 @@ function is_number_safe()
                         PROBABLY_BEST=$num
                         return 0
                     fi
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color_opponent}" ] && 
-                        [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
-                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
-                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
-                        [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
-                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
-                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
-                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] &&
-                        [ "${_check_str9}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color_opponent}" ] && 
-                        [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
-                        [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
-                        [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str9}" = "-" ] && [ "${_check_str17}" = "-" ] && 
-                        [ "${_check_str25}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
-                        [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str49}" = "${color_opponent}" ] && 
-                        [ "${_check_str57}" = "-" ] && [ "${_check_str64}" = "-" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "-" ] && 
-                        [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] && 
-                        [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
-                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "-" ] && 
-                        [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] && 
-                        [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
-                        [ "${_check_str9}" = "${color}" ] && [ "${_check_str1}" = "${color}" ] &&
-                        [ $REMAIN -le 2 ]); then
-                    EMERGENCY=$num
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
-                        [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color}" ] && 
-                        [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
-                        [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
-                        [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ]); then
-                    return 1
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color_opponent}" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                            [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ] &&
+                            [ "${_check_str9}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color_opponent}" ] && 
+                            [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
+                            [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str9}" = "-" ] && [ "${_check_str17}" = "-" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                            [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str49}" = "${color_opponent}" ] && 
+                            [ "${_check_str57}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "-" ] && 
+                            [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "-" ] && 
+                            [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
+                            [ "${_check_str9}" = "${color}" ] && [ "${_check_str1}" = "${color}" ] &&
+                            [ $REMAIN -le 2 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
+                            [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color}" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
+                            [ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color}" ] && 
+                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
+                            [ "${_check_str9}" = "${color}" ] && [ "${_check_str1}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
+                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
+                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color_opponent}" ] && 
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "${color_opponent}" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color_opponent}" ] && 
+                            [ "${_check_str25}" = "${color_opponent}" ] && [ "${_check_str17}" = "${color_opponent}" ]); then
+                        return 1
+                    fi
                 fi
             fi
             if ([ "${_check_str41}" = "${color_opponent}" ] && [ "${_check_str33}" = "${color}" ] && 
@@ -2779,6 +3324,32 @@ function is_number_safe()
                     # Check corner has priority. 
                     if ([ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str63}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "-" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 1
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "-" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 1
+                    fi
+                    _check_flippable=$(get_contents_flippables 16 | grep "15#")
+                    ## We go aggressive in first stage.
+                    if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str24}" != "${color_opponent}" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    # We may see this in early stage when aggressive mode.
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color}" ] && 
+                            [ "${_check_str48}" = "-" ] && [ "${_check_str40}" = "-" ] && 
+                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        AGGRESSIVE_SAVE=$num
+                        return 0
                     fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color_opponent}" ] && 
@@ -2857,7 +3428,6 @@ function is_number_safe()
                         EMERGENCY=$num
                         return 0
                     fi
-                    _check_flippable=$(get_contents_flippables 16 | grep "15#")
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
@@ -2944,79 +3514,94 @@ function is_number_safe()
                         PROBABLY_BEST=$num
                         return 0
                     fi
-                fi
-                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color_opponent}" ] && 
-                        [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
-                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
-                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color}" ] && 
-                        [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
-                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
-                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color_opponent}" ] && 
-                        [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
-                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
-                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] &&
-                        [ "${_check_str56}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
-                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                        [ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "-" ] && 
-                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                        [ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
-                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color}" ] && 
-                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "-" ] && 
-                        [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
-                        [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
-                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "-" ] && 
-                        [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
-                        [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
-                        [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "${color}" ] &&
-                        [ $REMAIN -le 2 ]); then
-                    EMERGENCY=$num
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
-                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color}" ] && 
-                        [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
-                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ]); then
-                    return 1
+                    if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color_opponent}" ] && 
+                            [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                            [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color}" ] && 
+                            [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                            [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color_opponent}" ] && 
+                            [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                            [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] &&
+                            [ "${_check_str56}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                            [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "${color}" ] &&
+                            [ $REMAIN -le 2 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                            [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
+                            [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && 
+                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "${color_opponent}" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ]); then
+                        return 1
+                    fi
                 fi
             fi
             if [ $num -eq 56 ]; then
@@ -3025,6 +3610,32 @@ function is_number_safe()
                     # Check corner has priority. 
                     if ([ "${_check_str16}" = "${color_opponent}" ] && [ "${_check_str7}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
+                            [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "-" ] && 
+                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color_opponent}" ] && 
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        return 1
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
+                            [ "${_check_str48}" = "-" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "-" ] && 
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        return 1
+                    fi
+                    _check_flippable=$(get_contents_flippables 56 | grep "55#")
+                    ## We go aggressive in first stage.
+                    if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str48}" != "${color_opponent}" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    # We may see this in early stage when aggressive mode.
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
+                            [ "${_check_str24}" = "-" ] && [ "${_check_str32}" = "-" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        AGGRESSIVE_SAVE=$num
+                        return 0
                     fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
@@ -3103,7 +3714,6 @@ function is_number_safe()
                         EMERGENCY=$num
                         return 0
                     fi
-                    _check_flippable=$(get_contents_flippables 56 | grep "55#")
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
@@ -3190,79 +3800,94 @@ function is_number_safe()
                         PROBABLY_BEST=$num
                         return 0
                     fi
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
-                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
-                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
-                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
-                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] &&
-                        [ "${_check_str16}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
-                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
-                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
-                        [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
-                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
-                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "-" ] && 
-                        [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && 
-                        [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
-                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "-" ] && 
-                        [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && 
-                        [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
-                        [ "${_check_str16}" = "${color}" ] && [ "${_check_str8}" = "${color}" ] &&
-                        [ $REMAIN -le 2 ]); then
-                    EMERGENCY=$num
-                    return 0
-                fi
-                if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
-                        [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color}" ] && 
-                        [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
-                        [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
-                        [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ]); then
-                    return 1
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                            [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ] &&
+                            [ "${_check_str16}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color_opponent}" ] && 
+                            [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
+                            [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "-" ] && 
+                            [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && 
+                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "-" ] && 
+                            [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && 
+                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
+                            [ "${_check_str16}" = "${color}" ] && [ "${_check_str8}" = "${color}" ] &&
+                            [ $REMAIN -le 2 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
+                            [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color}" ] && 
+                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
+                            [ "${_check_str48}" = "${color_opponent}" ] && [ "${_check_str40}" = "${color}" ] && 
+                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
+                            [ "${_check_str16}" = "${color}" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
+                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
+                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color_opponent}" ] && 
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color_opponent}" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color_opponent}" ] && 
+                            [ "${_check_str32}" = "${color_opponent}" ] && [ "${_check_str24}" = "${color_opponent}" ]); then
+                        return 1
+                    fi
                 fi
             fi
         fi
@@ -3295,6 +3920,32 @@ function is_number_safe()
                     # Check corner has priority. 
                     if ([ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str16}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
+                            [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "-" ] && 
+                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        return 1
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "-" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "-" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        return 1
+                    fi
+                    _check_flippable=$(get_contents_flippables 2 | grep "10#")
+                    ## We go aggressive in first stage.
+                    if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str3}" != "${color_opponent}" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    # We may see this in early stage when aggressive mode.
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color}" ] && 
+                            [ "${_check_str6}" = "-" ] && [ "${_check_str5}" = "-" ] && 
+                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        AGGRESSIVE_SAVE=$num
+                        return 0
                     fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color_opponent}" ] && 
@@ -3373,7 +4024,6 @@ function is_number_safe()
                         EMERGENCY=$num
                         return 0
                     fi
-                    _check_flippable=$(get_contents_flippables 2 | grep "10#")
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
@@ -3460,73 +4110,88 @@ function is_number_safe()
                         PROBABLY_BEST=$num
                         return 0
                     fi
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color_opponent}" ] && 
-                        [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
-                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
-                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "-" ] && [ "${_check_str7}" = "${color}" ] && 
-                        [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
-                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
-                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color_opponent}" ] && 
-                        [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
-                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
-                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
-                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] &&
-                        [ "${_check_str7}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "-" ] && 
-                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
-                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
-                        [ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str8}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
-                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
-                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color}" ] && 
-                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "-" ] && 
-                        [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
-                        [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
-                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "-" ] && 
-                        [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
-                        [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
-                        [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "${color}" ] &&
-                        [ $REMAIN -le 2 ]); then
-                    EMERGENCY=$num
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
-                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color}" ] && 
-                        [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
-                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
-                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ]); then
-                    return 1
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color_opponent}" ] && 
+                            [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                            [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str7}" = "${color}" ] && 
+                            [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                            [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color_opponent}" ] && 
+                            [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                            [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] &&
+                            [ "${_check_str7}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "${color_opponent}" ] && [ "${_check_str8}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                            [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "${color}" ] &&
+                            [ $REMAIN -le 2 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                            [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
+                            [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && 
+                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color_opponent}" ] && 
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "${color_opponent}" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ]); then
+                        return 1
+                    fi
                 fi
             fi
             if [ $num -eq 7 ]; then
@@ -3535,6 +4200,32 @@ function is_number_safe()
                     # Check corner has priority. 
                     if ([ "${_check_str2}" = "${color_opponent}" ] && [ "${_check_str9}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "-" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        return 1
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
+                            [ "${_check_str6}" = "-" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "-" ] && 
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                        return 1
+                    fi
+                    _check_flippable=$(get_contents_flippables 7 | grep "15#")
+                    ## We go aggressive in first stage.
+                    if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str6}" != "${color_opponent}" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    # We may see this in early stage when aggressive mode.
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
+                            [ "${_check_str3}" = "-" ] && [ "${_check_str4}" = "-" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        AGGRESSIVE_SAVE=$num
+                        return 0
                     fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
@@ -3613,7 +4304,6 @@ function is_number_safe()
                         EMERGENCY=$num
                         return 0
                     fi
-                    _check_flippable=$(get_contents_flippables 7 | grep "15#")
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
@@ -3700,73 +4390,88 @@ function is_number_safe()
                         PROBABLY_BEST=$num
                         return 0
                     fi
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
-                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
-                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
-                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
-                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
-                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
-                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
-                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
-                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
-                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
-                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] &&
-                        [ "${_check_str2}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
-                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
-                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
-                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
-                        [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
-                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
-                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "-" ] && 
-                        [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && 
-                        [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
-                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "-" ] && 
-                        [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && 
-                        [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
-                        [ "${_check_str2}" = "${color}" ] && [ "${_check_str1}" = "${color}" ] &&
-                        [ $REMAIN -le 2 ]); then
-                    EMERGENCY=$num
-                    return 0
-                fi
-                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
-                        [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color}" ] && 
-                        [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
-                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
-                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ]); then
-                    return 1
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                            [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] &&
+                            [ "${_check_str2}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color_opponent}" ] && 
+                            [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
+                            [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "-" ] && 
+                            [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && 
+                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "-" ] && 
+                            [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && 
+                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
+                            [ "${_check_str2}" = "${color}" ] && [ "${_check_str1}" = "${color}" ] &&
+                            [ $REMAIN -le 2 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
+                            [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color}" ] && 
+                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
+                            [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color}" ] && 
+                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
+                            [ "${_check_str2}" = "${color}" ] && [ "${_check_str1}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
+                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
+                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color_opponent}" ] && 
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "${color_opponent}" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color_opponent}" ] && 
+                            [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ]); then
+                        return 1
+                    fi
                 fi
             fi
             if ([ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color}" ] && 
@@ -3821,6 +4526,32 @@ function is_number_safe()
                     # Check corner has priority. 
                     if ([ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str56}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
+                            [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "-" ] && 
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        return 1
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "-" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 1
+                    fi
+                    _check_flippable=$(get_contents_flippables 58 | grep "50#")
+                    ## We go aggressive in first stage.
+                    if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str59}" != "${color_opponent}" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    # We may see this in early stage when aggressive mode.
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color}" ] && 
+                            [ "${_check_str62}" = "-" ] && [ "${_check_str61}" = "-" ] && 
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        AGGRESSIVE_SAVE=$num
+                        return 0
                     fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color_opponent}" ] && 
@@ -3899,7 +4630,6 @@ function is_number_safe()
                         EMERGENCY=$num
                         return 0
                     fi
-                    _check_flippable=$(get_contents_flippables 58 | grep "50#")
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
@@ -3993,73 +4723,88 @@ function is_number_safe()
                         PROBABLY_BEST=$num
                         return 0
                     fi
-                fi
-                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color_opponent}" ] && 
-                        [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
-                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
-                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "-" ] && [ "${_check_str63}" = "${color}" ] && 
-                        [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
-                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
-                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color_opponent}" ] && 
-                        [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
-                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
-                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
-                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] &&
-                        [ "${_check_str63}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
-                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
-                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
-                        [ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
-                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
-                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color}" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
-                        [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
-                        [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
-                        [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
-                        [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                        [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "${color}" ] &&
-                        [ $REMAIN -le 2 ]); then
-                    EMERGENCY=$num
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
-                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color}" ] && 
-                        [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
-                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ]); then
-                    return 1
+                    if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color_opponent}" ] && 
+                            [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                            [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str63}" = "${color}" ] && 
+                            [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                            [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color_opponent}" ] && 
+                            [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                            [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] &&
+                            [ "${_check_str63}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "${color_opponent}" ] && [ "${_check_str64}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                            [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "${color}" ] &&
+                            [ $REMAIN -le 2 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                            [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
+                            [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && 
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color_opponent}" ] && 
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "${color_opponent}" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ]); then
+                        return 1
+                    fi
                 fi
             fi
             if [ $num -eq 63 ]; then
@@ -4068,6 +4813,32 @@ function is_number_safe()
                     # Check corner has priority. 
                     if ([ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str49}" = "${color_opponent}" ]); then
                         CORNER_PRIORITY=1
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "-" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 1
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
+                            [ "${_check_str62}" = "-" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "-" ] && 
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                        return 1
+                    fi
+                    _check_flippable=$(get_contents_flippables 63 | grep "55#")
+                    ## We go aggressive in first stage.
+                    if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str62}" != "${color_opponent}" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    # We may see this in early stage when aggressive mode.
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
+                            [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "-" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        AGGRESSIVE_SAVE=$num
+                        return 0
                     fi
                     # This one is for option_reliable_than_corner in judge_position(). 
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
@@ -4146,7 +4917,6 @@ function is_number_safe()
                         EMERGENCY=$num
                         return 0
                     fi
-                    _check_flippable=$(get_contents_flippables 63 | grep "55#")
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
@@ -4233,73 +5003,88 @@ function is_number_safe()
                         PROBABLY_BEST=$num
                         return 0
                     fi
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
-                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
-                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
-                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
-                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
-                    EMERGENCY=0
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
-                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
-                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
-                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] &&
-                        [ "${_check_str58}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
-                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
-                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
-                    return 0
-                fi
-                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
-                        [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
-                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "-" ] && 
-                        [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && 
-                        [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
-                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "-" ] && 
-                        [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && 
-                        [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
-                        [ "${_check_str58}" = "${color}" ] && [ "${_check_str57}" = "${color}" ] &&
-                        [ $REMAIN -le 2 ]); then
-                    EMERGENCY=$num
-                    return 0
-                fi
-                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
-                        [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color}" ] && 
-                        [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
-                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ] &&
-                        [ -z "${_check_flippable}" ]); then
-                    PRIORITY=$num
-                    return 0
-                fi
-                if ([ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
-                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ]); then
-                    return 1
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        EMERGENCY=0
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                            [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] &&
+                            [ "${_check_str58}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && 
+                            [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "${color}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color_opponent}" ] && 
+                            [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "-" ] && 
+                            [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && 
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "-" ] && 
+                            [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && 
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
+                            [ "${_check_str58}" = "${color}" ] && [ "${_check_str57}" = "${color}" ] &&
+                            [ $REMAIN -le 2 ]); then
+                        EMERGENCY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
+                            [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color}" ] && 
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
+                            [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color}" ] && 
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
+                            [ "${_check_str58}" = "${color}" ] && [ "${_check_str57}" = "-" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        PRIORITY=$num
+                        return 0
+                    fi
+                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
+                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ] && 
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "${color_opponent}" ] &&
+                            [ -z "${_check_flippable}" ]); then
+                        return 0
+                    fi
+                    if ([ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color_opponent}" ] && 
+                            [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ]); then
+                        return 1
+                    fi
                 fi
             fi
             if ([ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color}" ] && 
@@ -4327,10 +5112,17 @@ function is_number_safe()
     fi
     ## pattern 4 ######
     if ([ $num -eq 10 ] || [ $num -eq 15 ] || [ $num -eq 50 ] || [ $num -eq 55 ]); then
+        if [ $REMAIN -le 8 ]; then
+            return 0
+        fi
         _check_str10=$(cut -f 10 -d" " "${file}")
         _check_str19=$(cut -f 19 -d" " "${file}")
+        _check_str22=$(cut -f 22 -d" " "${file}")
         _check_str28=$(cut -f 28 -d" " "${file}")
+        _check_str29=$(cut -f 29 -d" " "${file}")
+        _check_str36=$(cut -f 36 -d" " "${file}")
         _check_str37=$(cut -f 37 -d" " "${file}")
+        _check_str43=$(cut -f 43 -d" " "${file}")
         _check_str46=$(cut -f 46 -d" " "${file}")
         _check_str55=$(cut -f 55 -d" " "${file}")
         if ([ $num -eq 10 ]); then
@@ -4485,6 +5277,7 @@ function judge_position()
     #local position_rim=0
     local position_reliable_than_corner=0
     local position_including_others=0
+    local position_aggressive=0
 
     local position_upper_rim_sub_corner=0
     local position_right_rim_sub_corner=0
@@ -4697,14 +5490,20 @@ function judge_position()
             if [ $? -eq 0 ]; then
                 is_number_safe 4 "${COMPUTER}"
                 if [ $? -eq 0 ]; then
-                    flippables_4=$(count_flippables 4)
+                    is_number_safe 4 "${COMPUTER}"
+                    if [ $? -ne 1 ]; then
+                        flippables_4=$(count_flippables 4)
+                    fi
                 fi
             fi
             is_number_available 5
             if [ $? -eq 0 ]; then
                 is_number_safe 5 "${COMPUTER}"
                 if [ $? -eq 0 ]; then
-                    flippables_5=$(count_flippables 5)
+                    is_number_safe 5 "${COMPUTER}"
+                    if [ $? -ne 1 ]; then
+                        flippables_5=$(count_flippables 5)
+                    fi
                 fi
             fi
             array=($flippables_4 $flippables_5)    
@@ -4727,11 +5526,17 @@ function judge_position()
             array2=()
             is_number_available 32
             if [ $? -eq 0 ]; then
-                flippables_32=$(count_flippables 32)
+                is_number_safe 32 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_32=$(count_flippables 32)
+                fi
             fi
             is_number_available 40
             if [ $? -eq 0 ]; then
-                flippables_40=$(count_flippables 40)
+                is_number_safe 40 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_40=$(count_flippables 40)
+                fi
             fi
             array=($flippables_32 $flippables_40)    
             array2=(32 40)
@@ -4753,11 +5558,17 @@ function judge_position()
             array2=()
             is_number_available 60
             if [ $? -eq 0 ]; then
-                flippables_60=$(count_flippables 60)
+                is_number_safe 60 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_60=$(count_flippables 60)
+                fi
             fi
             is_number_available 61
             if [ $? -eq 0 ]; then
-                flippables_61=$(count_flippables 61)
+                is_number_safe 61 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_61=$(count_flippables 61)
+                fi
             fi
             array=($flippables_60 $flippables_61)    
             array2=(60 61)
@@ -4779,11 +5590,17 @@ function judge_position()
             array2=()
             is_number_available 25
             if [ $? -eq 0 ]; then
-                flippables_25=$(count_flippables 25)
+                is_number_safe 25 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_25=$(count_flippables 25)
+                fi
             fi
             is_number_available 33
             if [ $? -eq 0 ]; then
-                flippables_33=$(count_flippables 33)
+                is_number_safe 33 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_33=$(count_flippables 33)
+                fi
             fi
             array=($flippables_25 $flippables_33)    
             array2=(25 33)
@@ -4865,11 +5682,17 @@ function judge_position()
             array2=()
             is_number_available 3
             if [ $? -eq 0 ]; then
-                flippables_3=$(count_flippables 3)
+                is_number_safe 3 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_3=$(count_flippables 3)
+                fi
             fi
             is_number_available 6
             if [ $? -eq 0 ]; then
-                flippables_6=$(count_flippables 6)
+                is_number_safe 6 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_6=$(count_flippables 6)
+                fi
             fi
             array=($flippables_3 $flippables_6)    
             array2=(3 6)
@@ -4892,16 +5715,16 @@ function judge_position()
             array2=()
             is_number_available 24
             if [ $? -eq 0 ]; then
-                flippables_24=$(count_flippables 24)
+                is_number_safe 24 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_24=$(count_flippables 24)
+                fi
             fi
             is_number_available 48
             if [ $? -eq 0 ]; then
-                is_flippable_safe 48
-                if [ $? -eq 0 ]; then
+                is_number_safe 48 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
                     flippables_48=$(count_flippables 48)
-                else
-                    echo "48 is not safe."
-                    echo ""
                 fi
             fi
             array=($flippables_24 $flippables_48)    
@@ -4924,11 +5747,17 @@ function judge_position()
             array2=()
             is_number_available 59
             if [ $? -eq 0 ]; then
-                flippables_59=$(count_flippables 59)
+                is_number_safe 59 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_59=$(count_flippables 59)
+                fi
             fi
             is_number_available 62
             if [ $? -eq 0 ]; then
-                flippables_62=$(count_flippables 62)
+                is_number_safe 62 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_62=$(count_flippables 62)
+                fi
             fi
             array=($flippables_59 $flippables_62)    
             array2=(59 62)
@@ -4950,12 +5779,15 @@ function judge_position()
             array2=()
             is_number_available 17
             if [ $? -eq 0 ]; then
-                flippables_17=$(count_flippables 17)
+                is_number_safe 17 "${COMPUTER}"
+                if [ $? -ne 1 ]; then
+                    flippables_17=$(count_flippables 17)
+                fi
             fi
             is_number_available 41
             if [ $? -eq 0 ]; then
                 is_number_safe 41 "${COMPUTER}"
-                if [ $? -eq 0 ]; then
+                if [ $? -ne 1 ]; then
                     flippables_41=$(count_flippables 41)
                 fi
             fi
@@ -5246,7 +6078,6 @@ function judge_position()
             fi
         fi
     fi
-
     #echo "position_authentic:$position"
 
     if ([ $position -eq 0 ] || [ $position -eq 4 ] || [ $position -eq 5 ] || [ $position -eq 32 ] || [ $position -eq 40 ] ||
@@ -5323,15 +6154,14 @@ function judge_position()
             done
         fi
     fi
-
     #echo "position_includeing others:$position_including_others"
+
     # Set other positions if not in first stage when position is 0.
     if [ $position_including_others -ne 0 ]; then
         if ([ $position -eq 0 ] || [ $REMAIN -lt 20 ]); then
             position=$position_including_others
         fi
     fi
-
     #echo "position is set to $position"
 
     position_last2=0
@@ -5451,8 +6281,8 @@ function judge_position()
             done
         fi
     fi
-
     #echo "position_last2:$position_last2"
+
     # We prefer position_last than position_last2 when position_last2 is the last resort.
     if ([ $position_last2 -eq 0 ] || [ ! -z $LAST_RESORT ]); then
         local _safe10=1
@@ -5460,22 +6290,55 @@ function judge_position()
         local _safe50=1
         local _safe55=1
         # Next to the corner. 
-        is_number_safe 10 "${COMPUTER}"
+        is_number_available 10
         if [ $? -eq 0 ]; then
-            _safe10=0
+            if !([ $position -eq 0 ] && [ $position_last2 -eq 0 ]); then
+                is_number_safe 10 "${COMPUTER}"
+                if [ $? -eq 0 ]; then
+                    _safe10=0
+                fi
+            else
+                # It may not be safe, but we have no other way but to take this position.
+                _safe10=0
+            fi
         fi
-        is_number_safe 15 "${COMPUTER}"
+        is_number_available 15
         if [ $? -eq 0 ]; then
-            _safe15=0
+            if !([ $position -eq 0 ] && [ $position_last2 -eq 0 ]); then
+                is_number_safe 15 "${COMPUTER}"
+                if [ $? -eq 0 ]; then
+                    _safe15=0
+                fi
+            else
+                # It may not be safe, but we have no other way but to take this position.
+                _safe15=0
+            fi
         fi
-        is_number_safe 50 "${COMPUTER}"
+        is_number_available 50
         if [ $? -eq 0 ]; then
-            _safe50=0
+            if !([ $position -eq 0 ] && [ $position_last2 -eq 0 ]); then
+                is_number_safe 50 "${COMPUTER}"
+                if [ $? -eq 0 ]; then
+                    _safe50=0
+                fi
+            else
+                # It may not be safe, but we have no other way but to take this position.
+                _safe50=0
+            fi
         fi
-        is_number_safe 55 "${COMPUTER}"
+        is_number_available 55 
         if [ $? -eq 0 ]; then
-            _safe55=0
+            if !([ $position -eq 0 ] && [ $position_last2 -eq 0 ]); then
+                is_number_safe 55 "${COMPUTER}"
+                if [ $? -eq 0 ]; then
+                    _safe55=0
+                fi
+            else
+                # It may not be safe, but we have no other way but to take this position.
+                _safe55=0
+            fi
         fi
+
         flippables_10=0
         flippables_15=0
         flippables_50=0
@@ -5494,6 +6357,8 @@ function judge_position()
             else
                 flippables_10=0
             fi
+        else
+            flippables_10=0
         fi
         is_number_available 15
         if [ $? -eq 0 ]; then
@@ -5505,6 +6370,8 @@ function judge_position()
             else
                 flippables_15=0
             fi
+        else
+            flippables_15=0
         fi
         is_number_available 50
         if [ $? -eq 0 ]; then
@@ -5516,6 +6383,8 @@ function judge_position()
             else
                 flippables_50=0
             fi
+        else
+            flippables_50=0
         fi
         is_number_available 55
         if [ $? -eq 0 ]; then
@@ -5527,6 +6396,8 @@ function judge_position()
             else
                 flippables_55=0
             fi
+        else
+            flippables_55=0
         fi
         if [ -z $flippables_10 ]; then
             flippables_10=0
@@ -5539,24 +6410,6 @@ function judge_position()
         fi
         if [ -z $flippables_55 ]; then
             flippables_55=0
-        fi
-        if ([ $flippables_10 -eq 0 ] && [ $flippables_15 -eq 0 ] && [ $flippables_50 -eq 0 ] && [ $flippables_55 -eq 0 ]); then    
-            is_number_available 10
-            if [ $? -eq 0 ]; then
-                flippables_10=$(count_flippables 10)
-            fi
-            is_number_available 15
-            if [ $? -eq 0 ]; then
-                flippables_15=$(count_flippables 15)
-            fi
-            is_number_available 50
-            if [ $? -eq 0 ]; then
-                flippables_50=$(count_flippables 50)
-            fi
-            is_number_available 55
-            if [ $? -eq 0 ]; then
-                flippables_50=$(count_flippables 55)
-            fi
         fi
         if ([ $flippables_10 -ne 0 ] || [ $flippables_15 -ne 0 ] || [ $flippables_50 -ne 0 ] || [ $flippables_55 -ne 0 ]); then    
             array=($flippables_10 $flippables_15 $flippables_50 $flippables_55)    
@@ -5575,7 +6428,6 @@ function judge_position()
         fi
 
     fi
-
     #echo "position_last:$position_last"
     # Still 'position' is 0.
 
@@ -5588,11 +6440,11 @@ function judge_position()
             fi
         fi
     fi
-
     #echo "##position:$position"
+
     # Go aggressive if safe.
-    if [ $MODE = "Mode2" ]; then
-        if [ $position -eq 0 ]; then
+    if [ "${MODE}" = "Mode2" ]; then
+        #if [ $position -eq 0 ]; then
             is_corner_available
             if [ $? -eq 1 ]; then
                 opponent_exists_in_rim "${HUMAN}"
@@ -5603,8 +6455,131 @@ function judge_position()
                     fi
                 fi
             fi
+        #fi
+        ###FIXME:
+        is_number_available 4 
+        if [ $? -eq 0 ]; then
+            is_number_safe 4 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggresive=4
+            fi
+        fi
+        is_number_available 5 
+        if [ $? -eq 0 ]; then
+            is_number_safe 5 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=5
+            fi
+        fi
+        is_number_available 60 
+        if [ $? -eq 0 ]; then
+            is_number_safe 60 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=60
+            fi
+        fi
+        is_number_available 61
+        if [ $? -eq 0 ]; then
+            is_number_safe 61 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=61
+            fi
+        fi
+        is_number_available 25 
+        if [ $? -eq 0 ]; then
+            is_number_safe 25 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=25
+            fi
+        fi
+        is_number_available 33 
+        if [ $? -eq 0 ]; then
+            is_number_safe 33 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=33
+            fi
+        fi
+        is_number_available 32 
+        if [ $? -eq 0 ]; then
+            is_number_safe 32 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=32
+            fi
+        fi
+        is_number_available 40
+        if [ $? -eq 0 ]; then
+            is_number_safe 40 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=40
+            fi
+        fi
+        is_number_available 62
+        if [ $? -eq 0 ]; then
+            is_number_safe 62 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=62
+            fi
+        fi
+
+        # we check these and find AGGRESSIVE_SAVE.
+        is_number_available 17
+        if [ $? -eq 0 ]; then
+            is_number_safe 17 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=17
+            fi
+        fi
+        is_number_available 41
+        if [ $? -eq 0 ]; then
+            is_number_safe 41 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=41
+            fi
+        fi
+        is_number_available 24
+        if [ $? -eq 0 ]; then
+            is_number_safe 24 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=24
+            fi
+        fi
+        is_number_available 48
+        if [ $? -eq 0 ]; then
+            is_number_safe 48 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=48
+            fi
+        fi
+        is_number_available 3
+        if [ $? -eq 0 ]; then
+            is_number_safe 3 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=3
+            fi
+        fi
+        is_number_available 6
+        if [ $? -eq 0 ]; then
+            is_number_safe 6 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=6
+            fi
+        fi
+        is_number_available 59
+        if [ $? -eq 0 ]; then
+            is_number_safe 59 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=59
+            fi
+        fi
+        is_number_available 62
+        if [ $? -eq 0 ]; then
+            is_number_safe 62 "${COMPUTER}"
+            if [ $? -eq 0 ]; then
+                position_aggressive=62
+            fi
         fi
     fi
+    #echo "#position_aggressive:$position_aggressive"
 
     # We select safest option.
     if [ $SAFEST -ne 0 ]; then
@@ -5672,8 +6647,17 @@ function judge_position()
         position=$PROBABLY_BEST
         PROBABLY_BEST=0
     fi
-
+    # xx
+    if ([ "${MODE}" = "Mode2" ] && [ $position_aggressive -ne 0 ]); then
+        position=$position_aggressive
+    fi
+    # xx
+    if ([ "${MODE}" = "Mode2" ] && [ $AGGRESSIVE_SAVE -ne 0 ]); then
+        position=$AGGRESSIVE_SAVE
+        AGGRESSIVE_SAVE=0
+    fi
     #echo "#position_final:$position"
+
     if [ $position -eq 0 ]; then
         COMPUTER_PASS=1
         PASS_ALL=$((PASS_ALL + 1))
@@ -5763,7 +6747,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver3.3"
+echo "CLI_Othello ver3.4"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

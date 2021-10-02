@@ -3113,7 +3113,11 @@ function is_number_safe()
                             [ "${_check_str25}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] &&
                             [ "${_check_str41}" = "-" ] && [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
                             [  -z "${_check_flippable}" ]); then
-                        PRIORITY=$num 
+                        # We don't set priority if next one is available.
+                        is_number_available 18 
+                        if [ $? -ne 0 ]; then
+                            PRIORITY=$num 
+                        fi
                         return 0
                     fi
                     ## We go aggressive in first stage.
@@ -3439,7 +3443,11 @@ function is_number_safe()
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] &&
                             [ "${_check_str17}" = "-" ] && [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ] &&
                             [  -z "${_check_flippable}" ]); then
-                        PRIORITY=$num 
+                        # We don't set priority if next one is available.
+                        is_number_available 42
+                        if [ $? -ne 0 ]; then
+                            PRIORITY=$num 
+                        fi
                         return 0
                     fi
                     ## We go aggressive in first stage.
@@ -3807,7 +3815,11 @@ function is_number_safe()
                             [ "${_check_str32}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] &&
                             [ "${_check_str48}" = "-" ] && [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
                             [  -z "${_check_flippable}" ]); then
-                        PRIORITY=$num 
+                        # We don't set priority if next one is available.
+                        is_number_available 23 
+                        if [ $? -ne 0 ]; then
+                            PRIORITY=$num 
+                        fi
                         return 0
                     fi
                     ## We go aggressive in first stage.
@@ -4133,7 +4145,11 @@ function is_number_safe()
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] &&
                             [ "${_check_str24}" = "-" ] && [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ] &&
                             [  -z "${_check_flippable}" ]); then
-                        PRIORITY=$num 
+                        # We don't set priority if next one is available.
+                        is_number_available 47 
+                        if [ $? -ne 0 ]; then
+                            PRIORITY=$num 
+                        fi
                         return 0
                     fi
                     ## We go aggressive in first stage.
@@ -4507,7 +4523,11 @@ function is_number_safe()
                             [ "${_check_str4}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] &&
                             [ "${_check_str6}" = "-" ] && [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
                             [  -z "${_check_flippable}" ]); then
-                        PRIORITY=$num 
+                        # We don't set priority if next one is available.
+                        is_number_available 11 
+                        if [ $? -ne 0 ]; then
+                            PRIORITY=$num 
+                        fi
                         return 0
                     fi
                     ## We go aggressive in first stage.
@@ -4827,7 +4847,11 @@ function is_number_safe()
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] &&
                             [ "${_check_str3}" = "-" ] && [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
                             [  -z "${_check_flippable}" ]); then
-                        PRIORITY=$num 
+                        # We don't set priority if next one is available.
+                        is_number_available 14 
+                        if [ $? -ne 0 ]; then
+                            PRIORITY=$num 
+                        fi
                         return 0
                     fi
                     ## We go aggressive in first stage.
@@ -5210,6 +5234,17 @@ function is_number_safe()
                         return 1
                     fi
                     _check_flippable=$(get_contents_flippables 58 | grep "50#")
+                    if ([ $REMAIN -le 20 ] && [ "${_check_str59}" = "${color_opponent}" ] &&
+                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] &&
+                            [ "${_check_str62}" = "-" ] && [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        # We don't set priority if next one is available.
+                        is_number_available 51 
+                        if [ $? -ne 0 ]; then
+                            PRIORITY=$num 
+                        fi
+                        return 0
+                    fi
                     ## We go aggressive in first stage.
                     if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str59}" != "${color_opponent}" ] &&
                             [  -z "${_check_flippable}" ]); then
@@ -5530,6 +5565,17 @@ function is_number_safe()
                         return 1
                     fi
                     _check_flippable=$(get_contents_flippables 63 | grep "55#")
+                    if ([ $REMAIN -le 20 ] && [ "${_check_str62}" = "${color_opponent}" ] &&
+                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] &&
+                            [ "${_check_str59}" = "-" ] && [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                        # We don't set priority if next one is available.
+                        is_number_available 54 
+                        if [ $? -ne 0 ]; then
+                            PRIORITY=$num 
+                        fi
+                        return 0
+                    fi
                     ## We go aggressive in first stage.
                     if ([ $MODE = "Mode2" ] && [ $REMAIN -ge 16 ] && [ "${_check_str62}" != "${color_opponent}" ] &&
                             [  -z "${_check_flippable}" ]); then
@@ -6904,7 +6950,7 @@ function judge_position()
     position_last2=0
     position_last=0
 
-    ## TESTING IF THIS CLAUSE WORKS EVERY TIME.
+    ## At present, we are testing not using this clause.
     #if ([ $position -eq 0 ] || [ $MODE = "Mode2" ]); then
         #echo "XXXX I'm still checking remaining positions. XXXX"
         flippables_2=0
@@ -7167,14 +7213,21 @@ function judge_position()
 
     fi
     #echo "position_last:$position_last"
-    # Still 'position' is 0.
 
     if [ $position -eq 0 ]; then
         if ([ $position_last2 -ne 0 ] || [ $position_last -ne 0 ]); then
-            if [ $position_last2 -gt $position_last ]; then
-                position=$position_last2
-            else
+            if [ $position_last2 -eq 0 ]; then
                 position=$position_last
+            fi
+            if [ $position_last -eq 0 ]; then
+                position=$position_last2
+            fi
+            if ([ $position_last2 -ne 0 ] && [ $position_last -ne 0 ]); then
+                if [ $flippables_${!position_last2} -gt $flippables_${!position_last} ]; then
+                    position=$position_last2
+                else
+                    position=$position_last
+                fi
             fi
         fi
     fi
@@ -7319,6 +7372,7 @@ function judge_position()
     fi
     #echo "#position_aggressive:$position_aggressive"
 
+    ### FIXME: I don't know this is the best.
     # We select safest option.
     if [ $SAFEST -ne 0 ]; then
         position=$SAFEST
@@ -7329,12 +7383,10 @@ function judge_position()
         position=$PRIORITY
         PRIORITY=0
     fi
-
     # Lastly we select best option.
     if [ $EMERGENCY -eq 0 ]; then
         position=$position_last2
     fi
-
     # Lastly we select best option even the corner is available.
     if ([ $position_reliable_than_corner -ne 0 ] && [ $LAST_RESORT -eq 0 ]); then
         #echo "position_reliable_than_corner:$position_reliable_than_corner"
@@ -7344,6 +7396,7 @@ function judge_position()
             position=$position_reliable_than_corner
         fi
     fi
+    #echo "###position:$position"
 
     # We seek best option.
     local _check_flippable12=""
@@ -7485,7 +7538,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver3.8"
+echo "CLI_Othello ver3.9"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

@@ -2338,6 +2338,12 @@ function is_number_safe()
                         [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
                     return 0
                 fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color_opponent}" ] &&
+                        [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] &&
+                        [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "-" ] &&
+                        [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -2658,6 +2664,12 @@ function is_number_safe()
                         [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
                     return 0
                 fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && [ "${_check_str3}" = "-" ] && 
+                        [ "${_check_str4}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                        [ -z "${_check_flippable}" ]); then
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -2818,6 +2830,12 @@ function is_number_safe()
                         [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
                     return 0
                 fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && [ "${_check_str6}" = "-" ] && 
+                        [ "${_check_str5}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
+                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                        [ -z "${_check_flippable}" ]); then
+                    return 0
+                fi
                 return 1
             fi
         fi
@@ -2903,7 +2921,8 @@ function is_number_safe()
                 fi
                 if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && [ "${_check_str59}" = "-" ] && 
                         [ "${_check_str60}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                        [ -z "${_check_flippable}" ]); then
                     return 0
                 fi
                 if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color_opponent}" ] && [ "${_check_str59}" = "-" ] && 
@@ -3200,13 +3219,16 @@ function is_number_safe()
                             [ $REMAIN -lt 16 ]); then
                         return 0
                     fi
-                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color}" ] && 
-                            [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] && 
-                            [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
-                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ] &&
-                            [  -z "${_check_flippable}" ]); then
-                        PROBABLY_BEST=$num
-                        return 0
+                    is_number_available 57
+                    if [ $? -ne 0 ]; then
+                        if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "${color}" ] && 
+                                [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] && 
+                                [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
+                                [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                                [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
+                            return 0
+                        fi
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "-" ] && 
@@ -3381,13 +3403,6 @@ function is_number_safe()
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
-                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
-                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
-                            [ "${_check_str49}" = "${color}" ] && [ "${_check_str57}" = "-" ] &&
-                            [ -z "${_check_flippable}" ]); then
-                        return 0
-                    fi
-                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
                             [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] && 
                             [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color}" ] && 
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
@@ -3558,13 +3573,16 @@ function is_number_safe()
                             [ $REMAIN -lt 16 ]); then
                         return 0
                     fi
-                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
-                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
-                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
-                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
-                            [  -z "${_check_flippable}" ]); then
-                        PROBABLY_BEST=$num
-                        return 0
+                    is_number_available 1 
+                    if [ $? -ne 0 ]; then
+                        if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
+                                [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
+                                [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
+                                [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                                [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
+                            return 0
+                        fi
                     fi
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
                             [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "-" ] && 
@@ -3736,13 +3754,6 @@ function is_number_safe()
                             [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "${color_opponent}" ] &&
                             [ $REMAIN -le 5 ]); then
                         SAFEST=$num
-                        return 0
-                    fi
-                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "${color}" ] && 
-                            [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
-                            [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
-                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
-                            [ -z "${_check_flippable}" ]); then
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
@@ -3959,13 +3970,16 @@ function is_number_safe()
                             [ $REMAIN -lt 16 ]); then
                         return 0
                     fi
-                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color}" ] && 
-                            [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && 
-                            [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
-                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                            [  -z "${_check_flippable}" ]); then
-                        PROBABLY_BEST=$num
-                        return 0
+                    is_number_available 64
+                    if [ $? -ne 0 ]; then
+                        if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "${color}" ] && 
+                                [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && 
+                                [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
+                                [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                                [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
+                            return 0
+                        fi
                     fi
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "-" ] && 
@@ -4140,13 +4154,6 @@ function is_number_safe()
                         return 0
                     fi
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
-                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
-                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
-                            [ "${_check_str56}" = "${color}" ] && [ "${_check_str64}" = "-" ] &&
-                            [ -z "${_check_flippable}" ]); then
-                        return 0
-                    fi
-                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
                             [ "${_check_str24}" = "${color_opponent}" ] && [ "${_check_str32}" = "${color_opponent}" ] && 
                             [ "${_check_str40}" = "${color_opponent}" ] && [ "${_check_str48}" = "${color}" ] && 
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
@@ -4317,13 +4324,16 @@ function is_number_safe()
                             [ $REMAIN -lt 16 ]); then
                         return 0
                     fi
-                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
-                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
-                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
-                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                            [  -z "${_check_flippable}" ]); then
-                        PROBABLY_BEST=$num
-                        return 0
+                    is_number_available 8 
+                    if [ $? -ne 0 ]; then
+                        if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
+                                [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
+                                [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
+                                [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                                [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
+                            return 0
+                        fi
                     fi
                     if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
                             [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "-" ] && 
@@ -4495,13 +4505,6 @@ function is_number_safe()
                             [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "${color_opponent}" ] &&
                             [ $REMAIN -le 5 ]); then
                         SAFEST=$num
-                        return 0
-                    fi
-                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && 
-                            [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
-                            [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
-                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                            [ -z "${_check_flippable}" ]); then
                         return 0
                     fi
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
@@ -4716,13 +4719,16 @@ function is_number_safe()
                             [ $REMAIN -lt 16 ]); then
                         return 0
                     fi
-                    if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color}" ] && 
-                            [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && 
-                            [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
-                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
-                            [  -z "${_check_flippable}" ]); then
-                        PROBABLY_BEST=$num
-                        return 0
+                    is_number_available 8 
+                    if [ $? -ne 0 ]; then
+                        if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color}" ] && 
+                                [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && 
+                                [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
+                                [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                                [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
+                            return 0
+                        fi
                     fi
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
                             [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "-" ] && 
@@ -4904,13 +4910,6 @@ function is_number_safe()
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
-                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
-                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
-                            [ "${_check_str7}" = "${color}" ] && [ "${_check_str8}" = "-" ] &&
-                            [ -z "${_check_flippable}" ]); then
-                        return 0
-                    fi
-                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                             [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] && 
                             [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color}" ] && 
                             [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
@@ -5075,13 +5074,16 @@ function is_number_safe()
                             [ $REMAIN -lt 16 ]); then
                         return 0
                     fi
-                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
-                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
-                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
-                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                            [  -z "${_check_flippable}" ]); then
-                        PROBABLY_BEST=$num
-                        return 0
+                    is_number_available 1 
+                    if [ $? -ne 0 ]; then
+                        if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
+                                [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
+                                [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
+                                [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                                [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
+                            return 0
+                        fi
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "-" ] && 
@@ -5253,13 +5255,6 @@ function is_number_safe()
                             [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "${color_opponent}" ] &&
                             [ $REMAIN -le 5 ]); then
                         SAFEST=$num
-                        return 0
-                    fi
-                    if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color}" ] && 
-                            [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
-                            [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
-                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
-                            [ -z "${_check_flippable}" ]); then
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
@@ -5494,13 +5489,16 @@ function is_number_safe()
                             [ $REMAIN -lt 16 ]); then
                         return 0
                     fi
-                    if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color}" ] && 
-                            [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && 
-                            [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
-                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ] &&
-                            [  -z "${_check_flippable}" ]); then
-                        PROBABLY_BEST=$num
-                        return 0
+                    is_number_available 64
+                    if [ $? -ne 0 ]; then
+                        if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color}" ] && 
+                                [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && 
+                                [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
+                                [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                                [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
+                            return 0
+                        fi
                     fi
                     if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
                             [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "-" ] && 
@@ -5630,14 +5628,6 @@ function is_number_safe()
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                            [ -z "${_check_flippable}" ]); then
-                        SAFEST=$num
-                        return 0
-                    fi
-                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
-                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
-                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                            [ "${_check_str63}" = "${color}" ] && [ "${_check_str64}" = "-" ] &&
                             [ -z "${_check_flippable}" ]); then
                         SAFEST=$num
                         return 0
@@ -5853,13 +5843,16 @@ function is_number_safe()
                             [ $REMAIN -lt 16 ]); then
                         return 0
                     fi
-                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
-                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
-                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                            [  -z "${_check_flippable}" ]); then
-                        PROBABLY_BEST=$num
-                        return 0
+                    is_number_available 57 
+                    if [ $? -ne 0 ]; then
+                        if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
+                                [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
+                                [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
+                                [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                                [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
+                            return 0
+                        fi
                     fi
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "-" ] && 
@@ -6023,13 +6016,6 @@ function is_number_safe()
                             [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "${color_opponent}" ] &&
                             [ $REMAIN -le 5 ]); then
                         SAFEST=$num
-                        return 0
-                    fi
-                    if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color}" ] && 
-                            [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
-                            [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
-                            [ -z "${_check_flippable}" ]); then
                         return 0
                     fi
                     if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "-" ] && 
@@ -7937,20 +7923,23 @@ function judge_position()
     # end:We seek best option.
 
     # Anyway we select probably the best option.
-    if [ $PROBABLY_BEST -ne 0 ]; then
-        position=$PROBABLY_BEST
-        PROBABLY_BEST=0
-    fi
-    if [ $position_aggressive -ne 0 ]; then
-        position=$position_aggressive
-    fi
-    if [ $AGGRESSIVE_SAVE -ne 0 ]; then
-        position=$AGGRESSIVE_SAVE
-        AGGRESSIVE_SAVE=0
-    fi
-    if [ $EMERGENCY -ne 0 ]; then
-        position=$EMERGENCY
-        EMERGENCY=0
+    if ([ $position_authentic -ne 1 ] && [ $position_authentic -ne 8 ] && [ $position_authentic -ne 57 ] &&
+        [ $position_authentic -ne 64 ]); then
+        if [ $PROBABLY_BEST -ne 0 ]; then
+            position=$PROBABLY_BEST
+            PROBABLY_BEST=0
+        fi
+        if [ $position_aggressive -ne 0 ]; then
+            position=$position_aggressive
+        fi
+        if [ $AGGRESSIVE_SAVE -ne 0 ]; then
+            position=$AGGRESSIVE_SAVE
+            AGGRESSIVE_SAVE=0
+        fi
+        if [ $EMERGENCY -ne 0 ]; then
+            position=$EMERGENCY
+            EMERGENCY=0
+        fi
     fi
     #echo "#position_final:$position"
 
@@ -8167,7 +8156,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver4.2"
+echo "CLI_Othello ver4.3"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

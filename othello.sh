@@ -38,6 +38,7 @@ CORNER_PRIORITY=0
 LAST_RESORT=0
 PROBABLY_BEST=0
 AGGRESSIVE_SAVE=0
+BEST_CORNER=0
 REPLY=
 PS3=
 
@@ -1621,6 +1622,86 @@ function is_number_safe()
     ## pattern 0 ######
     if [ $REMAIN -le 1 ]; then
         return 0
+    fi
+    ## pattern 0-1: corners ######
+    if ([ $num -eq 1 ] || [ $num -eq 8 ] || [ $num -eq 57 ] || [ $num -eq 64 ]); then
+        if [ $num -eq 1 ]; then
+            is_number_available 1 
+            if [ $? -eq 0 ]; then
+                _check_str2=$(cut -f 2 -d" " "${file}")
+                _check_str3=$(cut -f 3 -d" " "${file}")
+                _check_str4=$(cut -f 4 -d" " "${file}")
+                _check_str5=$(cut -f 5 -d" " "${file}")
+                _check_str6=$(cut -f 6 -d" " "${file}")
+                _check_str7=$(cut -f 7 -d" " "${file}")
+                _check_str8=$(cut -f 8 -d" " "${file}")
+                _check_str9=$(cut -f 9 -d" " "${file}")
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] &&
+                        [ "${_check_str5}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] &&
+                        [ "${_check_str2}" = "${color}" ] && [ "${_check_str9}" = "${color}" ]); then
+                    BEST_CORNER=$num
+                    return 0
+                fi
+            fi
+        fi
+        if [ $num -eq 8 ]; then
+            is_number_available 8 
+            if [ $? -eq 0 ]; then
+                _check_str2=$(cut -f 2 -d" " "${file}")
+                _check_str3=$(cut -f 3 -d" " "${file}")
+                _check_str4=$(cut -f 4 -d" " "${file}")
+                _check_str5=$(cut -f 5 -d" " "${file}")
+                _check_str6=$(cut -f 6 -d" " "${file}")
+                _check_str7=$(cut -f 7 -d" " "${file}")
+                _check_str1=$(cut -f 1 -d" " "${file}")
+                _check_str16=$(cut -f 16 -d" " "${file}")
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str7}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] &&
+                        [ "${_check_str5}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] &&
+                        [ "${_check_str2}" = "${color}" ] && [ "${_check_str16}" = "${color}" ]); then
+                    BEST_CORNER=$num
+                    return 0
+                fi
+            fi
+        fi
+        if [ $num -eq 57 ]; then
+            is_number_available 57
+            if [ $? -eq 0 ]; then
+                _check_str58=$(cut -f 58 -d" " "${file}")
+                _check_str59=$(cut -f 59 -d" " "${file}")
+                _check_str60=$(cut -f 60 -d" " "${file}")
+                _check_str61=$(cut -f 61 -d" " "${file}")
+                _check_str62=$(cut -f 62 -d" " "${file}")
+                _check_str63=$(cut -f 63 -d" " "${file}")
+                _check_str64=$(cut -f 64 -d" " "${file}")
+                _check_str49=$(cut -f 49 -d" " "${file}")
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] &&
+                        [ "${_check_str61}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] &&
+                        [ "${_check_str58}" = "${color}" ] && [ "${_check_str49}" = "${color}" ]); then
+                    BEST_CORNER=$num
+                    return 0
+                fi
+            fi
+        fi
+        if [ $num -eq 64 ]; then
+            is_number_available 64
+            if [ $? -eq 0 ]; then
+                _check_str8=$(cut -f 8 -d" " "${file}")
+                _check_str16=$(cut -f 16 -d" " "${file}")
+                _check_str24=$(cut -f 24 -d" " "${file}")
+                _check_str32=$(cut -f 32 -d" " "${file}")
+                _check_str40=$(cut -f 40 -d" " "${file}")
+                _check_str48=$(cut -f 48 -d" " "${file}")
+                _check_str56=$(cut -f 56 -d" " "${file}")
+                _check_str63=$(cut -f 63 -d" " "${file}")
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] &&
+                        [ "${_check_str32}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] &&
+                        [ "${_check_str56}" = "${color}" ] && [ "${_check_str63}" = "${color}" ]); then
+                    BEST_CORNER=$num
+                    return 0
+                fi
+            fi
+        fi
+        return 1
     fi
     ## pattern 1 ######
     if ([ $num -eq 4 ] || [ $num -eq 5 ] || [ $num -eq 60 ] || [ $num -eq 61 ] ||
@@ -3279,7 +3360,9 @@ function is_number_safe()
                     if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str49}" = "${color}" ] && 
                             [ "${_check_str41}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] && 
                             [ "${_check_str25}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] && 
-                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                            [ "${_check_str9}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
                         return 0
                     fi
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str49}" = "-" ] && 
@@ -3633,7 +3716,9 @@ function is_number_safe()
                     if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color}" ] && 
                             [ "${_check_str17}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] && 
                             [ "${_check_str33}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] && 
-                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                            [ "${_check_str49}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str9}" = "-" ] && 
@@ -4030,7 +4115,9 @@ function is_number_safe()
                     if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str56}" = "${color}" ] && 
                             [ "${_check_str48}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] && 
                             [ "${_check_str32}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] && 
-                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                            [ "${_check_str16}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
                         return 0
                     fi
                     if ([ "${_check_str64}" = "-" ] && [ "${_check_str56}" = "-" ] && 
@@ -4384,7 +4471,9 @@ function is_number_safe()
                     if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str16}" = "${color}" ] && 
                             [ "${_check_str24}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] && 
                             [ "${_check_str40}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] && 
-                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                            [ "${_check_str56}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
                         return 0
                     fi
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str16}" = "-" ] && 
@@ -4786,7 +4875,9 @@ function is_number_safe()
                     if ([ "${_check_str8}" = "${color}" ] && [ "${_check_str7}" = "${color}" ] && 
                             [ "${_check_str6}" = "${color}" ] && [ "${_check_str5}" = "${color}" ] && 
                             [ "${_check_str4}" = "${color}" ] && [ "${_check_str3}" = "${color}" ] && 
-                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ]); then
+                            [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
                         return 0
                     fi
                     if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "-" ] && 
@@ -5134,7 +5225,9 @@ function is_number_safe()
                     if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str2}" = "${color}" ] && 
                             [ "${_check_str3}" = "${color}" ] && [ "${_check_str4}" = "${color}" ] && 
                             [ "${_check_str5}" = "${color}" ] && [ "${_check_str6}" = "${color}" ] && 
-                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ]); then
+                            [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
                         return 0
                     fi
                     if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "-" ] && 
@@ -5549,7 +5642,9 @@ function is_number_safe()
                     if ([ "${_check_str64}" = "${color}" ] && [ "${_check_str63}" = "${color}" ] && 
                             [ "${_check_str62}" = "${color}" ] && [ "${_check_str61}" = "${color}" ] && 
                             [ "${_check_str60}" = "${color}" ] && [ "${_check_str59}" = "${color}" ] && 
-                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ]); then
+                            [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
                         return 0
                     fi
                     if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "-" ] && 
@@ -5903,7 +5998,9 @@ function is_number_safe()
                     if ([ "${_check_str57}" = "${color}" ] && [ "${_check_str58}" = "${color}" ] && 
                             [ "${_check_str59}" = "${color}" ] && [ "${_check_str60}" = "${color}" ] && 
                             [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] && 
-                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                            [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                            [  -z "${_check_flippable}" ]); then
+                            PROBABLY_BEST=$num
                         return 0
                     fi
                     if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] && 
@@ -6175,6 +6272,7 @@ function is_number_safe()
                         return 1
                     fi
                 fi
+                return 1
             fi
             if ([ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color}" ] && 
                     [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color_opponent}" ]); then
@@ -6199,7 +6297,7 @@ function is_number_safe()
                 fi
             fi
         fi
-
+        return 1
     fi
     ## pattern 4 ######
     if ([ $num -eq 10 ] || [ $num -eq 15 ] || [ $num -eq 50 ] || [ $num -eq 55 ]); then
@@ -6517,6 +6615,7 @@ function judge_position()
     local position_including_others=0
     local position_aggressive=0
     local position_early=0
+    local position_best_corner=0
 
     local position_upper_rim_sub_corner=0
     local position_right_rim_sub_corner=0
@@ -7862,7 +7961,14 @@ function judge_position()
     #echo "#position_aggressive:$position_aggressive"
 
     ### FIXME: I don't know this is the best.
-    # We select safest option.
+    if ([ $position_authentic -ne 1 ] && [ $position_authentic -ne 8 ] && [ $position_authentic -ne 57 ] &&
+        [ $position_authentic -ne 64 ]); then
+        # We select safest option.
+        # Lastly we select best option.
+        if [ $EMERGENCY -ne 0 ]; then
+            position=$position_last2
+        fi
+    fi
     if [ $SAFEST -ne 0 ]; then
         position=$SAFEST
         SAFEST=0
@@ -7871,10 +7977,6 @@ function judge_position()
     if [ $PRIORITY -ne 0 ]; then
         position=$PRIORITY
         PRIORITY=0
-    fi
-    # Lastly we select best option.
-    if [ $EMERGENCY -ne 0 ]; then
-        position=$position_last2
     fi
     # Lastly we select best option even the corner is available.
     if ([ $position_reliable_than_corner -ne 0 ] && [ $LAST_RESORT -eq 0 ]); then
@@ -7903,32 +8005,31 @@ function judge_position()
     _check_flippable31=$(get_contents_flippables 31 | grep "28#\|29#")
     _check_flippable39=$(get_contents_flippables 39 | grep "36#\|37#")
     ###FIXME
-    if [ ! -z "${_check_flippable12}" ]; then
-        position=12
-    elif [ ! -z "${_check_flippable13}" ]; then
-        position=13
-    elif [ ! -z "${_check_flippable52}" ]; then
-        position=52
-    elif [ ! -z "${_check_flippable53}" ]; then
-        position=53
-    elif [ ! -z "${_check_flippable26}" ]; then
-        position=26
-    elif [ ! -z "${_check_flippable34}" ]; then
-        position=34
-    elif [ ! -z "${_check_flippable31}" ]; then
-        position=31
-    elif [ ! -z "${_check_flippable39}" ]; then
-        position=39
+    if ([ $position_authentic -ne 1 ] && [ $position_authentic -ne 8 ] && [ $position_authentic -ne 57 ] &&
+        [ $position_authentic -ne 64 ]); then
+        if [ ! -z "${_check_flippable12}" ]; then
+            position=12
+        elif [ ! -z "${_check_flippable13}" ]; then
+            position=13
+        elif [ ! -z "${_check_flippable52}" ]; then
+            position=52
+        elif [ ! -z "${_check_flippable53}" ]; then
+            position=53
+        elif [ ! -z "${_check_flippable26}" ]; then
+            position=26
+        elif [ ! -z "${_check_flippable34}" ]; then
+            position=34
+        elif [ ! -z "${_check_flippable31}" ]; then
+            position=31
+        elif [ ! -z "${_check_flippable39}" ]; then
+            position=39
+        fi
     fi
     # end:We seek best option.
 
     # Anyway we select probably the best option.
     if ([ $position_authentic -ne 1 ] && [ $position_authentic -ne 8 ] && [ $position_authentic -ne 57 ] &&
         [ $position_authentic -ne 64 ]); then
-        if [ $PROBABLY_BEST -ne 0 ]; then
-            position=$PROBABLY_BEST
-            PROBABLY_BEST=0
-        fi
         if [ $position_aggressive -ne 0 ]; then
             position=$position_aggressive
         fi
@@ -7936,10 +8037,14 @@ function judge_position()
             position=$AGGRESSIVE_SAVE
             AGGRESSIVE_SAVE=0
         fi
-        if [ $EMERGENCY -ne 0 ]; then
-            position=$EMERGENCY
-            EMERGENCY=0
-        fi
+    fi
+    if [ $PROBABLY_BEST -ne 0 ]; then
+        position=$PROBABLY_BEST
+        PROBABLY_BEST=0
+    fi
+    if [ $EMERGENCY -ne 0 ]; then
+        position=$EMERGENCY
+        EMERGENCY=0
     fi
     #echo "#position_final:$position"
 
@@ -8065,6 +8170,43 @@ function judge_position()
     if ([ $position -eq -0 ] && [ $position_last2 -eq 0 ] && [ $position_aggressive -eq 0 ] && [ $position_early -eq 0 ]); then
         position=$position_last
     fi
+
+    ### FIXME
+    # we select best corner
+    is_number_available 1 
+    if [ $? -eq 0 ]; then
+        is_number_safe 1 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_best_corner=1
+        fi
+    fi
+    is_number_available 8 
+    if [ $? -eq 0 ]; then
+        is_number_safe 8 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_best_corner=8
+        fi
+    fi
+    is_number_available 57 
+    if [ $? -eq 0 ]; then
+        is_number_safe 57 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_best_corner=57
+        fi
+    fi
+    is_number_available 64
+    if [ $? -eq 0 ]; then
+        is_number_safe 64 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_best_corner=64
+        fi
+    fi
+    #echo "#position_best_corner:$position_best_corner"
+
+    if [ $position_best_corner -ne 0 ]; then
+        position=$position_best_corner
+        BEST_CORNER=0
+    fi
     #echo "position_answer:$position"
 
     if [ $position -eq 0 ]; then
@@ -8156,7 +8298,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver4.3"
+echo "CLI_Othello ver4.4"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

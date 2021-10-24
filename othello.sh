@@ -1605,6 +1605,7 @@ function is_number_safe()
     local _check_str62=""
     local _check_str63=""
     local _check_str64=""
+    local _file_contents=""
     _check_str1=$(cut -f 1 -d" " "${file}")
     _check_str2=$(cut -f 2 -d" " "${file}")
     _check_str3=$(cut -f 3 -d" " "${file}")
@@ -1668,7 +1669,8 @@ function is_number_safe()
     _check_str61=$(cut -f 61 -d" " "${file}")
     _check_str62=$(cut -f 62 -d" " "${file}")
     _check_str63=$(cut -f 63 -d" " "${file}")
-    _check_str64=$(cut -f 64 -d" " "${file}")
+    _file_contents=$(cat "${file}")
+    _check_str64=$(echo "${_file_contents: -1}")
     if [ -z "${1}" ]; then
         echo "Please give a variable as a number." >&2
         exit 1
@@ -6963,6 +6965,17 @@ function is_number_safe()
                 if [ "${_check_str1}" = "${color}" ]; then
                     return 0
                 fi
+                if ([ "${_check_str8}" = "-" ] && [ "${_check_str7}" = "${color_opponent}" ] &&
+                        [ "${_check_str6}" = "${color_opponent}" ] && [ "${_check_str5}" = "${color_opponent}" ] &&
+                        [ "${_check_str4}" = "${color_opponent}" ] && [ "${_check_str3}" = "${color_opponent}" ] &&
+                        [ "${_check_str2}" = "-" ] && [ "${_check_str1}" = "-" ] &&
+                        [ "${_check_str9}" = "${color}" ] && [ "${_check_str17}" = "${color}" ] &&
+                        [ "${_check_str25}" = "${color}" ] && [ "${_check_str33}" = "${color}" ] &&
+                        [ "${_check_str41}" = "${color}" ] && [ "${_check_str49}" = "-" ] &&
+                        [ "${_check_str57}" = "-" ]); then
+                    TACTICAL=$num
+                    return 0
+                fi
                 if ([ "${_check_str1}" = "-" ] && [ "${_check_str10}" = "-" ] &&
                         [ "${_check_str19}" = "${color_opponent}" ] && [ "${_check_str28}" = "${color}" ] &&
                         [ "${_check_str37}" = "${color}" ] && [ "${_check_str46}" = "${color}" ] &&
@@ -7023,6 +7036,17 @@ function is_number_safe()
                 if [ "${_check_str8}" = "${color}" ]; then
                     return 0
                 fi
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str2}" = "${color_opponent}" ] &&
+                        [ "${_check_str3}" = "${color_opponent}" ] && [ "${_check_str4}" = "${color_opponent}" ] &&
+                        [ "${_check_str5}" = "${color_opponent}" ] && [ "${_check_str6}" = "${color_opponent}" ] &&
+                        [ "${_check_str7}" = "-" ] && [ "${_check_str8}" = "-" ] &&
+                        [ "${_check_str16}" = "${color}" ] && [ "${_check_str24}" = "${color}" ] &&
+                        [ "${_check_str32}" = "${color}" ] && [ "${_check_str40}" = "${color}" ] &&
+                        [ "${_check_str48}" = "${color}" ] && [ "${_check_str56}" = "-" ] &&
+                        [ "${_check_str64}" = "-" ]); then
+                    TACTICAL=$num
+                    return 0
+                fi
                 if ([ "${_check_str8}" = "-" ] && [ "${_check_str15}" = "-" ] &&
                         [ "${_check_str22}" = "${color_opponent}" ] && [ "${_check_str29}" = "${color}" ] &&
                         [ "${_check_str36}" = "${color}" ] && [ "${_check_str43}" = "${color}" ] &&
@@ -7065,6 +7089,17 @@ function is_number_safe()
                 if [ "${_check_str57}" = "${color}" ]; then
                     return 0
                 fi
+                if ([ "${_check_str64}" = "-" ] && [ "${_check_str63}" = "${color_opponent}" ] &&
+                        [ "${_check_str62}" = "${color_opponent}" ] && [ "${_check_str61}" = "${color_opponent}" ] &&
+                        [ "${_check_str60}" = "${color_opponent}" ] && [ "${_check_str59}" = "${color_opponent}" ] &&
+                        [ "${_check_str58}" = "-" ] && [ "${_check_str57}" = "-" ] &&
+                        [ "${_check_str49}" = "${color}" ] && [ "${_check_str41}" = "${color}" ] &&
+                        [ "${_check_str33}" = "${color}" ] && [ "${_check_str25}" = "${color}" ] &&
+                        [ "${_check_str17}" = "${color}" ] && [ "${_check_str9}" = "-" ] &&
+                        [ "${_check_str1}" = "-" ]); then
+                    TACTICAL=$num
+                    return 0
+                fi
                 if ([ "${_check_str57}" = "-" ] && [ "${_check_str50}" = "-" ] &&
                         [ "${_check_str43}" = "${color_opponent}" ] && [ "${_check_str36}" = "${color}" ] &&
                         [ "${_check_str29}" = "${color}" ] && [ "${_check_str22}" = "${color}" ] &&
@@ -7105,6 +7140,17 @@ function is_number_safe()
             is_number_available 55 
             if [ $? -eq 0 ]; then
                 if [ "${_check_str64}" = "${color}" ]; then
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "${color_opponent}" ] &&
+                        [ "${_check_str59}" = "${color_opponent}" ] && [ "${_check_str60}" = "${color_opponent}" ] &&
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color_opponent}" ] &&
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ] &&
+                        [ "${_check_str56}" = "${color}" ] && [ "${_check_str48}" = "${color}" ] &&
+                        [ "${_check_str40}" = "${color}" ] && [ "${_check_str32}" = "${color}" ] &&
+                        [ "${_check_str24}" = "${color}" ] && [ "${_check_str16}" = "-" ] &&
+                        [ "${_check_str8}" = "-" ]); then
+                    TACTICAL=$num
                     return 0
                 fi
                 if ([ "${_check_str64}" = "-" ] && [ "${_check_str55}" = "-" ] &&
@@ -9369,7 +9415,7 @@ function count_black_and_white()
                 echo "Computer (Black) won."
             fi
         elif [ $black -eq $white ]; then
-            echo "Tie."
+            echo "Draw match."
         else
             if [ "${HUMAN}" = "White" ]; then
                 echo "You (White) won."
@@ -9386,7 +9432,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver4.9"
+echo "CLI_Othello ver5.0"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file

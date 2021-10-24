@@ -145,3 +145,6 @@ Fix logic.
 4.9
 2021/10/24
 Fix logic.
+5.0
+2021/10/25
+Fix bug not get data of the last position.

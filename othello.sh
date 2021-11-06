@@ -42,6 +42,7 @@ BEST_CORNER=0
 EARLY_TAKE=0
 TACTICAL=0
 DEFINITELY=0
+WIN_CORNER=0
 REPLY=
 PS3=
 
@@ -1688,6 +1689,43 @@ function is_number_safe()
         color="B"
         color_opponent="W"
     fi
+    ## pattern WIN ######
+    if ([ $num -eq 19 ] || [ $num -eq 22 ] || [ $num -eq 43 ] || [ $num -eq 46 ] ||
+            [ $num -eq 20 ] || [ $num -eq 34 ]); then
+        if [ $num -eq 43 ]; then
+            is_number_available 43
+            if [ $? -eq 0 ]; then
+                if ([ "${_check_str15}" = "-" ] && [ "${_check_str22}" = "${color_opponent}" ] &&
+                        [ "${_check_str29}" = "${color_opponent}" ] && [ "${_check_str36}" = "${color_opponent}" ] &&
+                        [ "${_check_str43}" = "-" ] && [ "${_check_str50}" = "${color_opponent}" ]); then
+                    WIN_CORNER=$num
+                    return 0
+                fi
+            fi
+        fi
+        if [ $num -eq 20 ]; then
+            is_number_available 20 
+            if [ $? -eq 0 ]; then
+                if ([ "${_check_str15}" = "-" ] && [ "${_check_str22}" = "${color_opponent}" ] &&
+                        [ "${_check_str29}" = "${color_opponent}" ] && [ "${_check_str36}" = "${color_opponent}" ] &&
+                        [ "${_check_str43}" = "${color_opponent}" ] && [ "${_check_str50}" = "${color_opponent}" ]); then
+                    WIN_CORNER=$num
+                    return 0
+                fi
+            fi
+        fi
+        if [ $num -eq 34 ]; then
+            is_number_available 34 
+            if [ $? -eq 0 ]; then
+                if ([ "${_check_str15}" = "-" ] && [ "${_check_str22}" = "${color_opponent}" ] &&
+                        [ "${_check_str29}" = "${color_opponent}" ] && [ "${_check_str36}" = "${color_opponent}" ] &&
+                        [ "${_check_str43}" = "${color_opponent}" ] && [ "${_check_str50}" = "${color_opponent}" ]); then
+                    WIN_CORNER=$num
+                    return 0
+                fi
+            fi
+        fi
+    fi
     ## pattern 0 ######
     if [ $REMAIN -le 1 ]; then
         return 0
@@ -1962,6 +2000,13 @@ function is_number_safe()
         if [ $num -eq 57 ]; then
             is_number_available 57
             if [ $? -eq 0 ]; then
+                if ([ "${_check_str1}" = "-" ] && [ "${_check_str15}" = "-" ] &&
+                        [ "${_check_str22}" = "${color_opponent}" ] && [ "${_check_str29}" = "${color_opponent}" ] &&
+                        [ "${_check_str36}" = "${color}" ] && [ "${_check_str43}" = "${color_opponent}" ] &&
+                        [ "${_check_str50}" = "${color_opponent}" ] && [ "${_check_str57}" = "-" ]); then
+                    BEST_CORNER=$num
+                    return 0
+                fi
                 if ([ "${_check_str1}" = "${color}" ] && [ "${_check_str9}" = "${color}" ] &&
                         [ "${_check_str17}" = "${color_opponent}" ] && [ "${_check_str25}" = "${color_opponent}" ] &&
                         [ "${_check_str33}" = "${color_opponent}" ] && [ "${_check_str41}" = "${color_opponent}" ] &&
@@ -2279,6 +2324,13 @@ function is_number_safe()
                         [ "${_check_str61}" = "${color}" ] && [ "${_check_str62}" = "${color}" ] &&
                         [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
                     AGGRESSIVE_SAVE=$num
+                    return 0
+                fi
+                if ([ "${_check_str57}" = "-" ] && [ "${_check_str58}" = "-" ] &&
+                        [ "${_check_str59}" = "-" ] && [ "${_check_str60}" = "-" ] &&
+                        [ "${_check_str61}" = "${color_opponent}" ] && [ "${_check_str62}" = "${color}" ] &&
+                        [ "${_check_str63}" = "-" ] && [ "${_check_str64}" = "-" ]); then
+                    PROBABLY_BEST=$num
                     return 0
                 fi
             fi
@@ -7592,6 +7644,7 @@ function judge_position()
     local position_aggressive=0
     local position_early=0
     local position_best_corner=0
+    local position_win_corner=0
 
     local position_upper_rim_sub_corner=0
     local position_right_rim_sub_corner=0
@@ -9336,6 +9389,52 @@ function judge_position()
     fi
     #echo "#position_best_corner:$position_best_corner"
 
+    is_number_available 19 
+    if [ $? -eq 0 ]; then
+        is_number_safe 19 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_win_corner=19
+        fi
+    fi
+    is_number_available 20
+    if [ $? -eq 0 ]; then
+        is_number_safe 20 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_win_corner=20
+        fi
+    fi
+    is_number_available 22
+    if [ $? -eq 0 ]; then
+        is_number_safe 22 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_win_corner=22
+        fi
+    fi
+    is_number_available 34
+    if [ $? -eq 0 ]; then
+        is_number_safe 34 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_win_corner=34
+        fi
+    fi
+    is_number_available 43
+    if [ $? -eq 0 ]; then
+        is_number_safe 43 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_win_corner=43
+        fi
+    fi
+    is_number_available 46
+    if [ $? -eq 0 ]; then
+        is_number_safe 46 "${COMPUTER}"
+        if [ $? -eq 0 ]; then
+            position_win_corner=46
+        fi
+    fi
+    if [ $position_win_corner -ne 0 ]; then
+        position=$position_win_corner
+        WIN_CORNER=0
+    fi
     if [ $position_best_corner -ne 0 ]; then
         position=$position_best_corner
         BEST_CORNER=0
@@ -9432,7 +9531,7 @@ function count_black_and_white()
 ##
 
 echo ""
-echo "CLI_Othello ver5.0"
+echo "CLI_Othello ver5.1"
 echo "  a  b  c  d  e  f  g  h" > "${FILE}"
 echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - W B - - - - - - B W - - - - - - - - - - - - - - - - - - - - - - - - - - -" > "${FILE_KIFU_PRESENT}"
 check_file
